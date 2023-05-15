@@ -1,0 +1,55 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+#import './node_modules/aws-appsync-scalars/src/scalars/AWSURL.graphql'
+
+type TranslationConfig {
+    id: ID!
+    url: String!
+    targetLanguage: Language! #you dont always need a target language, for simplicity sake we'll keep it
+    sourceLanguage: Language!
+    translationModel: TranslationModel!
+}
+
+interface BlogPost {
+    id: ID!
+    language: Language!
+    title: String!
+    authors: [String]!
+    content: Content
+}
+
+type OriginalBlogPost implements BlogPost{
+    id: ID!
+    language: Language!
+    title: String!
+    authors: [String]!
+    content: Content
+}
+
+type TranslatedBlogPost implements BlogPost {
+    id: ID!
+    originalPost: OriginalBlogPost!
+    language: Language!
+    title: String!
+    authors: [String]!
+    content: Content
+}
+
+type Content {
+    paragraphs: [String]
+    #add another field for HTML images or tags (will be changed)
+}
+
+
+type Language {
+    id: ID!
+    name: String!
+    code: String!  #Language code: ie. "en" for English, "tr" for Turkish
+}
+
+type TranslationModel {
+    id: ID!
+    name: String!
+}
