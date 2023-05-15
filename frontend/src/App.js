@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { createTranslationConfig } from './graphql/mutations';
 
 
