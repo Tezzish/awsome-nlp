@@ -3,3 +3,11 @@ target/
 venv/
 *.iml
 frontend/amplify/backend/function/userConfigurationFunction/.gradle/
+amplify/backend/function/UserConfigFunction/.gradle/
+amplify/backend/function/UserConfigFunction/gradlew
+amplify/backend/function/UserConfigFunction/gradlew.bat
+amplify/#current-cloud-backend/
+amplify/.config/
+amplify/backend/api/awsomenlp/build/
+amplify/backend/function/UserConfigFunction/amplify.state
+amplify/backend/function/UserConfigFunction/build/

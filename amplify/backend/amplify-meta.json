@@ -1,0 +1,45 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-awsomenlp-develop-192735-authRole",
+      "UnauthRoleArn": "arn:aws:iam::766847484313:role/amplify-awsomenlp-develop-192735-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::766847484313:role/amplify-awsomenlp-develop-192735-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
+      "UnauthRoleName": "amplify-awsomenlp-develop-192735-unauthRole",
+      "StackName": "amplify-awsomenlp-develop-192735",
+      "StackId": "arn:aws:cloudformation:eu-west-1:766847484313:stack/amplify-awsomenlp-develop-192735/c8d66460-f345-11ed-89e7-06dd2a20e887",
+      "AmplifyAppId": "d3hi3nxsg84mt0"
+    }
+  },
+  "api": {
+    "awsomenlp": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "function": {
+    "UserConfigFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "awsomenlp0f8cd9dd": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
