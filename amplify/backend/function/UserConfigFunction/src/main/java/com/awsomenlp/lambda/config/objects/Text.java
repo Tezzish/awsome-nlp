@@ -47,4 +47,14 @@ public abstract class Text {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "Text{" +
+            "language=" + language +
+            ", title='" + title + '\'' +
+            ", authors=" + authors +
+            ", content='" + content + '\'' +
+            '}';
+    }
 }

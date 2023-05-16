@@ -1,14 +1,18 @@
 package com.awsomenlp.lambda.config.models;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.translate.AmazonTranslateAsync;
 import com.amazonaws.services.translate.AmazonTranslateAsyncClient;
 import com.amazonaws.services.translate.model.TranslateTextRequest;
 import com.amazonaws.services.translate.model.TranslateTextResult;
+import com.awsomenlp.lambda.config.objects.AWSBlogPost;
+import com.awsomenlp.lambda.config.objects.Author;
 import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -44,10 +48,14 @@ public class AmazonTranslate extends TranslationModel {
      * @return Translated text or NULL if translation is interrupted or cannot.
      */
     @Override
+
     public Text translate(Text text, Language sourceLanguage, Language targetLanguage) {
+
         translateAsync = AmazonTranslateAsyncClient.asyncBuilder()
-            .withRegion(Regions.DEFAULT_REGION)
+            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+            .withRegion(Regions.EU_WEST_1) //should be changed to not be hard coded
             .build();
+
 
         TranslateTextRequest request = new TranslateTextRequest()
             .withText(text.getContent())
@@ -74,7 +82,8 @@ public class AmazonTranslate extends TranslationModel {
             e.printStackTrace();
         }
 
-        return null;
+        return new AWSBlogPost(Language.ENGLISH, "fail",
+            List.of(new Author("fail", "fail", "fail")), List.of("fail"));
     }
 
 

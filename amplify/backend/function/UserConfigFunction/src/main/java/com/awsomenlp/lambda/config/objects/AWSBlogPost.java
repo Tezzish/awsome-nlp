@@ -34,4 +34,15 @@ public class AWSBlogPost extends Text{
     public void setParagraphs(List<String> paragraphs) {
         this.paragraphs = paragraphs;
     }
+
+    @Override
+    public String toString() {
+        return "AWSBlogPost{" +
+            "language=" + this.getLanguage() +
+            ", title='" + this.getTitle() + '\'' +
+            ", authors=" + this.getAuthors() +
+            ", content='" + this.getContent() + '\'' +
+            "paragraphs=" + paragraphs +
+            '}';
+    }
 }
