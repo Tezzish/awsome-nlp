@@ -6,19 +6,23 @@ import com.awsomenlp.lambda.config.objects.Language;
 
 public class Config {
     private String url; //TODO make this AWS URL datatype???
-    private Language sourceLang;
-    private Language destinationLang;
+    private Language sourceLanguage;
+    private Language targetLanguage;
     private TranslationModel model;
+
+
+    public Config() {
+    }
 
     /**
      * In order to resolve the model, we need to add type annotations according to this article:
      * https://leoniedermeier.github.io/docs/java/snippets/java_misc/jackson_polymorphic.html
      */
-    public Config(String url, Language sourceLang,
-                  Language destinationLang, TranslationModel model) {
+    public Config(String url, Language sourceLanguage,
+                  Language targetLanguage, TranslationModel model) {
         this.url = url;
-        this.sourceLang = sourceLang;
-        this.destinationLang = destinationLang;
+        this.sourceLanguage = sourceLanguage;
+        this.targetLanguage = targetLanguage;
         this.model = model;
     }
 
@@ -31,21 +35,21 @@ public class Config {
         this.url = url;
     }
 
-    public Language getSourceLang() {
-        return sourceLang;
+    public Language getSourceLanguage() {
+        return sourceLanguage;
     }
 
-    public void setSourceLang(Language sourceLang) {
-        this.sourceLang = sourceLang;
+    public void setSourceLanguage(Language sourceLanguage) {
+        this.sourceLanguage = sourceLanguage;
     }
 
 
-    public Language getDestinationLang() {
-        return destinationLang;
+    public Language getTargetLanguage() {
+        return targetLanguage;
     }
 
-    public void setDestinationLang(Language destinationLang) {
-        this.destinationLang = destinationLang;
+    public void setTargetLanguage(Language targetLanguage) {
+        this.targetLanguage = targetLanguage;
     }
 
     public TranslationModel getModel() {
