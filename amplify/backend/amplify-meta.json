@@ -14,29 +14,29 @@
   },
   "api": {
     "awsomenlp": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
+            "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 7
-            },
-            "authenticationType": "API_KEY"
-          }
+            }
+          },
+          "additionalAuthenticationProviders": []
         },
         "GraphQLAPIIdOutput": "5itsd6myxfh43f7lq2ogxkvu2e",
         "GraphQLAPIEndpointOutput": "https://ofzsp4unmvbapfggptclvhpx2y.appsync-api.eu-west-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-q2f2oiufivhrjagwot4lqibqsm"
       },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync",
+      "lastPushTimeStamp": "2023-05-16T11:52:08.569Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushTimeStamp": "2023-05-16T10:24:48.370Z",
-      "lastPushDirHash": "mo2EjyXQTZgWtrzBvrJkEvTxEo0="
+      "lastPushDirHash": "3LOaiLzUz0G1piO4QEtX1j/x9AE="
     }
   },
   "function": {
@@ -56,7 +56,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastPushTimeStamp": "2023-05-16T10:24:48.618Z",
+      "lastPushTimeStamp": "2023-05-16T11:52:06.200Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::766847484313:role/awsomenlpLambdaRolee754d004-develop",
         "Region": "eu-west-1",
