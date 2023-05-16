@@ -31,8 +31,13 @@
     },
     "categories": {
       "function": {
-        "UserConfigFunction": {},
-        "awsomenlp0f8cd9dd": {}
+        "UserConfigFunction": {
+          "deploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
+          "s3Key": "amplify-builds/UserConfigFunction-474854484f4b596f4652-build.zip"
+        }
+      },
+      "api": {
+        "awsomenlp": {}
       }
     }
   }

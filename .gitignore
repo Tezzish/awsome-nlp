@@ -11,3 +11,4 @@ amplify/.config/
 amplify/backend/api/awsomenlp/build/
 amplify/backend/function/UserConfigFunction/amplify.state
 amplify/backend/function/UserConfigFunction/build/
+amplify/backend/function/UserConfigFunction/dist/latest-build.zip
