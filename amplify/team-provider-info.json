@@ -33,7 +33,7 @@
       "function": {
         "UserConfigFunction": {
           "deploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-474854484f4b596f4652-build.zip"
+          "s3Key": "amplify-builds/UserConfigFunction-79524468303361567461-build.zip"
         }
       },
       "api": {

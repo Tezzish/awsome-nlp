@@ -35,7 +35,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushTimeStamp": "2023-05-16T08:18:21.603Z",
+      "lastPushTimeStamp": "2023-05-16T10:24:48.370Z",
       "lastPushDirHash": "mo2EjyXQTZgWtrzBvrJkEvTxEo0="
     }
   },
@@ -44,19 +44,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2023-05-16T08:17:16.793Z",
+      "lastBuildTimeStamp": "2023-05-16T10:23:43.180Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-05-16T08:17:16.823Z",
-      "distZipFilename": "UserConfigFunction-474854484f4b596f4652-build.zip",
+      "lastPackageTimeStamp": "2023-05-16T10:23:43.211Z",
+      "distZipFilename": "UserConfigFunction-79524468303361567461-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
-        "s3Key": "amplify-builds/UserConfigFunction-474854484f4b596f4652-build.zip"
+        "s3Key": "amplify-builds/UserConfigFunction-79524468303361567461-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastPushTimeStamp": "2023-05-16T08:18:21.858Z",
+      "lastPushTimeStamp": "2023-05-16T10:24:48.618Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::766847484313:role/awsomenlpLambdaRolee754d004-develop",
         "Region": "eu-west-1",
@@ -64,7 +64,7 @@
         "Name": "UserConfigFunction-develop",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-develop"
       },
-      "lastPushDirHash": "tMgpYrHU6yrZjv84LXHvyxfLNpc="
+      "lastPushDirHash": "p2DdpwfEuO9jKiRgaR2dGHxCyas="
     }
   }
 }
