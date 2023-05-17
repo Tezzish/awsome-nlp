@@ -2,6 +2,8 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
+
+
 type TranslationConfig @model {
     id: ID!
     url: String!
@@ -10,28 +12,14 @@ type TranslationConfig @model {
     translationModel: TranslationModel @hasOne
 }
 
-
-type OriginalBlogPost @model {
-    id: ID!
-    language: Language @hasOne
-    title: String!
-    authors: [String]!
-    content: Content
-}
-
-type TranslatedBlogPost @model {
+type BlogPost @model {
     id: ID!
     originalPost: OriginalBlogPost @hasOne
-    language: Language @hasOne
+    language: Language! @hasOne
     title: String!
     authors: [String]!
-    content: Content
-    translationModel: TranslationModel! @hasOne
-}
-
-type Content {
-paragraphs: [String]
-#add another field for HTML images or tags (will be changed)
+    content: [String]
+    translationModel: TranslationModel @hasOne
 }
 
 type Language @model {
