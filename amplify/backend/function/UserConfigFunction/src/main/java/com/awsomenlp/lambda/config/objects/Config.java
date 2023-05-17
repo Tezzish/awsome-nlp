@@ -1,7 +1,6 @@
-package com.awsomenlp.lambda.config;
+package com.awsomenlp.lambda.config.objects;
 
 import com.awsomenlp.lambda.config.models.TranslationModel;
-import com.awsomenlp.lambda.config.objects.Language;
 
 
 public class Config {
