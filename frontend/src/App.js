@@ -70,18 +70,7 @@ function App() {
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
     // call api which calls the lambda function that has the python libraries 
-    e.preventDefault();
-    const url = URLValue;
-    const lang = selectedLanguage;
-    const translator = selectedModel;
-
-
-    if (isValidURL(url)) {
-          setLeftIframeSrc(url)
-          // TODO: Translate the right side of the frame
-          setRightIframeSrc(url)
-          sendConfigToBackend(url, lang, translator)
-        }
+    const blogContent = await API.graphql(graphqlOperation(listLanguages));
   };
 
   //TODO: Check if URL is a valid AWS URL.
