@@ -1,0 +1,70 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-awsomenlp-develop-192735-authRole",
+      "UnauthRoleArn": "arn:aws:iam::766847484313:role/amplify-awsomenlp-develop-192735-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::766847484313:role/amplify-awsomenlp-develop-192735-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
+      "UnauthRoleName": "amplify-awsomenlp-develop-192735-unauthRole",
+      "StackName": "amplify-awsomenlp-develop-192735",
+      "StackId": "arn:aws:cloudformation:eu-west-1:766847484313:stack/amplify-awsomenlp-develop-192735/c8d66460-f345-11ed-89e7-06dd2a20e887",
+      "AmplifyAppId": "d3hi3nxsg84mt0"
+    }
+  },
+  "api": {
+    "awsomenlp": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "5itsd6myxfh43f7lq2ogxkvu2e",
+        "GraphQLAPIEndpointOutput": "https://ofzsp4unmvbapfggptclvhpx2y.appsync-api.eu-west-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-q2f2oiufivhrjagwot4lqibqsm"
+      },
+      "lastPushTimeStamp": "2023-05-16T11:52:08.569Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiawsomenlp"
+      },
+      "lastPushDirHash": "3LOaiLzUz0G1piO4QEtX1j/x9AE="
+    }
+  },
+  "function": {
+    "UserConfigFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2023-05-16T10:23:43.180Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2023-05-16T10:23:43.211Z",
+      "distZipFilename": "UserConfigFunction-79524468303361567461-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
+        "s3Key": "amplify-builds/UserConfigFunction-79524468303361567461-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
+        "logicalId": "functionUserConfigFunction"
+      },
+      "lastPushTimeStamp": "2023-05-16T11:52:06.200Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::766847484313:role/awsomenlpLambdaRolee754d004-develop",
+        "Region": "eu-west-1",
+        "Arn": "arn:aws:lambda:eu-west-1:766847484313:function:UserConfigFunction-develop",
+        "Name": "UserConfigFunction-develop",
+        "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-develop"
+      },
+      "lastPushDirHash": "p2DdpwfEuO9jKiRgaR2dGHxCyas="
+    }
+  }
+}
