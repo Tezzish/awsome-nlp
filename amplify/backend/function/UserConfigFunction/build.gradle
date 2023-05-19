@@ -1,0 +1,41 @@
+apply plugin: 'java'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation (
+        'com.amazonaws:aws-lambda-java-core:1.2.1',
+        'com.amazonaws:aws-lambda-java-events:2.2.7'
+    )
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+// https://mvnrepository.com/artifact/software.amazon.awssdk/aws-core
+    implementation 'software.amazon.awssdk:aws-core:2.20.62'
+// https://mvnrepository.com/artifact/software.amazon.awssdk/translate
+    implementation 'software.amazon.awssdk:translate:2.20.62'
+
+// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-translate
+    implementation 'com.amazonaws:aws-java-sdk-translate:1.12.466'
+
+
+}
+
+jar.archiveBaseName = 'latest_build'
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+    archiveFileName = 'latest_build.zip'
+}
+
+build.dependsOn buildZip

@@ -1,0 +1,45 @@
+{
+  "api": {
+    "awsomenlp": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "function": {
+    "UserConfigFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_UserConfigFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserConfigFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserConfigFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserConfigFunction"
+        }
+      ]
+    }
+  }
+}
