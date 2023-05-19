@@ -39,17 +39,21 @@ TODO: Read List Below
 * RHS is hardcoded to wikipedia/CSS and is in no way a translation
 * No Search Functionality Available
  */
+
+// please do a fibonacci function 
+
 Amplify.configure(awsExports);
 
 function App() {
+
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState("https://en.wikipedia.org/wiki/HTML");
 
-  const [leftIframeSrc, setLeftIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
-  const [rightIframeSrc, setRightIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
+  const [leftIframeSrc, setLeftIframeSrc] = useState();
+  const [rightIframeSrc, setRightIframeSrc] = useState();
 
   const handleInputChangeURL = (e) => {
     setURLValue(e.target.value);
@@ -64,16 +68,20 @@ function App() {
   };
 
   //TODO: Currently we are displaying the same values for the left and right iframes
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
+    // call api which calls the lambda function that has the python libraries 
+    e.preventDefault();
     const url = URLValue;
     const lang = selectedLanguage;
     const translator = selectedModel;
 
+
     if (isValidURL(url)) {
-      setLeftIframeSrc(url);
-      setRightIframeSrc(url) // you should update this to handle the translated content
-      sendConfigToBackend(url, lang, translator)
-    }
+          setLeftIframeSrc(url)
+          // TODO: Translate the right side of the frame
+          setRightIframeSrc(url)
+          sendConfigToBackend(url, lang, translator)
+        }
   };
 
   //TODO: Check if URL is a valid AWS URL.
@@ -115,6 +123,7 @@ function App() {
     }
   };
 
+
   return (
       <div className="App">
         <form>
@@ -144,11 +153,13 @@ function App() {
               className="left-side"
               title="Left Content"
               src={leftIframeSrc}
+              //key={leftIframeSrc}
           ></iframe>
           <iframe
               className="right-side"
               title="Translated Post"
               src={rightIframeSrc}
+              //key={rightIframeSrc}
           ></iframe>
         </div>
       </div>

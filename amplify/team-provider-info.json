@@ -40,5 +40,63 @@
         "awsomenlp": {}
       }
     }
+  },
+  "laraenv": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-awsomenlp-laraenv-144612-authRole",
+      "UnauthRoleArn": "arn:aws:iam::927062947930:role/amplify-awsomenlp-laraenv-144612-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::927062947930:role/amplify-awsomenlp-laraenv-144612-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-awsomenlp-laraenv-144612-deployment",
+      "UnauthRoleName": "amplify-awsomenlp-laraenv-144612-unauthRole",
+      "StackName": "amplify-awsomenlp-laraenv-144612",
+      "StackId": "arn:aws:cloudformation:eu-west-1:927062947930:stack/amplify-awsomenlp-laraenv-144612/23546a90-f643-11ed-8d52-06fbd1c895c9",
+      "AmplifyAppId": "d1ro1on73yyg79"
+    },
+    "categories": {
+      "function": {
+        "UserConfigFunction": {},
+        "contentParser": {},
+        "pythonScraping": {}
+      }
+    }
+  },
+  "laradev": {
+    "categories": {
+      "function": {
+        "UserConfigFunction": {},
+        "contentParser": {},
+        "pythonScraping": {}
+      }
+    },
+    "awscloudformation": {}
+  },
+  "amplifydev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-awsomenlp-amplifydev-153255-authRole",
+      "UnauthRoleArn": "arn:aws:iam::927062947930:role/amplify-awsomenlp-amplifydev-153255-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::927062947930:role/amplify-awsomenlp-amplifydev-153255-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-awsomenlp-amplifydev-153255-deployment",
+      "UnauthRoleName": "amplify-awsomenlp-amplifydev-153255-unauthRole",
+      "StackName": "amplify-awsomenlp-amplifydev-153255",
+      "StackId": "arn:aws:cloudformation:eu-west-1:927062947930:stack/amplify-awsomenlp-amplifydev-153255/aa2880a0-f649-11ed-b80e-06148e527433",
+      "AmplifyAppId": "d1ro1on73yyg79"
+    },
+    "categories": {
+      "function": {
+        "UserConfigFunction": {
+          "deploymentBucketName": "amplify-awsomenlp-amplifydev-153255-deployment",
+          "s3Key": "amplify-builds/UserConfigFunction-5330712b537a6b4b4639-build.zip"
+        },
+        "getBlogContent": {
+          "deploymentBucketName": "amplify-awsomenlp-amplifydev-153255-deployment",
+          "s3Key": "amplify-builds/getBlogContent-57496737546c70524f77-build.zip"
+        }
+      },
+      "api": {
+        "awsomenlp": {}
+      }
+    }
   }
 }

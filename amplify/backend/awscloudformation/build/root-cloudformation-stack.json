@@ -155,25 +155,36 @@
     "apiawsomenlp": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-amplifydev-153255-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "awsomenlp",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
-          "S3DeploymentBucket": "amplify-awsomenlp-develop-192735-deployment",
+          "S3DeploymentBucket": "amplify-awsomenlp-amplifydev-153255-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/e738db5a2c593ba17dd136bd43afeb3edcd6951e",
-          "env": "develop"
+          "env": "amplifydev"
         }
       }
     },
     "functionUserConfigFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-develop-192735-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-amplifydev-153255-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-develop-192735-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-474854484f4b596f4652-build.zip",
-          "env": "develop"
+          "deploymentBucketName": "amplify-awsomenlp-amplifydev-153255-deployment",
+          "s3Key": "amplify-builds/UserConfigFunction-5330712b537a6b4b4639-build.zip",
+          "env": "amplifydev"
+        }
+      }
+    },
+    "functiongetBlogContent": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-amplifydev-153255-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-amplifydev-153255-deployment",
+          "s3Key": "amplify-builds/getBlogContent-57496737546c70524f77-build.zip",
+          "env": "amplifydev"
         }
       }
     }

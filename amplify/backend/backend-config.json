@@ -22,6 +22,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "getBlogContent": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -38,6 +43,22 @@
         {
           "category": "function",
           "resourceName": "UserConfigFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_getBlogContent_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getBlogContent"
+        }
+      ]
+    },
+    "AMPLIFY_function_getBlogContent_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getBlogContent"
         }
       ]
     }
