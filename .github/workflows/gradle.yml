@@ -16,22 +16,19 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
 
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v1
-        with:
-          gradle-version: '7.3'
-          arguments: build
-        working-directory: ./amplify/backend/function/UserConfigFunction/
+    - name: Build and Test
+      working-directory: ./subfolder
+      run: |
+        ./gradlew clean build
     
