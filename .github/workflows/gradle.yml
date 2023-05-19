@@ -31,4 +31,4 @@ jobs:
       with:
         gradle-version: '7.3'
         arguments: build
-        working-directory: ./amplify/backend/function
+        working-directory: ./amplify/backend/function/UserConfigFunction
