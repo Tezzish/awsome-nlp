@@ -26,7 +26,7 @@ public class UserConfigHandler implements RequestStreamHandler {
 //            mapper.writeValue(writer, config1);
 //            return writer.toString();
 //        } catch (IOException e) {
-//            return "error n shit";
+//            return "errors";
 //        }
     //    }
 
@@ -52,14 +52,22 @@ public class UserConfigHandler implements RequestStreamHandler {
 
 
         String jsonOut =    "{\n" +
-            "    \"id\": 100,\n" +
-            "    \"blogPostLanguageCode\": \"en\",\n" +
-            "    \"title\": \"Biking\",\n" +
-            "    \"authors\": [\"Remi Wolf\"],\n" +
-            "    \"translationModel\": {\n" +
-            "        \"id\": 1,\n" +
-            "        \"name\":\"amazonTranslate\"\n" +
-            "    }\n" +
+            "    \"id\": 100,\n"
+            +
+            "    \"blogPostLanguageCode\": \"en\",\n"
+            +
+            "    \"title\": \"Biking\",\n"
+            +
+            "    \"authors\": [\"Remi Wolf\"],\n"
+            +
+            "    \"translationModel\": {\n"
+            +
+            "        \"id\": 1,\n"
+            +
+            "        \"name\":\"amazonTranslate\"\n"
+            +
+            "    }\n"
+            +
             "}";
 
         output.write(jsonOut.getBytes(StandardCharsets.UTF_8));

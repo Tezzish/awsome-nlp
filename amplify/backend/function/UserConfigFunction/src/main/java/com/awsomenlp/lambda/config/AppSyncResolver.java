@@ -8,14 +8,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * *short desc*
- * Kyon S. Caldera
- * <p>
- * 5/17/2023
- * amplify
+ * This class functions to deal with the specific way that AppSync sends requests
+ * using the VTL resolver.
  */
 public class AppSyncResolver {
 
+    /**
+     * This function turns the specific JsonNode, formatted like how it came from AppSync
+     * into a proper Config object.
+     * @param input
+     * @param objectMapper
+     * @return
+     * @throws JsonProcessingException
+     */
     public Config resolveAppSyncInput(JsonNode input, ObjectMapper objectMapper) throws JsonProcessingException {
 
         input = input.path("input");

@@ -3,15 +3,25 @@ package com.awsomenlp.lambda.config.objects;
 import java.util.List;
 
 /**
- * TODO: Determine whether the models will mess with delimiters (such as \r) for paragraph distinction.
- * If they dont mess with delimiters, we can toss in entire blogs to translate and delimit at
- * frontend, however, if they do, we need to find a solution to translate the post piece by
- * piece.
+ * If they dont mess with delimiters, we can toss in entire blogs to translate
+ * and delimit at frontend, however, if they do, we need to find a
+ * solution to translate the post piece by piece.
  */
-public class AWSBlogPost extends Text{
+
+//TODO: Determine whether the models will mess with delimiters
+//(such as \r) for paragraph distinction.
+public class AWSBlogPost extends Text {
 
     private List<String> paragraphs;
 
+    /**
+     * Constructor for AWS BlogPost Object.
+     * @param language
+     * @param title
+     * @param authors
+     * @param paragraphs turns into a single String to delimitted by "\r\r\r\r\r"
+     *                  for each paragraph
+     */
     public AWSBlogPost(Language language, String title,
                        List<Author> authors, List<String> paragraphs) {
         super(language, title, authors, null);
