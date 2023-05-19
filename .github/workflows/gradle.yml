@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: cd ./amplify/backend/function/UserConfigFunction/
-    - run: cd / && ls && cd home && ls && cd runner &&  cd work && ls
+    - run: cd $GITHUB_WORKSPACE && ls
     - run: ls
     - name: Set up JDK 17
       uses: actions/setup-java@v3
