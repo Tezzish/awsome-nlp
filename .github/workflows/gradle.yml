@@ -29,5 +29,6 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v1
       with:
-        gradle-version: '7.1'  # replace with your desired Gradle version
+        gradle-version: '7.3'
         arguments: build
+        working-directory: ./amplify/backend/function
