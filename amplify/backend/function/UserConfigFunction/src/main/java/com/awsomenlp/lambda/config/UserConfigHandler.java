@@ -63,7 +63,7 @@ public class UserConfigHandler implements RequestStreamHandler {
             +
             "        \"id\": 1,\n"
             +
-            "        \"name\":\"itsthefirstofthemonth\"\n"
+            "        \"name\":\"newchange\"\n"
             +
             "    }\n"
             +
