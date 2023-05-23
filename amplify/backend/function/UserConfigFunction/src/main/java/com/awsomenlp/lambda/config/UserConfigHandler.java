@@ -4,7 +4,6 @@ package com.awsomenlp.lambda.config;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,10 +44,10 @@ public class UserConfigHandler implements RequestStreamHandler {
 
         //String temp = IOUtils.toString(input);
 
-        JsonNode rootNode = objectMapper.readTree(input);
+        //JsonNode rootNode = objectMapper.readTree(input);
 
-        System.out.println(rootNode.path("arguments"));
-        System.out.println(appSyncResolver.resolveAppSyncInput(rootNode.path("arguments"), objectMapper));
+        //System.out.println(rootNode.path("arguments"));
+        //System.out.println(appSyncResolver.resolveAppSyncInput(rootNode.path("arguments"), objectMapper));
 
 
         String jsonOut =    "{\n" +
@@ -64,7 +63,7 @@ public class UserConfigHandler implements RequestStreamHandler {
             +
             "        \"id\": 1,\n"
             +
-            "        \"name\":\"amazonTranslate\"\n"
+            "        \"name\":\"itsthefirstofthemonth\"\n"
             +
             "    }\n"
             +
