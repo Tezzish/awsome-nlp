@@ -107,9 +107,11 @@ function App() {
   }, []);
 
   const sendConfigToBackend = async (url, language, translationModel) => {
-    try {
-      await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
+    try { //url: $url, targetLanguage: $targetLanguage, sourceLanguage: $sourceLanguage, translationModel: $translationModel
+      //input: {url: "https://aws.amazon.com/blogs/desktop-and-application-streaming/network-coverage-delivers-secure-operations-by-utilizing-amazon-end-user-computing-services/", targetLanguage: {code: "tr", name: "TURKISH"}, sourceLanguage: {code: "en", name: "ENGLISH"}, translationModel: {type: "amazonTranslate"}}) {
+      await API.graphql(graphqlOperation(translate, { input: {url: "https://aws.amazon.com/blogs/desktop-and-application-streaming/network-coverage-delivers-secure-operations-by-utilizing-amazon-end-user-computing-services/", targetLanguage: {code: "tr", name: "TURKISH"}, sourceLanguage: {code: "en", name: "ENGLISH"}, translationModel: {type: "amazonTranslate"}}}));
       console.log('send successful');
+    
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
