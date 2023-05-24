@@ -3,7 +3,7 @@ import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-import {createTranslationJob} from './graphql/mutations';
+//import {createTranslationJob} from './graphql/mutations';
 import {listLanguages, listTranslationModels, translate} from "./graphql/queries";
 
 
