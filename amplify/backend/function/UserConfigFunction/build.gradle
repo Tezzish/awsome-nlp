@@ -24,6 +24,8 @@ dependencies {
 // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-translate
     implementation 'com.amazonaws:aws-java-sdk-translate:1.12.466'
 
+    implementation 'org.json:json:20210307'
+
 
 }
 
