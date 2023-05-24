@@ -4,8 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {createTranslationJob} from './graphql/mutations';
-import {listLanguages, listTranslationModels} from "./graphql/queries";
-
+import {getBlogPostParsed, listLanguages, listTranslationModels} from "./graphql/queries";
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -40,7 +39,6 @@ TODO: Read List Below
 * No Search Functionality Available
  */
 
-// please do a fibonacci function 
 
 Amplify.configure(awsExports);
 
@@ -66,12 +64,20 @@ function App() {
   const handleInputChangeModel = (e) => {
     setSelectedModel(e.target.value);
   };
-
-  //TODO: Currently we are displaying the same values for the left and right iframes
+  
   const handleButtonClick = (e) => {
-    // call api which calls the lambda function that has the python libraries 
-    const blogContent = await API.graphql(graphqlOperation(listLanguages));
+    sendOriginalToBackend(URLValue)
   };
+
+  // sends the url of the original blog post to the backend to be parsed
+  async function sendOriginalToBackend(url) {
+    console.log('sending original blog post url to backend: URL =' + url)
+    try {
+      await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+    } catch (error) {
+      console.error('Error sending original blog post to backend:', error);
+    }
+  }
 
   //TODO: Check if URL is a valid AWS URL.
   // Current implementation only check if it is a URL
@@ -142,13 +148,13 @@ function App() {
               className="left-side"
               title="Left Content"
               src={leftIframeSrc}
-              //key={leftIframeSrc}
+              key={leftIframeSrc}
           ></iframe>
           <iframe
               className="right-side"
               title="Translated Post"
               src={rightIframeSrc}
-              //key={rightIframeSrc}
+              key={rightIframeSrc}
           ></iframe>
         </div>
       </div>
@@ -156,3 +162,4 @@ function App() {
 }
 
 export default App;
+
