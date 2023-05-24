@@ -97,26 +97,33 @@ export const listTranslationModels = /* GraphQL */ `
   }
 `;
 
-export const translate = /* GraphQL */`
-query translate($url: String, $targetLanguage: CreateLanguageInput, $sourceLanguage: CreateLanguageInput, $translationModel: TranslationModelInput) {
-  translate(input: {url: $url, targetLanguage: $targetLanguage, sourceLanguage: $sourceLanguage, translationModel: $translationModel}) {
+
+export const translate = /* GraphQL */
+  query translate(input: $ConfigInput {url: $url
+  targetLanguage: $tlang
+  sourceLanguage: $slang
+  translationModel: $tmodel }) {
+  translationModel {
+    name
+  }
+  originalPost {
+    authors
+    content
+    id
+    language {
+      name
+      code
+    }
     translationModel {
+      id
       name
     }
-    originalPost {
-      authors
-      content
-      id
-      language {
-        name
-        code
-      }
-    }
-    content
-    authors
-    blogPostLanguageCode
-    blogPostOriginalPostId
-    id
   }
+  content
+  authors
+  blogPostLanguageCode
+  blogPostOriginalPostId
+  id
 }
-`;
+
+

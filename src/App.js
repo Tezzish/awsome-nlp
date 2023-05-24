@@ -108,7 +108,7 @@ function App() {
 
   const sendConfigToBackend = async (url, language, translationModel) => {
     try {
-      await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
+      await API.graphql(graphqlOperation(translate, { input: { url, language, translationModel } }));
       console.log('send successful');
     } catch (error) {
       console.error('Error sending config to backend:', error);

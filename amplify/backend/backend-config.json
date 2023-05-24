@@ -23,23 +23,5 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
-  },
-  "parameters": {
-    "AMPLIFY_function_UserConfigFunction_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserConfigFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_UserConfigFunction_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserConfigFunction"
-        }
-      ]
-    }
   }
 }
