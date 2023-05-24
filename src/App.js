@@ -4,7 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {createTranslationJob} from './graphql/mutations';
-import {listLanguages, listTranslationModels} from "./graphql/queries";
+import {listLanguages, listTranslationModels, translate} from "./graphql/queries";
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
