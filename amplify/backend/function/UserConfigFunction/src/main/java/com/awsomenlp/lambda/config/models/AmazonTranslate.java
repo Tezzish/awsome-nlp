@@ -12,7 +12,9 @@ import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -56,34 +58,48 @@ public class AmazonTranslate extends TranslationModel {
             .withRegion(Regions.EU_WEST_1) //should be changed to not be hard coded
             .build();
 
-
         TranslateTextRequest request = new TranslateTextRequest()
-            .withText(text.getContent())
             .withSourceLanguageCode(sourceLanguage.getCode())
             .withTargetLanguageCode(targetLanguage.getCode());
 
-        Future<TranslateTextResult> result = translateAsync.translateTextAsync(request);
+        Scanner scanner = new Scanner(text.getContent());
+        scanner.useDelimiter("\r\r\r\r\r");
 
-        /**
-         * since it is a future, it can be interrupted.
-         */
-        try {
-            /**
-             * really stupid solution that doesnt change anything except the actual text, and
-             * its language.
-             */
-            Text t = text;
-            t.setContent(result.get().getTranslatedText());
-            t.setLanguage(targetLanguage);
-            return t;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+
+        List<Future<TranslateTextResult>> resultList = new ArrayList<>();
+        while(scanner.hasNext()){
+            request.withText(scanner.next());
+            resultList.add(translateAsync.translateTextAsync(request));
         }
 
-        return new AWSBlogPost(Language.ENGLISH, "fail",
-            List.of(new Author("fail", "fail", "fail")), List.of("fail"));
+
+
+        /**
+         * really stupid solution that doesnt change anything except the actual text, and
+         * its language.
+         */
+        Text t = text;
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        /**
+         * translates everything paragraph by paragraph
+         */
+        resultList.forEach(x -> {
+            try {
+                stringBuilder.append(x.get().getTranslatedText());
+                stringBuilder.append("\r\r\r\r\r");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
+
+        t.setContent(stringBuilder.toString());
+        t.setLanguage(targetLanguage);
+        return t;
+
+
     }
 
 
