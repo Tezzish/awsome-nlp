@@ -3,8 +3,8 @@ import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-//import {createTranslationJob} from './graphql/mutations';
-import {listLanguages, listTranslationModels, translate} from "./graphql/queries";
+import {createTranslationJob} from './graphql/mutations';
+import {listLanguages, listTranslationModels} from "./graphql/queries";
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
@@ -107,11 +107,9 @@ function App() {
   }, []);
 
   const sendConfigToBackend = async (url, language, translationModel) => {
-    try { //url: $url, targetLanguage: $targetLanguage, sourceLanguage: $sourceLanguage, translationModel: $translationModel
-      //input: {url: "https://aws.amazon.com/blogs/desktop-and-application-streaming/network-coverage-delivers-secure-operations-by-utilizing-amazon-end-user-computing-services/", targetLanguage: {code: "tr", name: "TURKISH"}, sourceLanguage: {code: "en", name: "ENGLISH"}, translationModel: {type: "amazonTranslate"}}) {
-      await API.graphql(graphqlOperation(translate, { input: {url: "https://aws.amazon.com/blogs/desktop-and-application-streaming/network-coverage-delivers-secure-operations-by-utilizing-amazon-end-user-computing-services/", targetLanguage: {code: "tr", name: "TURKISH"}, sourceLanguage: {code: "en", name: "ENGLISH"}, translationModel: {type: "amazonTranslate"}}}));
+    try {
+      await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
       console.log('send successful');
-    
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
