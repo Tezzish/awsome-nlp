@@ -61,7 +61,7 @@ function App() {
   async function sendConfigToBackend(url, language, translator) {
     console.log('sending config to backend: URL = {' + url + '}, Language = {' + language + '}, translator = {' + translator + '}')
     try {
-      await API.graphql(graphqlOperation(translate, { input: { url, language, translator } }));
+      await API.graphql(graphqlOperation(createTranslationConfig, { input: { url, language, translator } }));
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
