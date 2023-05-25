@@ -53,7 +53,7 @@ public class AppSyncResolver {
 
         JSONArray content = new JSONArray();
         Scanner scanner = new Scanner(text.getContent());
-        scanner.useDelimiter("\r\r\r\r\r");
+        scanner.useDelimiter("#####!!!!!");
         while(scanner.hasNext()){
             content.put(scanner.next());
         }

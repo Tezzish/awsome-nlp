@@ -19,7 +19,7 @@ public class AWSBlogPost extends Text {
      * @param language
      * @param title
      * @param authors
-     * @param paragraphs turns into a single String to delimitted by "\r\r\r\r\r"
+     * @param paragraphs turns into a single String to delimitted by "#####!!!!!"
      *                  for each paragraph
      */
     public AWSBlogPost(Language language, String title,
@@ -30,7 +30,7 @@ public class AWSBlogPost extends Text {
         StringBuilder stringBuilder = new StringBuilder();
         for (String paragraph: paragraphs) {
             stringBuilder.append(paragraph);
-            stringBuilder.append("\r\r\r\r\r");
+            stringBuilder.append("#####!!!!!");
         }
 
         this.setContent(stringBuilder.toString());
