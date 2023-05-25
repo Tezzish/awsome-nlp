@@ -85,7 +85,7 @@ function App() {
     try {
       const output = await API.graphql(graphqlOperation(translate, {
         input: {
-          url: "https://aws.amazon.com/blogs/desktop-and-application-streaming/network-coverage-delivers-secure-operations-by-utilizing-amazon-end-user-computing-services/",
+          url: url,
           targetLanguage: { name: "TURKISH", code: "tr" },
           sourceLanguage: { name: "ENGLISH", code: "en" },
           translationModel: { type: "amazonTranslate" }
