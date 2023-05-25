@@ -183,7 +183,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-lhsdev-105204-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-lhsdev-105204-deployment",
-          "s3Key": "amplify-builds/getBlogContent-68774c52316f744e6973-build.zip",
+          "s3Key": "amplify-builds/getBlogContent-6b4b52634757394a5552-build.zip",
           "env": "lhsdev"
         }
       }

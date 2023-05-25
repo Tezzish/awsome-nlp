@@ -6,6 +6,8 @@ def handler(event, context):
   # url = event['arguments']['url']
   print('received event:')
   print(event)
+  print(event['arguments'])
+  a = parser(event['arguments']['url'])
 #   print(parser(event['url']))
   # body = parser(event['url'])
   return {
@@ -15,7 +17,7 @@ def handler(event, context):
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET BINKS'
       },
-      'body': event
+      'body': a
   }
 
 # # function called when the url is passed to the lambda function
