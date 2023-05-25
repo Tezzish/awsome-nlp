@@ -24,7 +24,7 @@ def handler(event, context):
 def parser(url):
 
     # gets the html from the website
-    html = urlopen(url)
+    html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
     soup = soup.find('section', class_='blog-post-content lb-rtxt')
     soup = soup.find('lb-h2 blog-post-title')
