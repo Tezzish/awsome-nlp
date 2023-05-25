@@ -63,7 +63,7 @@ public class AmazonTranslate extends TranslationModel {
             .withTargetLanguageCode(targetLanguage.getCode());
 
         Scanner scanner = new Scanner(text.getContent());
-        scanner.useDelimiter("#####!!!!!");
+        scanner.useDelimiter("\r\r\r\r\r");
 
 
         List<Future<TranslateTextResult>> resultList = new ArrayList<>();
@@ -87,7 +87,7 @@ public class AmazonTranslate extends TranslationModel {
         resultList.forEach(x -> {
             try {
                 stringBuilder.append(x.get().getTranslatedText());
-                stringBuilder.append("#####!!!!!");
+                stringBuilder.append("\r\r\r\r\r");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
