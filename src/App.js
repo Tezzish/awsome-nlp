@@ -11,12 +11,6 @@ import {listLanguages, listTranslationModels, translate} from "./graphql/queries
 You can add these manually in AppSync and under the Queries Menu.
  */
 
-/*
-TODO: Read List Below
-* LHS takes the url and spits out the page, this is currently possible for select pages (NOT AWS pages)
-* RHS is hardcoded to wikipedia/CSS and is in no way a translation
-* No Search Functionality Available
- */
 Amplify.configure(awsExports);
 
 function App() {
@@ -27,7 +21,8 @@ function App() {
   const [URLValue, setURLValue] = useState("https://en.wikipedia.org/wiki/HTML");
 
   const [leftIframeSrc, setLeftIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
-  const [translatedContent, setTranslatedContent] = useState("");
+  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+
 
 
   const handleInputChangeURL = (e) => {
@@ -52,7 +47,6 @@ function App() {
 
     if (isValidURL(url)) {
       setLeftIframeSrc(url);
-      //setRightIframeSrc(url)  you should update this to handle the translated content
       sendConfigToBackend(url, lang, translator)
     }
   };
@@ -98,16 +92,20 @@ function App() {
           translationModel: { type: "amazonTranslate" }
         }
       }));
-
       console.log('send successful');
+      console.log(JSON.stringify(output))
 
-// This assumes your output is a string of translated text
-      setTranslatedContent(JSON.stringify(output));
+      const translatedPost = output.data.translate;
+      const title = translatedPost.title;
+      const authors = translatedPost.authors.join(', ');
+      const content = translatedPost.content.join('\n');
 
+      setTranslatedContent({ title, authors, content });
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
   };
+
 
   return (
       <div className="App">
@@ -139,7 +137,13 @@ function App() {
               title="Left Content"
               src={leftIframeSrc}
           ></iframe>
-          <div className="right-side" title="Translated Post">{translatedContent}</div>
+          <div className="right-side">
+            <h2>{translatedContent.title}</h2>
+            <h3>{translatedContent.authors}</h3>
+            {translatedContent.content.split('\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </div>
   );
