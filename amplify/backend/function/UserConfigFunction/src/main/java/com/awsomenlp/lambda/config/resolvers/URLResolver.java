@@ -5,6 +5,7 @@ import com.awsomenlp.lambda.config.objects.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,11 +31,12 @@ public class URLResolver {
             title = titEles.first().text();
 
         //get Authors from blogpost
-        Elements authEles = doc.select("[property=author]");
+        Elements nameEles = doc.select("[property=author] [property=name]");
         List<Author> auths = new ArrayList<>();
-        for (Element ele : authEles) {
+        for (Element ele : nameEles) {
             auths.add(new Author("", "", ele.text()));
         }
+        auths = auths.stream().distinct().collect(Collectors.toList());
 
         //get headers and paragraphs from blogpost
         Elements paraEles = doc.select("p, h2");
