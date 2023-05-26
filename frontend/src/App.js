@@ -70,6 +70,7 @@ function App() {
   };
 
   // sends the url of the original blog post to the backend to be parsed
+  // lutfen calis
   async function sendOriginalToBackend(url) {
     console.log('sending original blog post url to backend: URL =' + url)
     try {
