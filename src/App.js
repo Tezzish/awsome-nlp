@@ -64,18 +64,27 @@ function App() {
     setSelectedModel(e.target.value);
   };
 
-  //TODO: Currently we are displaying the same values for the left and right iframes
-  const handleButtonClick = () => {
-    const url = URLValue;
-    const lang = selectedLanguage;
-    const translator = selectedModel;
-
-    if (isValidURL(url)) {
-      setLeftIframeSrc(url);
-      setRightIframeSrc(url) // you should update this to handle the translated content
-      sendConfigToBackend(url, lang, translator)
+  const handleButtonClick = async(e) => {
+    console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
+    try {
+      const response = await sendOriginalToBackend(URLValue);
+      return response;
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
+
+  // sends the url of the original blog post to the backend to be parsed
+  async function sendOriginalToBackend(url) {
+    console.log('sending original blog post url to backend: URL =' + url)
+    try {
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+      return response;
+    } catch (error) {
+      console.error('Error sending original blog post to backend:', error);
+    }
+  }
+
 
   //TODO: Check if URL is a valid AWS URL.
   // Current implementation only check if it is a URL
