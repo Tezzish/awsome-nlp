@@ -30,7 +30,15 @@ def parser(url):
     for i in paragraphs:
         paragraphList.append(str(i))
     # print(title.text + content.text + '\n'.join(paragraphList))
-    return (str(title) + str(content) + '\n'.join(paragraphList))
+    beginning = '''<!DOCTYPE html>
+                   <html>
+                   <head>
+                   <title>Page Title</title>
+                   </head>
+                   <body>'''
+
+
+    return (beginning + str(title) + str(content) + '\n'.join(paragraphList) + '</body>' + '</html>') 
     
     
 #parser("https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el")

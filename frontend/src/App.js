@@ -48,7 +48,7 @@ function App() {
   const [translationModels, setTranslationModels] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  const [URLValue, setURLValue] = useState("https://en.wikipedia.org/wiki/HTML");
+  const [URLValue, setURLValue] = useState();
 
   const [leftIframeSrc, setLeftIframeSrc] = useState();
   const [rightIframeSrc, setRightIframeSrc] = useState();
@@ -69,7 +69,7 @@ function App() {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       const response = await sendOriginalToBackend(URLValue);
-      console.log("PLEASE PRINT PLEASE", response);
+      return response;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -97,33 +97,33 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const fetchLanguagesAndModels = async () => {
-      try {
-        const languagesData = await API.graphql(graphqlOperation(listLanguages));
-        const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
+  // useEffect(() => {
+  //   const fetchLanguagesAndModels = async () => {
+  //     try {
+  //       const languagesData = await API.graphql(graphqlOperation(listLanguages));
+  //       const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
 
-        console.log("Fetched languages: ", languagesData);
-        console.log("Fetched models: ", modelsData);
+  //       console.log("Fetched languages: ", languagesData);
+  //       console.log("Fetched models: ", modelsData);
 
-        setLanguages(languagesData.data.listLanguages.items);
-        setTranslationModels(modelsData.data.listTranslationModels.items);
-      } catch (error) {
-        console.error('Error fetching languages and models:', error);
-      }
-    };
+  //       setLanguages(languagesData.data.listLanguages.items);
+  //       setTranslationModels(modelsData.data.listTranslationModels.items);
+  //     } catch (error) {
+  //       console.error('Error fetching languages and models:', error);
+  //     }
+  //   };
 
-    fetchLanguagesAndModels();
-  }, []);
+  //   fetchLanguagesAndModels();
+  // }, []);
 
-  const sendConfigToBackend = async (url, language, translationModel) => {
-    try {
-      await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
-      console.log('send successful');
-    } catch (error) {
-      console.error('Error sending config to backend:', error);
-    }
-  };
+  // const sendConfigToBackend = async (url, language, translationModel) => {
+  //   try {
+  //     await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
+  //     console.log('send successful');
+  //   } catch (error) {
+  //     console.error('Error sending config to backend:', error);
+  //   }
+  // };
 
 
   return (
