@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {React, useEffect, useState} from "react";
 import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
@@ -65,16 +65,22 @@ function App() {
     setSelectedModel(e.target.value);
   };
   
-  const handleButtonClick = (e) => {
-    sendOriginalToBackend(URLValue)
+  const handleButtonClick = async(e) => {
+    console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
+    try {
+      const response = await sendOriginalToBackend(URLValue);
+      console.log("PLEASE PRINT PLEASE", response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   // sends the url of the original blog post to the backend to be parsed
-  // lutfen calis
   async function sendOriginalToBackend(url) {
     console.log('sending original blog post url to backend: URL =' + url)
     try {
-      await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+      return response;
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }

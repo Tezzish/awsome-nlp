@@ -9,7 +9,7 @@ def handler(event, context):
   # print(event['arguments'])
   url = event['arguments']['url']
   a = parser(url)
-#   print(parser(event['url']))
+  # print(parser(event['url']))
   # body = parser(event['url'])
   return {
       'file' : a
