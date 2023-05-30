@@ -3,7 +3,7 @@
 
 export const getBlogPostParsed = /* GraphQL */ `
 query HailMary{
-  getBlogPostParsed (url: "https://aws.amazon.com/blogs/aws/new-set-up-your-aws-notifications-in-one-place/?trk=0d894571-f34d-4bc1-8bb7-64328a484f97&sc_channel=el%22) {
+  getBlogPostParsed (url: String) {
     file
   }
 }

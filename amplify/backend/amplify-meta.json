@@ -35,7 +35,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.390Z",
+      "lastPushTimeStamp": "2023-05-30T10:31:21.195Z",
       "lastPushDirHash": "N1+vezHi+/dtfOORwowhJLrviW8="
     }
   },
@@ -44,9 +44,9 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2023-05-29T11:41:54.821Z",
+      "lastBuildTimeStamp": "2023-05-30T10:15:41.725Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-05-29T11:41:54.973Z",
+      "lastPackageTimeStamp": "2023-05-30T10:15:41.855Z",
       "distZipFilename": "UserConfigFunction-5330712b537a6b4b4639-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
@@ -56,7 +56,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.401Z",
+      "lastPushTimeStamp": "2023-05-30T10:31:21.205Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::913488795696:role/awsomenlpLambdaRolee754d004-frontdev",
         "Region": "eu-west-1",
@@ -70,19 +70,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2023-05-29T13:16:07.217Z",
+      "lastBuildTimeStamp": "2023-05-30T10:30:16.586Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-05-29T13:16:12.112Z",
-      "distZipFilename": "getBlogContent-764f593365332f657353-build.zip",
+      "lastPackageTimeStamp": "2023-05-30T10:30:18.271Z",
+      "distZipFilename": "getBlogContent-70766f4a4a2b615a4d49-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-        "s3Key": "amplify-builds/getBlogContent-764f593365332f657353-build.zip"
+        "s3Key": "amplify-builds/getBlogContent-70766f4a4a2b615a4d49-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.847Z",
+      "lastPushTimeStamp": "2023-05-30T10:31:21.421Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::913488795696:role/awsomenlpLambdaRole4c31b8f7-frontdev",
         "Region": "eu-west-1",
@@ -90,7 +90,7 @@
         "Name": "getBlogContent-frontdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-frontdev"
       },
-      "lastPushDirHash": "KDqZJIo+ZQG50BwE5rS2So3a6sU="
+      "lastPushDirHash": "I4Ivrh/DUYPgRm66jeTiovSImD4="
     }
   }
 }

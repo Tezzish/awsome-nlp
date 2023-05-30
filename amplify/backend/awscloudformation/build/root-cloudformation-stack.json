@@ -183,7 +183,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-          "s3Key": "amplify-builds/getBlogContent-764f593365332f657353-build.zip",
+          "s3Key": "amplify-builds/getBlogContent-70766f4a4a2b615a4d49-build.zip",
           "env": "frontdev"
         }
       }
