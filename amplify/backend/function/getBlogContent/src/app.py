@@ -31,9 +31,11 @@ def parser(url):
     title = soup.find('h1', class_='lb-h2 blog-post-title')
     content = soup.find('section', class_='blog-post-content lb-rtxt')
     paragraphs = soup.find_all('p')
-    print(title)
-    print(content)
-    print(paragraphs)
+    paragraphList = []
+    for i in paragraphs:
+        paragraphList.append(i.text)
+
+    return (title.text + content.text + '\n'.join(paragraphList))
     
     
     
