@@ -26,13 +26,14 @@ def parser(url):
     # gets the html from the website
     html = urlopen(url).read()
     # print(html)
+
     soup = bs.BeautifulSoup(html, 'html.parser')
-    one = soup.find('section', class_='blog-post-content lb-rtxt')
-    two = soup.find('lb-h2 blog-post-title')
-    three = soup.find_all('p')
-    print(one)
-    print(two)
-    print(three)
+    title = soup.find('h1', class_='lb-h2 blog-post-title')
+    content = soup.find('section', class_='blog-post-content lb-rtxt')
+    paragraphs = soup.find_all('p')
+    print(title)
+    print(content)
+    print(paragraphs)
     
     
     
