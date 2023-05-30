@@ -70,11 +70,12 @@ function App() {
   const handleButtonClick = async(e) => {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
-      // const response = await 
-      // let html = document.createElement('html');
-      // html.innerHTML = response.data.getBlogPostParsed.file;
+      
+      let html = document.createElement('html');
+      let response = sendOriginalToBackend(URLValue);
+      html.innerHTML = response.data.getBlogPostParsed.file;
       sendOriginalToBackend(URLValue);
-      // return html;
+      return html;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -84,14 +85,15 @@ function App() {
   async function sendOriginalToBackend(url1) {
     console.log('sending original blog post url to backend: URL =' + url1)
     try {
+      url1 = "https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el"
       const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
       console.log('response from backend: ', response);
       let html = document.createElement('html');
       html.innerHTML = response.data.getBlogPostParsed.file;
       console.log(html);
-      setLeftIframeSrc(html);
+      setLeftIframeSrc(html.innerHTML);
       return response;
-      // await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+      //await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }
