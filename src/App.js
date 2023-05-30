@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from "react";
+import {React, useEffect, useState} from "react";
 import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {createTranslationJob} from './graphql/mutations';
-import {listLanguages, listTranslationModels} from "./graphql/queries";
-
-
+import {getBlogPostParsed, listLanguages, listTranslationModels} from "./graphql/queries";
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -40,17 +38,20 @@ TODO: Read List Below
 * RHS is hardcoded to wikipedia/CSS and is in no way a translation
 * No Search Functionality Available
  */
+
+
 Amplify.configure(awsExports);
 
 function App() {
+
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  const [URLValue, setURLValue] = useState("https://en.wikipedia.org/wiki/HTML");
+  const [URLValue, setURLValue] = useState();
 
-  const [leftIframeSrc, setLeftIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
-  const [rightIframeSrc, setRightIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
+  const [leftIframeSrc, setLeftIframeSrc] = useState();
+  const [rightIframeSrc, setRightIframeSrc] = useState();
 
   const handleInputChangeURL = (e) => {
     setURLValue(e.target.value);
@@ -63,7 +64,7 @@ function App() {
   const handleInputChangeModel = (e) => {
     setSelectedModel(e.target.value);
   };
-
+  
   const handleButtonClick = async(e) => {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
@@ -85,7 +86,6 @@ function App() {
     }
   }
 
-
   //TODO: Check if URL is a valid AWS URL.
   // Current implementation only check if it is a URL
   const isValidURL = (str) => {
@@ -97,33 +97,34 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const fetchLanguagesAndModels = async () => {
-      try {
-        const languagesData = await API.graphql(graphqlOperation(listLanguages));
-        const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
+  // useEffect(() => {
+  //   const fetchLanguagesAndModels = async () => {
+  //     try {
+  //       const languagesData = await API.graphql(graphqlOperation(listLanguages));
+  //       const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
 
-        console.log("Fetched languages: ", languagesData);
-        console.log("Fetched models: ", modelsData);
+  //       console.log("Fetched languages: ", languagesData);
+  //       console.log("Fetched models: ", modelsData);
 
-        setLanguages(languagesData.data.listLanguages.items);
-        setTranslationModels(modelsData.data.listTranslationModels.items);
-      } catch (error) {
-        console.error('Error fetching languages and models:', error);
-      }
-    };
+  //       setLanguages(languagesData.data.listLanguages.items);
+  //       setTranslationModels(modelsData.data.listTranslationModels.items);
+  //     } catch (error) {
+  //       console.error('Error fetching languages and models:', error);
+  //     }
+  //   };
 
-    fetchLanguagesAndModels();
-  }, []);
+  //   fetchLanguagesAndModels();
+  // }, []);
 
-  const sendConfigToBackend = async (url, language, translationModel) => {
-    try {
-      await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
-      console.log('send successful');
-    } catch (error) {
-      console.error('Error sending config to backend:', error);
-    }
-  };
+  // const sendConfigToBackend = async (url, language, translationModel) => {
+  //   try {
+  //     await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
+  //     console.log('send successful');
+  //   } catch (error) {
+  //     console.error('Error sending config to backend:', error);
+  //   }
+  // };
+
 
   return (
       <div className="App">
@@ -154,11 +155,13 @@ function App() {
               className="left-side"
               title="Left Content"
               src={leftIframeSrc}
+              key={leftIframeSrc}
           ></iframe>
           <iframe
               className="right-side"
               title="Translated Post"
               src={rightIframeSrc}
+              key={rightIframeSrc}
           ></iframe>
         </div>
       </div>
@@ -166,3 +169,4 @@ function App() {
 }
 
 export default App;
+

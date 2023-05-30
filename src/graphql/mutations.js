@@ -1,43 +1,133 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
+export const createTranslationJob = /* GraphQL */ `
+  mutation CreateTranslationJob(
+    $input: CreateTranslationJobInput!
+    $condition: ModelTranslationJobConditionInput
   ) {
-    createTodo(input: $input, condition: $condition) {
+    createTranslationJob(input: $input, condition: $condition) {
       id
-      name
-      description
+      url
+      language
+      translationModel
+      status
+      originalContent
+      translatedContent
       createdAt
       updatedAt
     }
   }
 `;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $input: UpdateTodoInput!
-    $condition: ModelTodoConditionInput
+export const updateTranslationJob = /* GraphQL */ `
+  mutation UpdateTranslationJob(
+    $input: UpdateTranslationJobInput!
+    $condition: ModelTranslationJobConditionInput
   ) {
-    updateTodo(input: $input, condition: $condition) {
+    updateTranslationJob(input: $input, condition: $condition) {
       id
-      name
-      description
+      url
+      language
+      translationModel
+      status
+      originalContent
+      translatedContent
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $input: DeleteTodoInput!
-    $condition: ModelTodoConditionInput
+export const deleteTranslationJob = /* GraphQL */ `
+  mutation DeleteTranslationJob(
+    $input: DeleteTranslationJobInput!
+    $condition: ModelTranslationJobConditionInput
   ) {
-    deleteTodo(input: $input, condition: $condition) {
+    deleteTranslationJob(input: $input, condition: $condition) {
+      id
+      url
+      language
+      translationModel
+      status
+      originalContent
+      translatedContent
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLanguage = /* GraphQL */ `
+  mutation CreateLanguage(
+    $input: CreateLanguageInput!
+    $condition: ModelLanguageConditionInput
+  ) {
+    createLanguage(input: $input, condition: $condition) {
       id
       name
-      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLanguage = /* GraphQL */ `
+  mutation UpdateLanguage(
+    $input: UpdateLanguageInput!
+    $condition: ModelLanguageConditionInput
+  ) {
+    updateLanguage(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLanguage = /* GraphQL */ `
+  mutation DeleteLanguage(
+    $input: DeleteLanguageInput!
+    $condition: ModelLanguageConditionInput
+  ) {
+    deleteLanguage(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTranslationModel = /* GraphQL */ `
+  mutation CreateTranslationModel(
+    $input: CreateTranslationModelInput!
+    $condition: ModelTranslationModelConditionInput
+  ) {
+    createTranslationModel(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTranslationModel = /* GraphQL */ `
+  mutation UpdateTranslationModel(
+    $input: UpdateTranslationModelInput!
+    $condition: ModelTranslationModelConditionInput
+  ) {
+    updateTranslationModel(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTranslationModel = /* GraphQL */ `
+  mutation DeleteTranslationModel(
+    $input: DeleteTranslationModelInput!
+    $condition: ModelTranslationModelConditionInput
+  ) {
+    deleteTranslationModel(input: $input, condition: $condition) {
+      id
+      name
       createdAt
       updatedAt
     }

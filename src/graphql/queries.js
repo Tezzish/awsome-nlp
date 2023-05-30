@@ -2,34 +2,102 @@
 // this is an auto generated file. This will be overwritten
 
 export const getBlogPostParsed = /* GraphQL */ `
-  query GetBlogPostParsed($url: String) {
-    getBlogPostParsed(url: $url) {
-      file
-    }
+query HailMary{
+  getBlogPostParsed (url: String) {
+    file
   }
-`;
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
+}
+`
+
+
+export const getTranslationJob = /* GraphQL */ `
+  query GetTranslationJob($id: ID!) {
+    getTranslationJob(id: $id) {
       id
-      name
-      description
+      url
+      language
+      translationModel
+      status
+      originalContent
+      translatedContent
       createdAt
       updatedAt
     }
   }
 `;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
+export const listTranslationJobs = /* GraphQL */ `
+  query ListTranslationJobs(
+    $filter: ModelTranslationJobFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTranslationJobs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        url
+        language
+        translationModel
+        status
+        originalContent
+        translatedContent
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getLanguage = /* GraphQL */ `
+  query GetLanguage($id: ID!) {
+    getLanguage(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLanguages = /* GraphQL */ `
+  query ListLanguages(
+    $filter: ModelLanguageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLanguages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
-        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTranslationModel = /* GraphQL */ `
+  query GetTranslationModel($id: ID!) {
+    getTranslationModel(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTranslationModels = /* GraphQL */ `
+  query ListTranslationModels(
+    $filter: ModelTranslationModelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTranslationModels(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
         createdAt
         updatedAt
       }
