@@ -19,11 +19,7 @@
         },
         "getBlogContent": {
           "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-<<<<<<< HEAD
-          "s3Key": "amplify-builds/getBlogContent-70766f4a4a2b615a4d49-build.zip"
-=======
           "s3Key": "amplify-builds/getBlogContent-705930666573302b5443-build.zip"
->>>>>>> d572aaf7e7b5ee3ddcff67589f85c8aea7bfb402
         }
       },
       "api": {
