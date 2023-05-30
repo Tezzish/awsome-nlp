@@ -7,11 +7,18 @@ def handler(event, context):
   print('received event:')
   print(event)
   print(event['arguments'])
-  a = parser(event['arguments']['url'])
+  response = parser(event['arguments']['url'])
 #   print(parser(event['url']))
   # body = parser(event['url'])
+
   return {
-      'file' : a
+      'statusCode': 200,
+      'headers': {
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+      },
+      'file' : response
   }
 
 # # function called when the url is passed to the lambda function
