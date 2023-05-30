@@ -69,6 +69,7 @@ function App() {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       const response = await sendOriginalToBackend(URLValue);
+      setLeftIframeSrc(response.data.getBlogPostParsed.file);
       return response;
     } catch (error) {
       console.error("Error:", error);
