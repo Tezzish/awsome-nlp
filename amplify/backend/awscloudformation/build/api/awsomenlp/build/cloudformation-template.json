@@ -111,7 +111,7 @@
             "ApiId"
           ]
         },
-        "Expires": 1685470194
+        "Expires": 1685965326
       }
     },
     "CustomResourcesjson": {
@@ -227,5 +227,6 @@
         }
       }
     }
-  }
+  },
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.0.0\",\"stackType\":\"api-AppSync\",\"metadata\":{}}"
 }

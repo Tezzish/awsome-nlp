@@ -25,8 +25,16 @@ def parser(url):
 
     # gets the html from the website
     html = urlopen(url).read()
+    # print(html)
     soup = bs.BeautifulSoup(html, 'html.parser')
-    soup = soup.find('section', class_='blog-post-content lb-rtxt')
-    soup = soup.find('lb-h2 blog-post-title')
-    soup = soup.find_all('p')
+    one = soup.find('section', class_='blog-post-content lb-rtxt')
+    two = soup.find('lb-h2 blog-post-title')
+    three = soup.find_all('p')
+    print(one)
+    print(two)
+    print(three)
     
+    
+    
+    
+parser("https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el")

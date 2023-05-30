@@ -155,36 +155,36 @@
     "apiawsomenlp": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-lhsdev-105204-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "awsomenlp",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
-          "S3DeploymentBucket": "amplify-awsomenlp-lhsdev-105204-deployment",
+          "S3DeploymentBucket": "amplify-awsomenlp-frontdev-134102-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/5787ff67016cc62f28a274985801da755a1981e7",
-          "env": "lhsdev"
+          "env": "frontdev"
         }
       }
     },
     "functionUserConfigFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-lhsdev-105204-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-lhsdev-105204-deployment",
+          "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
           "s3Key": "amplify-builds/UserConfigFunction-5330712b537a6b4b4639-build.zip",
-          "env": "lhsdev"
+          "env": "frontdev"
         }
       }
     },
     "functiongetBlogContent": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-lhsdev-105204-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-lhsdev-105204-deployment",
-          "s3Key": "amplify-builds/getBlogContent-6b4b52634757394a5552-build.zip",
-          "env": "lhsdev"
+          "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
+          "s3Key": "amplify-builds/getBlogContent-764f593365332f657353-build.zip",
+          "env": "frontdev"
         }
       }
     }
