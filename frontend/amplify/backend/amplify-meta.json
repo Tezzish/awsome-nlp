@@ -1,0 +1,38 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-app-laradev-142100-authRole",
+      "UnauthRoleArn": "arn:aws:iam::766847484313:role/amplify-app-laradev-142100-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::766847484313:role/amplify-app-laradev-142100-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-app-laradev-142100-deployment",
+      "UnauthRoleName": "amplify-app-laradev-142100-unauthRole",
+      "StackName": "amplify-app-laradev-142100",
+      "StackId": "arn:aws:cloudformation:eu-west-1:766847484313:stack/amplify-app-laradev-142100/1f807a00-f3e4-11ed-add0-02722ef4d797",
+      "AmplifyAppId": "d9ers3u19qhtw"
+    }
+  },
+  "api": {
+    "app": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-app-laradev-142100-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiapp"
+      },
+      "lastPushTimeStamp": "2023-05-16T12:22:06.075Z"
+    }
+  }
+}
