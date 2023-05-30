@@ -87,7 +87,7 @@ function App() {
     try {
       
       //url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{  url: url1 }));
       console.log('response from backend: ', response);
       url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const leftWindow = document.getElementById('leftWindow');
@@ -103,7 +103,7 @@ function App() {
   const isValidURL = (str) => {
     try {
       new URL(str);
-      if (str.includes("https://aws.amazon.com/blogs/aws/")) {
+      if (str.includes("https://aws.amazon.com/blogs/")) {
         return true;
       }
     } catch {
