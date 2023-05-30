@@ -35,7 +35,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.390Z",
+      "lastPushTimeStamp": "2023-05-30T10:53:04.206Z",
       "lastPushDirHash": "N1+vezHi+/dtfOORwowhJLrviW8="
     }
   },
@@ -56,7 +56,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.401Z",
+      "lastPushTimeStamp": "2023-05-30T10:53:04.234Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::913488795696:role/awsomenlpLambdaRolee754d004-frontdev",
         "Region": "eu-west-1",
@@ -70,19 +70,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "lastBuildTimeStamp": "2023-05-29T13:16:07.217Z",
+      "lastBuildTimeStamp": "2023-05-30T10:51:54.527Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-05-29T13:16:12.112Z",
-      "distZipFilename": "getBlogContent-764f593365332f657353-build.zip",
+      "lastPackageTimeStamp": "2023-05-30T10:51:58.557Z",
+      "distZipFilename": "getBlogContent-705930666573302b5443-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-        "s3Key": "amplify-builds/getBlogContent-764f593365332f657353-build.zip"
+        "s3Key": "amplify-builds/getBlogContent-705930666573302b5443-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
       },
-      "lastPushTimeStamp": "2023-05-29T13:17:17.847Z",
+      "lastPushTimeStamp": "2023-05-30T10:53:04.591Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::913488795696:role/awsomenlpLambdaRole4c31b8f7-frontdev",
         "Region": "eu-west-1",
@@ -90,7 +90,7 @@
         "Name": "getBlogContent-frontdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-frontdev"
       },
-      "lastPushDirHash": "KDqZJIo+ZQG50BwE5rS2So3a6sU="
+      "lastPushDirHash": "6PaVyAyIoGF2haAjqqk6qAWKQhA="
     }
   }
 }
