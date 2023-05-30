@@ -5,9 +5,6 @@ import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {createTranslationJob} from './graphql/mutations';
 import {getBlogPostParsed, listLanguages, listTranslationModels} from "./graphql/queries";
-// import ReactHtmlParser from 'react-html-parser'; 
-import { parse } from 'node-html-parser';
-var HTMLParser = require('node-html-parser');
 
 
 
@@ -73,11 +70,11 @@ function App() {
   const handleButtonClick = async(e) => {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
-      const response = await sendOriginalToBackend(URLValue);
-      let html = document.createElement('html');
-      html.innerHTML = response.data.getBlogPostParsed.file;
-      set
-      return html;
+      // const response = await 
+      // let html = document.createElement('html');
+      // html.innerHTML = response.data.getBlogPostParsed.file;
+      sendOriginalToBackend(URLValue);
+      // return html;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -92,7 +89,7 @@ function App() {
       let html = document.createElement('html');
       html.innerHTML = response.data.getBlogPostParsed.file;
       console.log(html);
-      setLeftIframeSrc(response.data.getBlogPostParsed.file);
+      setLeftIframeSrc(html);
       return response;
       // await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
     } catch (error) {
@@ -165,14 +162,13 @@ function App() {
         </div>
         </form>
         <div className="content-container">
-          <div className="left-side">  {HTMLParser.parse(leftIframeSrc)}</div>
+          {/* <div className="left-side"></div> */}
 
-          {/* <iframe
+          <div
               className="left-side"
               title="Translated Post"
-              src={rightIframeSrc}
-              key={rightIframeSrc}
-          ></iframe> */}
+              // key={rightIframeSrc}
+          > {leftIframeSrc} </div>
           <iframe
               className="right-side"
               title="Translated Post"
