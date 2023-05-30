@@ -72,13 +72,13 @@ function App() {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
-      if (isValidURL(URLValue)) {  
+       
       let html = document.createElement('html');
       let response = sendOriginalToBackend(URLValue);
       html.innerHTML = response.data.getBlogPostParsed.file;
       sendOriginalToBackend(URLValue);
       return html;
-      }
+      
     } catch (error) {
       console.error("Error:", error);
     }
@@ -101,7 +101,6 @@ function App() {
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
       return response;
-      // await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }
@@ -112,9 +111,6 @@ function App() {
   const isValidURL = (str) => {
     try {
       new URL(str);
-      if (str.includes("https://aws.amazon.com/blogs/aws/")) {
-        return true;
-      }
     } catch {
       return false;
     }
@@ -172,16 +168,13 @@ function App() {
               <button id="translate" onClick={handleButtonClick}>Translate!</button>
           </div>
         </div>
+
         </form>
         <div className="content-container">
-          {/* <div className="left-side"></div> */}
-
           <div
               className="left-side"
               title="Translated Post"
               id="leftWindow"
-              // class="scrollable-box"
-              // key={rightIframeSrc}
           > {leftIframeSrc} </div>
           <iframe
               className="right-side"
