@@ -29,7 +29,15 @@ def parser(url):
     for i in paragraphs:
         paragraphList.append(str(i))
     # print(title.text + content.text + '\n'.join(paragraphList))
-    return (str(title) + str(content) + '\n'.join(paragraphList))
+    beginning = '''<!DOCTYPE html>
+                  <html>
+                  <head>
+                  <title>Page Title</title>
+                  </head>
+                  <body>
+                  '''
+
+    return (beginning + str(title) + str(content) + '\n'.join(paragraphList) + '</body></html>')
     
     
     
