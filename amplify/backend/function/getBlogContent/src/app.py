@@ -11,7 +11,14 @@ def handler(event, context):
   a = parser(url)
   # print(parser(event['url']))
   # body = parser(event['url'])
+
   return {
+      'statusCode': 200,
+      'headers': {
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+      },
       'file' : a
   }
 
@@ -30,6 +37,7 @@ def parser(url):
     for i in paragraphs:
         paragraphList.append(str(i))
     # print(title.text + content.text + '\n'.join(paragraphList))
+  
     beginning = '''<!DOCTYPE html>
                    <html>
                    <head>
