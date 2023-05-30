@@ -68,6 +68,7 @@ function App() {
   };
   
   const handleButtonClick = async(e) => {
+    e.preventDefault();
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       // const response = await 
@@ -86,10 +87,14 @@ function App() {
     try {
       const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
       console.log('response from backend: ', response);
-      let html = document.createElement('html');
-      html.innerHTML = response.data.getBlogPostParsed.file;
-      console.log(html);
-      setLeftIframeSrc(html);
+      // let html = document.createElement('html');
+      // html.innerHTML = response.data.getBlogPostParsed.file;
+      // console.log(html);
+      // setLeftIframeSrc(html);
+      // const elem = document.getElementById('elem');
+      // elem.innerHTML = html.innerHTML;
+      const leftWindow = document.getElementById('leftWindow');
+      leftWindow.innerHTML = response.data.getBlogPostParsed.file;
       return response;
       // await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
     } catch (error) {
@@ -167,6 +172,8 @@ function App() {
           <div
               className="left-side"
               title="Translated Post"
+              id="leftWindow"
+              // class="scrollable-box"
               // key={rightIframeSrc}
           > {leftIframeSrc} </div>
           <iframe
