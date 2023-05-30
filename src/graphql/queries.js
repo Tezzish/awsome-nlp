@@ -2,12 +2,12 @@
 // this is an auto generated file. This will be overwritten
 
 export const getBlogPostParsed = /* GraphQL */ `
-query HailMary{
-  getBlogPostParsed (url: String) {
-    file
+  query GetBlogPostParsed {
+    getBlogPostParsed(url: "https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el%22") {
+      file
+    }
   }
-}
-`
+`;
 
 
 export const getTranslationJob = /* GraphQL */ `

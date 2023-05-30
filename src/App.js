@@ -5,6 +5,11 @@ import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {createTranslationJob} from './graphql/mutations';
 import {getBlogPostParsed, listLanguages, listTranslationModels} from "./graphql/queries";
+// import ReactHtmlParser from 'react-html-parser'; 
+import { parse } from 'node-html-parser';
+var HTMLParser = require('node-html-parser');
+
+
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -69,18 +74,27 @@ function App() {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       const response = await sendOriginalToBackend(URLValue);
-      return response;
+      let html = document.createElement('html');
+      html.innerHTML = response.data.getBlogPostParsed.file;
+      set
+      return html;
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   // sends the url of the original blog post to the backend to be parsed
-  async function sendOriginalToBackend(url) {
-    console.log('sending original blog post url to backend: URL =' + url)
+  async function sendOriginalToBackend(url1) {
+    console.log('sending original blog post url to backend: URL =' + url1)
     try {
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
+      console.log('response from backend: ', response);
+      let html = document.createElement('html');
+      html.innerHTML = response.data.getBlogPostParsed.file;
+      console.log(html);
+      setLeftIframeSrc(response.data.getBlogPostParsed.file);
       return response;
+      // await API.graphql(graphqlOperation(getBlogPostParsed, { input: { url} }));
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }
@@ -151,12 +165,14 @@ function App() {
         </div>
         </form>
         <div className="content-container">
-          <iframe
+          <div className="left-side">  {HTMLParser.parse(leftIframeSrc)}</div>
+
+          {/* <iframe
               className="left-side"
-              title="Left Content"
-              src={leftIframeSrc}
-              key={leftIframeSrc}
-          ></iframe>
+              title="Translated Post"
+              src={rightIframeSrc}
+              key={rightIframeSrc}
+          ></iframe> */}
           <iframe
               className="right-side"
               title="Translated Post"
