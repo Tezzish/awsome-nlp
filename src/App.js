@@ -73,11 +73,7 @@ function App() {
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
       if(isValidURL(URLValue)) {
-      let html = document.createElement('html');
-      let response = sendOriginalToBackend(URLValue);
-      html.innerHTML = response.data.getBlogPostParsed.file;
       sendOriginalToBackend(URLValue);
-      return html;
       }
     } catch (error) {
       console.error("Error:", error);
@@ -93,12 +89,6 @@ function App() {
       //url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
       console.log('response from backend: ', response);
-      // let html = document.createElement('html');
-      // html.innerHTML = response.data.getBlogPostParsed.file;
-      // console.log(html);
-      // setLeftIframeSrc(html);
-      // const elem = document.getElementById('elem');
-      // elem.innerHTML = html.innerHTML;
       url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
@@ -180,7 +170,7 @@ function App() {
               className="left-side"
               title="Translated Post"
               id="leftWindow"
-          > {leftIframeSrc} </div>
+          ></div>
           <iframe
               className="right-side"
               title="Translated Post"
