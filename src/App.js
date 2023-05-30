@@ -71,11 +71,12 @@ function App() {
     e.preventDefault();
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
-      // const response = await 
-      // let html = document.createElement('html');
-      // html.innerHTML = response.data.getBlogPostParsed.file;
+      
+      let html = document.createElement('html');
+      let response = sendOriginalToBackend(URLValue);
+      html.innerHTML = response.data.getBlogPostParsed.file;
       sendOriginalToBackend(URLValue);
-      // return html;
+      return html;
     } catch (error) {
       console.error("Error:", error);
     }
