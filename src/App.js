@@ -72,13 +72,13 @@ function App() {
     console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
-       
+      if(isValidURL(URLValue)) {
       let html = document.createElement('html');
       let response = sendOriginalToBackend(URLValue);
       html.innerHTML = response.data.getBlogPostParsed.file;
       sendOriginalToBackend(URLValue);
       return html;
-      
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -86,8 +86,10 @@ function App() {
 
   // sends the url of the original blog post to the backend to be parsed
   async function sendOriginalToBackend(url1) {
-    console.log('sending original blog post url to backend: URL =' + url1)
+    console.log('sending original blog post url to backend: URL =' + url1);
+
     try {
+      
       //url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const response = await API.graphql(graphqlOperation(getBlogPostParsed,{ input: { url: url1 } }));
       console.log('response from backend: ', response);
@@ -111,6 +113,9 @@ function App() {
   const isValidURL = (str) => {
     try {
       new URL(str);
+      if (str.includes("https://aws.amazon.com/blogs/aws/")) {
+        return true;
+      }
     } catch {
       return false;
     }
