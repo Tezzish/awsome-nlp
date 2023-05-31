@@ -14,16 +14,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 public class AmazonTranslateTest {
 
 
   AmazonTranslate amazonTranslate;
 
-  @Mock
+
   AmazonTranslateAsync translateAsync;
 
 
@@ -32,7 +30,7 @@ public class AmazonTranslateTest {
    */
   @BeforeEach
   public void setup() {
-    MockitoAnnotations.initMocks(this);
+    translateAsync = Mockito.mock(AmazonTranslateAsync.class);
     amazonTranslate = new AmazonTranslate();
     amazonTranslate.setTranslateAsync(translateAsync);
   }
@@ -97,7 +95,6 @@ public class AmazonTranslateTest {
     Mockito.verify(translateAsync, Mockito.times(3))
         .translateTextAsync(Mockito.any());
   }
-
 
 
 }
