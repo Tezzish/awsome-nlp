@@ -65,8 +65,7 @@ function App() {
     }
   }
 
-  //TODO: Check if URL is a valid AWS URL.
-  // Current implementation only check if it is a URL
+  // checks if the url is a valid AWS blog post url
   const isValidURL = (str) => {
     try {
       new URL(str);
