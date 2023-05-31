@@ -1,8 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'checkstyle'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+checkstyle {
+    configFile = file("sun_checks.xml")
+}
+checkstyleMain {
+    source ='src/main/java'
+}
+checkstyleTest {
+    source ='src/test/java'
 }
 
 repositories {
@@ -23,6 +34,15 @@ dependencies {
 
 // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-translate
     implementation 'com.amazonaws:aws-java-sdk-translate:1.12.466'
+    implementation 'org.json:json:20210307'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.16.1'
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin
+    implementation 'org.apache.maven.plugins:maven-checkstyle-plugin:3.3.0'
+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 
 }
@@ -36,6 +56,10 @@ task buildZip(type: Zip) {
         from configurations.runtimeClasspath
     }
     archiveFileName = 'latest_build.zip'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 build.dependsOn buildZip

@@ -2,17 +2,18 @@
 target/
 venv/
 *.iml
+node_modules
 frontend/amplify/backend/function/userConfigurationFunction/.gradle/
 amplify/backend/function/UserConfigFunction/.gradle/
 amplify/backend/function/UserConfigFunction/gradlew
 amplify/backend/function/UserConfigFunction/gradlew.bat
-amplify/#current-cloud-backend/
 amplify/.config/
-amplify/backend/api/awsomenlp/build/
+amplify/backend/api/appAPI/build/
 amplify/backend/function/UserConfigFunction/amplify.state
 amplify/backend/function/UserConfigFunction/build/
 amplify/backend/function/UserConfigFunction/dist/latest-build.zip
-node_modules
+amplify/team-provider-info.json
+amplify/backend/awscloudformation/build/
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
@@ -35,3 +36,5 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+
