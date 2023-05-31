@@ -3,44 +3,10 @@ import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-import {createTranslationJob} from './graphql/mutations';
-import {getBlogPostParsed, listLanguages, listTranslationModels} from "./graphql/queries";
-
-
-
+import {getBlogPostParsed, listLanguages, listTranslationModels, translate} from "./graphql/queries";
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
-
-If you want to add a Language:
-mutation CreateLanguage {
-  createLanguage(input: {
-    name: "French"
-  }) {
-    id
-    name
-  }
-}
-
-If you want to add a Translation Model:
-mutation CreateTranslationModel {
-  createTranslationModel(input: {
-    name: "Amazon Translate"
-  }) {
-    id
-    name
-  }
-}
-
-
  */
-
-/*
-TODO: Read List Below
-* LHS takes the url and spits out the page, this is currently possible for select pages (NOT AWS pages)
-* RHS is hardcoded to wikipedia/CSS and is in no way a translation
-* No Search Functionality Available
- */
-
 
 Amplify.configure(awsExports);
 
@@ -52,8 +18,8 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
 
-  const [leftIframeSrc, setLeftIframeSrc] = useState();
-  const [rightIframeSrc, setRightIframeSrc] = useState();
+  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+
 
   const handleInputChangeURL = (e) => {
     setURLValue(e.target.value);
@@ -69,11 +35,15 @@ function App() {
   
   const handleButtonClick = async(e) => {
     e.preventDefault();
-    console.log("IT PRINTS BUTTON CLICKED IT PRINTS");
+    console.log("Translate button clicked");
+    const url = URLValue;
+    const lang = selectedLanguage;
+    const translator = selectedModel;
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
-      if(isValidURL(URLValue)) {
-      sendOriginalToBackend(URLValue);
+      if(isValidURL(url)) {
+      sendOriginalToBackend(url);
+      sendConfigToBackend(url, lang, translator)
       }
     } catch (error) {
       console.error("Error:", error);
@@ -85,11 +55,8 @@ function App() {
     console.log('sending original blog post url to backend: URL =' + url1);
 
     try {
-      
-      //url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const response = await API.graphql(graphqlOperation(getBlogPostParsed,{  url: url1 }));
       console.log('response from backend: ', response);
-      url1 = "https://aws.amazon.com/blogs/aws/amazon-translate-now-supports-english-to-japanese-translation/"
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
       return response;
@@ -111,34 +78,48 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchLanguagesAndModels = async () => {
-  //     try {
-  //       const languagesData = await API.graphql(graphqlOperation(listLanguages));
-  //       const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
+  useEffect(() => {
+    const fetchLanguagesAndModels = async () => {
+      try {
+        const languagesData = await API.graphql(graphqlOperation(listLanguages));
+        const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
 
-  //       console.log("Fetched languages: ", languagesData);
-  //       console.log("Fetched models: ", modelsData);
+        console.log("Fetched languages: ", languagesData);
+        console.log("Fetched models: ", modelsData);
 
-  //       setLanguages(languagesData.data.listLanguages.items);
-  //       setTranslationModels(modelsData.data.listTranslationModels.items);
-  //     } catch (error) {
-  //       console.error('Error fetching languages and models:', error);
-  //     }
-  //   };
+        setLanguages(languagesData.data.listLanguages.items);
+        setTranslationModels(modelsData.data.listTranslationModels.items);
+      } catch (error) {
+        console.error('Error fetching languages and models:', error);
+      }
+    };
 
-  //   fetchLanguagesAndModels();
-  // }, []);
+    fetchLanguagesAndModels();
+  }, []);
 
-  // const sendConfigToBackend = async (url, language, translationModel) => {
-  //   try {
-  //     await API.graphql(graphqlOperation(createTranslationJob, { input: { url, language, translationModel } }));
-  //     console.log('send successful');
-  //   } catch (error) {
-  //     console.error('Error sending config to backend:', error);
-  //   }
-  // };
+  const sendConfigToBackend = async (url, language, translationModel) => {
+    try {
+      const output = await API.graphql(graphqlOperation(translate, {
+        input: {
+          url: url,
+          targetLanguage: { name: "TURKISH", code: "tr" },
+          sourceLanguage: { name: "ENGLISH", code: "en" },
+          translationModel: { type: "amazonTranslate" }
+        }
+      }));
+      console.log('send successful');
+      console.log(JSON.stringify(output))
 
+      const translatedPost = output.data.translate;
+      const title = translatedPost.title;
+      const authors = translatedPost.authors.join(', ');
+      const content = translatedPost.content.join('\n');
+
+      setTranslatedContent({ title, authors, content });
+    } catch (error) {
+      console.error('Error sending config to backend:', error);
+    }
+  };
 
   return (
       <div className="App">
@@ -171,16 +152,16 @@ function App() {
               title="Translated Post"
               id="leftWindow"
           ></div>
-          <iframe
-              className="right-side"
-              title="Translated Post"
-              src={rightIframeSrc}
-              key={rightIframeSrc}
-          ></iframe>
+         <div className="right-side">
+            <h2>{translatedContent.title}</h2>
+            <h3>{translatedContent.authors}</h3>
+            {translatedContent.content.split('\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </div>
   );
 }
 
 export default App;
-

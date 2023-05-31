@@ -111,11 +111,6 @@
             "ApiId"
           ]
         },
-<<<<<<< HEAD
-        "Expires": 1685965326
-      }
-    },
-=======
         "Expires": 1685537090
       }
     },
@@ -558,7 +553,6 @@
         "TranslationModel"
       ]
     },
->>>>>>> dev
     "CustomResourcesjson": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -601,16 +595,12 @@
       },
       "DependsOn": [
         "GraphQLAPI",
-<<<<<<< HEAD
-        "GraphQLAPITransformerSchema3CB2AE18"
-=======
         "GraphQLAPITransformerSchema3CB2AE18",
         "TranslationConfig",
         "BlogPost",
         "Language",
         "TranslationModel",
         "ConnectionStack"
->>>>>>> dev
       ]
     }
   },
