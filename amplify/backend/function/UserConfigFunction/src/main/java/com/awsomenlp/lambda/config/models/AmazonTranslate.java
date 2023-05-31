@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
 /**
  * Supported Language Codes:
  * https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html .
- *
+ * <p>
  * API Reference:
  * https://docs.aws.amazon.com/translate/latest/APIReference/welcome.html .
  */
@@ -32,20 +32,12 @@ public class AmazonTranslate extends TranslationModel {
 
   /**
    * Constructor for AmazonTranslate Object.
+   *
    * @param id
    */
   public AmazonTranslate(String id) {
     super(id);
     translateAsync = buildAsync();
-  }
-
-  protected AmazonTranslateAsync buildAsync() {
-     return AmazonTranslateAsyncClient.asyncBuilder()
-        .withCredentials(
-            DefaultAWSCredentialsProviderChain.getInstance())
-        .withRegion(
-            Regions.EU_WEST_1) //should be changed to not be hard coded
-        .build();
   }
 
   /**
@@ -56,11 +48,21 @@ public class AmazonTranslate extends TranslationModel {
     translateAsync = buildAsync();
   }
 
+  protected AmazonTranslateAsync buildAsync() {
+    return AmazonTranslateAsyncClient.asyncBuilder()
+        .withCredentials(
+            DefaultAWSCredentialsProviderChain.getInstance())
+        .withRegion(
+            Regions.EU_WEST_1) //should be changed to not be hard coded
+        .build();
+  }
+
 
   //  TODO ADD CREDENTIALS
   //  TODO ADD REGION
   //  TODO ADD CUSTOM TERMS (SUPPORTED)
   //  TODO ADD TRANSLATING AUTHOR TITLE
+
   /**
    * @param text
    * @return Translated text or partially translated text if it was
@@ -69,10 +71,8 @@ public class AmazonTranslate extends TranslationModel {
   @Override
   public Text translate(Text text, Language sourceLanguage,
                         Language targetLanguage) {
-    TranslateTextRequest request = new TranslateTextRequest()
-        .withSourceLanguageCode(sourceLanguage.getCode())
-        .withTargetLanguageCode(targetLanguage.getCode());
 
+    TranslateTextRequest request;
     Scanner scanner = new Scanner(text.getContent());
     scanner.useDelimiter("\r\r\r\r\r");
 
@@ -80,10 +80,17 @@ public class AmazonTranslate extends TranslationModel {
     //get each item in the content and translate individually
     List<Future<TranslateTextResult>> resultList = new ArrayList<>();
     while (scanner.hasNext()) {
+      request = new TranslateTextRequest()
+          .withSourceLanguageCode(sourceLanguage.getCode())
+          .withTargetLanguageCode(targetLanguage.getCode());
+
       request.withText(scanner.next());
       resultList.add(translateAsync.translateTextAsync(request));
     }
 
+    request = new TranslateTextRequest()
+        .withSourceLanguageCode(sourceLanguage.getCode())
+        .withTargetLanguageCode(targetLanguage.getCode());
     Future<TranslateTextResult> translatedTitle = translateAsync
         .translateTextAsync(request.withText(text.getTitle()));
 
@@ -100,7 +107,10 @@ public class AmazonTranslate extends TranslationModel {
     //translate the body
     resultList.forEach(x -> {
       try {
-        stringBuilder.append(x.get().getTranslatedText());
+        System.out.println(x.get());
+        String i = x.get().getTranslatedText();
+        System.out.println(i);
+        stringBuilder.append(i);
         stringBuilder.append("\r\r\r\r\r");
       } catch (InterruptedException e) {
         e.printStackTrace();
