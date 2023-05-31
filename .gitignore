@@ -19,7 +19,7 @@ amplify/backend/awscloudformation/build/
 src/aws-exports.js
 .vscode/
 #amplify-do-not-edit-begin
-amplify/\#current-cloud-backend
+#amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data
