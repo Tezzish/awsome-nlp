@@ -149,7 +149,6 @@ function App() {
         <div className="content-container">
           <div
               className="left-side"
-              title="Translated Post"
               id="leftWindow"
           ></div>
          <div className="right-side">
