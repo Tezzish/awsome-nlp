@@ -36,6 +36,16 @@ public class AmazonTranslate extends TranslationModel {
    */
   public AmazonTranslate(String id) {
     super(id);
+    translateAsync = buildAsync();
+  }
+
+  protected AmazonTranslateAsync buildAsync() {
+     return AmazonTranslateAsyncClient.asyncBuilder()
+        .withCredentials(
+            DefaultAWSCredentialsProviderChain.getInstance())
+        .withRegion(
+            Regions.EU_WEST_1) //should be changed to not be hard coded
+        .build();
   }
 
   /**
@@ -43,6 +53,7 @@ public class AmazonTranslate extends TranslationModel {
    */
   public AmazonTranslate() {
     super(null);
+    translateAsync = buildAsync();
   }
 
 
@@ -52,20 +63,12 @@ public class AmazonTranslate extends TranslationModel {
   //  TODO ADD TRANSLATING AUTHOR TITLE
   /**
    * @param text
-   * @return Translated text or NULL if translation is interrupted or cannot.
+   * @return Translated text or partially translated text if it was
+   * interrupted.
    */
   @Override
-
   public Text translate(Text text, Language sourceLanguage,
                         Language targetLanguage) {
-
-    translateAsync = AmazonTranslateAsyncClient.asyncBuilder()
-        .withCredentials(
-            DefaultAWSCredentialsProviderChain.getInstance())
-        .withRegion(
-            Regions.EU_WEST_1) //should be changed to not be hard coded
-        .build();
-
     TranslateTextRequest request = new TranslateTextRequest()
         .withSourceLanguageCode(sourceLanguage.getCode())
         .withTargetLanguageCode(targetLanguage.getCode());
@@ -74,6 +77,7 @@ public class AmazonTranslate extends TranslationModel {
     scanner.useDelimiter("\r\r\r\r\r");
 
 
+    //get each item in the content and translate individually
     List<Future<TranslateTextResult>> resultList = new ArrayList<>();
     while (scanner.hasNext()) {
       request.withText(scanner.next());
@@ -83,13 +87,17 @@ public class AmazonTranslate extends TranslationModel {
     Future<TranslateTextResult> translatedTitle = translateAsync
         .translateTextAsync(request.withText(text.getTitle()));
 
-
-    Text t = text;
-    StringBuilder stringBuilder = new StringBuilder();
-
-
     //translates everything paragraph by paragraph
+    return getTranslatedText(targetLanguage, resultList, translatedTitle,
+        text);
+  }
 
+  private Text getTranslatedText(Language targetLanguage,
+                                 List<Future<TranslateTextResult>> resultList,
+                                 Future<TranslateTextResult> translatedTitle,
+                                 Text text) {
+    StringBuilder stringBuilder = new StringBuilder();
+    //translate the body
     resultList.forEach(x -> {
       try {
         stringBuilder.append(x.get().getTranslatedText());
@@ -101,17 +109,18 @@ public class AmazonTranslate extends TranslationModel {
       }
     });
 
+    //translate the title
     try {
-      t.setTitle(translatedTitle.get().getTranslatedText());
+      text.setTitle(translatedTitle.get().getTranslatedText());
     } catch (InterruptedException e) {
       e.printStackTrace();
     } catch (ExecutionException e) {
       e.printStackTrace();
     }
 
-    t.setContent(stringBuilder.toString());
-    t.setLanguage(targetLanguage);
-    return t;
+    text.setContent(stringBuilder.toString());
+    text.setLanguage(targetLanguage);
+    return text;
   }
 
 

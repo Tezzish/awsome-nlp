@@ -8,7 +8,7 @@ import java.util.List;
  * solution to translate the post piece by piece.
  */
 
-//TODO Determine whether the models will mess with delimiters
+//TODO refactor because the delimiters make no sense
 //(such as \r) for paragraph distinction.
 public class AWSBlogPost extends Text {
 
@@ -26,41 +26,30 @@ public class AWSBlogPost extends Text {
   public AWSBlogPost(Language language, String title,
                      List<Author> authors, List<String> paragraphs) {
     super(language, title, authors, null);
-    this.paragraphs = paragraphs;
-
-    StringBuilder stringBuilder = new StringBuilder();
-    for (String paragraph : paragraphs) {
-      stringBuilder.append(paragraph);
-      stringBuilder.append("\r\r\r\r\r");
-    }
-
-    this.setContent(stringBuilder.toString());
-
+    this.setParagraphs(paragraphs);
   }
+
 
   public List<String> getParagraphs() {
     return paragraphs;
   }
 
+  /**
+   * Sets paragraphs to the input string and content to the list of paragraphs,
+   * delimited by \r\r\r\r\r.
+   *
+   * @param paragraphs
+   */
   public void setParagraphs(List<String> paragraphs) {
     this.paragraphs = paragraphs;
-  }
 
-  @Override
-  public String toString() {
-    return "AWSBlogPost{"
-        + "language="
-        + this.getLanguage()
-        + ", title='"
-        + this.getTitle()
-        + '\''
-        + ", authors="
-        + this.getAuthors()
-        + ", content='"
-        + this.getContent()
-        + '\''
-        + "paragraphs="
-        + paragraphs
-        + '}';
+    StringBuilder stringBuilder = new StringBuilder();
+    if (paragraphs != null) {
+      for (String paragraph : paragraphs) {
+        stringBuilder.append(paragraph);
+        stringBuilder.append("\r\r\r\r\r");
+      }
+    }
+    this.setContent(stringBuilder.toString());
   }
 }

@@ -2,7 +2,7 @@ package com.awsomenlp.lambda.config.objects;
 
 import java.util.List;
 
-public abstract class Text {
+public class Text {
   /**
    * Fields for Text class.
    */
@@ -13,7 +13,8 @@ public abstract class Text {
 
 
   /**
-   * Abstract constructor for text class, meant to be overridden.
+   * Constructor for text class, meant to be overridden.
+   *
    * @param language
    * @param title
    * @param authors
@@ -31,30 +32,28 @@ public abstract class Text {
     return language;
   }
 
+  public void setLanguage(Language language) {
+    this.language = language;
+  }
+
   public String getTitle() {
     return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public List<Author> getAuthors() {
     return authors;
   }
 
+  public void setAuthors(List<Author> authors) {
+    this.authors = authors;
+  }
 
   public String getContent() {
     return content;
-  }
-
-  public void setLanguage(Language language) {
-    this.language = language;
-  }
-
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setAuthors(List<Author> authors) {
-    this.authors = authors;
   }
 
   public void setContent(String content) {
@@ -78,5 +77,40 @@ public abstract class Text {
         + content
         + '\''
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Text)) {
+      return false;
+    }
+
+    Text text = (Text) o;
+
+    if (getLanguage() != text.getLanguage()) {
+      return false;
+    }
+    if (getTitle() != null ? !getTitle().equals(text.getTitle())
+        : text.getTitle() != null) {
+      return false;
+    }
+    if (getAuthors() != null ? !getAuthors().equals(text.getAuthors())
+        : text.getAuthors() != null) {
+      return false;
+    }
+    return getContent() != null ? getContent().equals(text.getContent())
+        : text.getContent() == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = getLanguage() != null ? getLanguage().hashCode() : 0;
+    result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+    result = 31 * result + (getAuthors() != null ? getAuthors().hashCode() : 0);
+    result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
+    return result;
   }
 }
