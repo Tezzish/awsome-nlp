@@ -43,24 +43,16 @@
             "Ref": "s3Key"
           }
         },
-        "Handler": "index.handler",
+        "Handler": "example.LambdaRequestHandler::handleRequest",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-<<<<<<< HEAD:amplify/backend/awscloudformation/build/function/getBlogContent/getBlogContent-cloudformation-template.json
-            "getBlogContent",
-=======
             "UserConfigFunction",
->>>>>>> dev:amplify/#current-cloud-backend/awscloudformation/build/function/UserConfigFunction/UserConfigFunction-cloudformation-template.json
             {
               "Fn::Join": [
                 "",
                 [
-<<<<<<< HEAD:amplify/backend/awscloudformation/build/function/getBlogContent/getBlogContent-cloudformation-template.json
-                  "getBlogContent",
-=======
                   "UserConfigFunction",
->>>>>>> dev:amplify/#current-cloud-backend/awscloudformation/build/function/UserConfigFunction/UserConfigFunction-cloudformation-template.json
                   "-",
                   {
                     "Ref": "env"
@@ -86,7 +78,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "Runtime": "java11",
         "Layers": [],
         "Timeout": 25
       }
@@ -97,20 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-<<<<<<< HEAD:amplify/backend/awscloudformation/build/function/getBlogContent/getBlogContent-cloudformation-template.json
-            "awsomenlpLambdaRole4c31b8f7",
-=======
             "awsomenlpLambdaRolee754d004",
->>>>>>> dev:amplify/#current-cloud-backend/awscloudformation/build/function/UserConfigFunction/UserConfigFunction-cloudformation-template.json
             {
               "Fn::Join": [
                 "",
                 [
-<<<<<<< HEAD:amplify/backend/awscloudformation/build/function/getBlogContent/getBlogContent-cloudformation-template.json
-                  "awsomenlpLambdaRole4c31b8f7",
-=======
                   "awsomenlpLambdaRolee754d004",
->>>>>>> dev:amplify/#current-cloud-backend/awscloudformation/build/function/UserConfigFunction/UserConfigFunction-cloudformation-template.json
                   "-",
                   {
                     "Ref": "env"

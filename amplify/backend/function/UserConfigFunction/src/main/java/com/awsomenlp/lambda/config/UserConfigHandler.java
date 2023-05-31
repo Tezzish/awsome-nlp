@@ -1,45 +1,38 @@
+
+
 package com.awsomenlp.lambda.config;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
-import com.awsomenlp.lambda.config.models.TranslationModel;
-import com.awsomenlp.lambda.config.objects.Config;
-import com.awsomenlp.lambda.config.objects.Text;
-import com.awsomenlp.lambda.config.resolvers.AppSyncResolver;
-import com.awsomenlp.lambda.config.resolvers.URLResolver;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 public class UserConfigHandler implements RequestStreamHandler {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
-  private final AppSyncResolver appSyncResolver = new AppSyncResolver();
-  private final URLResolver urlResolver = new URLResolver();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-  @Override
-  public void handleRequest(InputStream input, OutputStream output,
-                            Context context) throws IOException {
+//    @Override
+//    public String handleRequest(Config config, Context context) {
+//
+//        Config config1 = new Config("url",  Language.ENGLISH, Language.TURKISH, new AmazonTranslate("129"));
+//        ObjectMapper mapper = new ObjectMapper();
+//        Writer writer = new StringWriter();
+//        try {
+//            mapper.writeValue(writer, config1);
+//            return writer.toString();
+//        } catch (IOException e) {
+//            return "error n shit";
+//        }
+//    }
 
-    //TODO Add a way to see where this request is coming from.
+    @Override
+    public void handleRequest(InputStream input, OutputStream output,
+                              Context context) throws IOException {
 
-    JsonNode rootNode = objectMapper.readTree(input);
-    Config config = appSyncResolver
-        .resolveAppSyncInput(rootNode.path("arguments"), objectMapper);
+        Config config = objectMapper.readValue(input, Config.class);
+        objectMapper.writeValue(output, config);
 
-    TranslationModel model = config.getModel();
-    Text text = urlResolver.resolve(config.getUrl());
-
-    Text translatedText = model.translate(text, config.getSourceLanguage(),
-        config.getTargetLanguage());
-
-    output.write(
-        appSyncResolver.resolveAppSyncOutPut(translatedText).toString()
-            .getBytes(
-                StandardCharsets.UTF_8));
-  }
-
+    }
 }
