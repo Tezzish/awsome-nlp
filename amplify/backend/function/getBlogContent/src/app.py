@@ -3,14 +3,8 @@ import bs4 as bs
 from urllib.request import urlopen
 
 def handler(event, context):
-  # url = event['arguments']['url']
-  print('received event:')
-  print(event)
-  print(event['arguments'])
+  # gets the url from the event
   response = parser(event['arguments']['url'])
-#   print(parser(event['url']))
-  # body = parser(event['url'])
-
   return {
       'statusCode': 200,
       'headers': {
@@ -21,12 +15,11 @@ def handler(event, context):
       'file' : response
   }
 
-# # function called when the url is passed to the lambda function
+# function called when the url is passed to the lambda function
 def parser(url):
 
-    # gets the html from the website
+    # gets the html from the website through the python library
     html = urlopen(url).read()
-    # print(html)
 
     soup = bs.BeautifulSoup(html, 'html.parser')
     title = soup.find('h1', class_='lb-h2 blog-post-title')
@@ -35,11 +28,10 @@ def parser(url):
     paragraphList = []
     for i in paragraphs:
         paragraphList.append(str(i))
-    # print(title.text + content.text + '\n'.join(paragraphList))
+   
     beginning = '''<!DOCTYPE html>
                   <html>
                   <head>
-                  <title>Page Title</title>
                   </head>
                   <body>
                   '''
