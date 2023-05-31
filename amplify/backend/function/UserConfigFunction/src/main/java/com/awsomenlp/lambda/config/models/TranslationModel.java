@@ -14,33 +14,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = AmazonTranslate.class, name = "amazonTranslate")
 })
 public abstract class TranslationModel {
-  private String id;
+    private String ID;
+    public abstract Text translate(Text text, Language sourceLanguage, Language destinationLanguage);
 
-  /**
-   * Translate function meant to be overridden.
-   * @param text
-   * @param sourceLanguage
-   * @param destinationLanguage
-   * @return Text
-   */
-  public abstract Text translate(Text text, Language sourceLanguage,
-                                 Language destinationLanguage);
+    public TranslationModel(String ID) {
+        this.ID = ID;
+    }
 
-  /**
-   * Constructor for TranslationModel Object.
-   * @param id
-   */
-  public TranslationModel(String id) {
-    this.id = id;
-  }
+    public String getID() {
+        return ID;
+    }
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }
 
 
