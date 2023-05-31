@@ -1,8 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'checkstyle'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+checkstyle {
+    configFile = file("sun_checks.xml")
+}
+checkstyleMain {
+    source ='src/main/java'
+}
+checkstyleTest {
+    source ='src/test/java'
 }
 
 repositories {
