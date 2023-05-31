@@ -122,20 +122,6 @@
       "lastPackageTimeStamp": "2023-05-30T15:22:59.956Z",
       "distZipFilename": "getBlogContent-5a6e716661576e524269-build.zip",
       "lastPushDirHash": "8VE1oMjQU+Grxkb1lYCHMfmVgII="
-=======
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-poof-144344-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
-        "logicalId": "functionUserConfigFunction"
-      },
-      "lastPushTimeStamp": "2023-05-24T13:00:02.385Z",
-      "output": {
-        "LambdaExecutionRoleArn": "arn:aws:iam::637065278176:role/awsomenlpLambdaRolee754d004-poof",
-        "Region": "eu-west-1",
-        "Arn": "arn:aws:lambda:eu-west-1:637065278176:function:UserConfigFunction-poof",
-        "Name": "UserConfigFunction-poof",
-        "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-poof"
-      },
-      "lastPushDirHash": "6CxiY3e4chjCfvCY4pZJGC95fPA="
->>>>>>> dev
     }
   }
 }
