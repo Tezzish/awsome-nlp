@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "UserConfigFunction",
+            "getBlogContent",
             {
               "Fn::Join": [
                 "",
                 [
-                  "UserConfigFunction",
+                  "getBlogContent",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "awsomenlpLambdaRolee754d004",
+            "awsomenlpLambdaRole4c31b8f7",
             {
               "Fn::Join": [
                 "",
                 [
-                  "awsomenlpLambdaRolee754d004",
+                  "awsomenlpLambdaRole4c31b8f7",
                   "-",
                   {
                     "Ref": "env"

@@ -45,7 +45,11 @@ type TranslationModel @model {
     name: String!
 }
 
-type Query {
-    translate(input: ConfigInput): BlogPost
+type html {
+	file: String
 }
 
+type Query {
+    translate(input: ConfigInput): BlogPost
+	getBlogPostParsed(url: String): html
+}

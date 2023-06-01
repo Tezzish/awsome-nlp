@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "UserConfigFunction",
+            "pythonScraping",
             {
               "Fn::Join": [
                 "",
                 [
-                  "UserConfigFunction",
+                  "pythonScraping",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "awsomenlpLambdaRolee754d004",
+            "awsomenlpLambdaRole016979a9",
             {
               "Fn::Join": [
                 "",
                 [
-                  "awsomenlpLambdaRolee754d004",
+                  "awsomenlpLambdaRole016979a9",
                   "-",
                   {
                     "Ref": "env"
