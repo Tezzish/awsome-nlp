@@ -2,6 +2,10 @@ package com.awsomenlp.lambda.config.models;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -14,14 +18,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 public class AmazonTranslateTest {
 
 
   AmazonTranslate amazonTranslate;
-
-
   AmazonTranslateAsync translateAsync;
 
 
@@ -30,7 +31,7 @@ public class AmazonTranslateTest {
    */
   @BeforeEach
   public void setup() {
-    translateAsync = Mockito.mock(AmazonTranslateAsync.class);
+    translateAsync = mock(AmazonTranslateAsync.class);
     amazonTranslate = new AmazonTranslate();
     amazonTranslate.setTranslateAsync(translateAsync);
   }
@@ -74,7 +75,7 @@ public class AmazonTranslateTest {
 
     //first two invocations of async should add to the result list,
     //and the last one is the title
-    when(translateAsync.translateTextAsync(Mockito.any())).thenReturn(
+    when(translateAsync.translateTextAsync(any())).thenReturn(
         CompletableFuture.completedFuture(paragraph1),
         CompletableFuture.completedFuture(paragraph2),
         CompletableFuture.completedFuture(title)
@@ -92,9 +93,7 @@ public class AmazonTranslateTest {
 
 
     assertEquals(expectedText, translatedText);
-    Mockito.verify(translateAsync, Mockito.times(3))
-        .translateTextAsync(Mockito.any());
+    verify(translateAsync, times(3))
+        .translateTextAsync(any());
   }
-
-
 }

@@ -107,10 +107,7 @@ public class AmazonTranslate extends TranslationModel {
     //translate the body
     resultList.forEach(x -> {
       try {
-        System.out.println(x.get());
-        String i = x.get().getTranslatedText();
-        System.out.println(i);
-        stringBuilder.append(i);
+        stringBuilder.append(x.get().getTranslatedText());
         stringBuilder.append("\r\r\r\r\r");
       } catch (InterruptedException e) {
         e.printStackTrace();
