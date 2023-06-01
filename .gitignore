@@ -1,6 +1,8 @@
 .idea/
 target/
 venv/
+.gradle/
+.vscode/
 *.iml
 node_modules
 frontend/amplify/backend/function/userConfigurationFunction/.gradle/
