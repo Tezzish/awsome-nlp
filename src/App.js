@@ -43,7 +43,7 @@ function App() {
     const lang = selectedLanguage;
     const translator = selectedModel;
     try {
-      // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
+      // check if url starts with https://aws.amazon.com/blogs/ then send to backend
       if(isValidURL(url)) {
       sendOriginalToBackend(url);
       sendConfigToBackend(url, lang, translator)
