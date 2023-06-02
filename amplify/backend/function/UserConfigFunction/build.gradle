@@ -72,10 +72,6 @@ test {
     useJUnitPlatform()
 }
 
-jacoco {
-    toolVersion = "0.8.10"
-    reportsDir = file("$buildDir/jacocoReport")
-}
 
 
 build.dependsOn
