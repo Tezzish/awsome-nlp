@@ -59,11 +59,10 @@ test('Translate Button', () => {
 test('URL Input', () => {
   expect(isValidURL('https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/')).toBe(true);
 });
-https://en.wikipedia.org/wiki/HTML
 
-// //test for checking the url input - not a blog post url
-// test('URL Input1', () => {
-//   expect(isValidURL('https://en.wikipedia.org/wiki/HTML')).toBe(false);
-// });
+//test for checking the url input - not a blog post url
+test('URL Input1', () => {
+  expect(isValidURL('https://en.wikipedia.org/wiki/HTML')).toBe(false);
+});
 
 

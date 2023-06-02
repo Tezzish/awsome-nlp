@@ -162,6 +162,9 @@ function isValidURL(str) {
     if (str.includes("https://aws.amazon.com/blogs/")) {
       return true;
     }
+    else {
+      return false;
+    }
   } catch {
     return false;
   }
