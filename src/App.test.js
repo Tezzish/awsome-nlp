@@ -3,7 +3,6 @@ import App from './App';
 import { isValidURL } from './App.js';
 
 
-
 test('checks if frontend can handle URL input change', () => {
   const { getByPlaceholderText } = render(<App />);
   const urlInput = getByPlaceholderText('AWS Blogpost (URL)');
@@ -17,16 +16,9 @@ test('checks if frontend can handle URL input change', () => {
 test('checks if the translation button works correctly on click', () => {
   const { getByText } = render(<App />);
   const translateButton = getByText('Translate!');
-
   fireEvent.click(translateButton);
 });
 
-
-// // tests the blog post url's validity
-// test('test for the validity of the blog post url', () => {
-//   expect(isValidURL("https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el")).toBe(true);
-//   }
-// );
 
 
 //tests for the URL input
