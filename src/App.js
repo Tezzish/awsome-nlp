@@ -167,5 +167,5 @@ function App() {
       </div>
   );
 }
-export default {App, isValidURL};
+export default App;
 
