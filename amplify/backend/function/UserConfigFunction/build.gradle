@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -49,8 +50,12 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
+    // https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
+    implementation 'org.jacoco:jacoco-maven-plugin:0.8.10'
 
 }
+
+
 
 jar.archiveBaseName = 'latest_build'
 
@@ -67,4 +72,12 @@ test {
     useJUnitPlatform()
 }
 
-build.dependsOn buildZip
+jacoco {
+    toolVersion = "0.8.10"
+    reportsDir = file("$buildDir/jacocoReport")
+}
+
+
+build.dependsOn
+
+
