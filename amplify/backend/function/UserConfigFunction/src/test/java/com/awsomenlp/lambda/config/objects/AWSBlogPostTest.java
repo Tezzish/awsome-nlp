@@ -40,7 +40,6 @@ class AWSBlogPostTest {
 
   @Test
   void getParagraphs() {
-
     List<String> correctParagraph = List.of("You and I, we fell in love\n"
             + "I ain't read the signs, ain't know what it was\n"
             + "But God gotta know he might have peaked when he made you\n"
@@ -111,6 +110,7 @@ class AWSBlogPostTest {
 
 
     blogPost.setParagraphs(paragraphs);
+
     assertEquals(correctContent, blogPost.getContent());
   }
 

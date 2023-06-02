@@ -7,6 +7,7 @@ public class Author {
 
   /**
    * Constructor for Author class.
+   *
    * @param title
    * @param firstName
    * @param lastName
@@ -44,5 +45,41 @@ public class Author {
   @Override
   public String toString() {
     return title + " " + firstName + " " + lastName;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Author)) {
+      return false;
+    }
+
+    Author author = (Author) o;
+
+    if (getTitle() != null ? !getTitle().equals(author.getTitle())
+        : author.getTitle() != null) {
+      return false;
+    }
+    if (getFirstName() != null ? !getFirstName().equals(author.getFirstName())
+        : author.getFirstName() != null) {
+      return false;
+    }
+    return getLastName() != null ? getLastName().equals(author.getLastName())
+        : author.getLastName() == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = getTitle() != null ? getTitle().hashCode()
+        : 0;
+    result =
+        31 * result + (getFirstName() != null ? getFirstName().hashCode()
+            : 0);
+    result =
+        31 * result + (getLastName() != null ? getLastName().hashCode()
+            : 0);
+    return result;
   }
 }

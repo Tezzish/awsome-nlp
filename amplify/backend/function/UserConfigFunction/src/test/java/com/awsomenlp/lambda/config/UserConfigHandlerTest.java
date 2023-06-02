@@ -3,12 +3,25 @@ package com.awsomenlp.lambda.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
+import com.awsomenlp.lambda.config.models.TranslationModel;
+import com.awsomenlp.lambda.config.objects.Config;
+import com.awsomenlp.lambda.config.objects.Text;
+import com.awsomenlp.lambda.config.resolvers.AppSyncResolver;
+import com.awsomenlp.lambda.config.resolvers.URLResolver;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.MediaType;
@@ -16,8 +29,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -30,17 +42,10 @@ class UserConfigHandlerTest {
   String endPoint = "https://gir7li5d5vbv5dcl7jglhmrgri.appsync-api.eu-west-1."
       + "amazonaws.com/graphql";
 
-  @BeforeEach
-  void setUp() {
-  }
-
-  @AfterEach
-  void tearDown() {
-  }
-
   @Disabled("Disabled until we get new accounts!")
   @Test
   void integrationTest() throws IOException {
+    //Prepare input
     OkHttpClient client = new OkHttpClient();
 
     Map<String, Object> variables = new HashMap<>();
@@ -94,8 +99,10 @@ class UserConfigHandlerTest {
         .addHeader("x-api-key", apiKey)
         .build();
 
+    //Test
     Response response = client.newCall(request).execute();
 
+    //Assert
     assertEquals(200, response.code());
     JsonNode output =
         objectMapper.readTree(response.body().string()).get("data")
@@ -113,6 +120,60 @@ class UserConfigHandlerTest {
       assertNotEquals(null, paragraph);
       assertNotEquals("", paragraph);
     }
+  }
 
+  @Test
+  public void testHandleRequest() throws IOException {
+    //Prepare input
+    ObjectMapper objectMapper = mock(ObjectMapper.class);
+    AppSyncResolver appSyncResolver = mock(AppSyncResolver.class);
+    URLResolver urlResolver = mock(URLResolver.class);
+
+    JsonNode mockNode = mock(JsonNode.class);
+    //Return itself because its a mock
+    when(mockNode.path("arguments")).thenReturn(mockNode);
+    when(objectMapper.readTree(any(InputStream.class))).thenReturn(mockNode);
+
+    Config mockConfig = mock(Config.class);
+    when(appSyncResolver
+        .resolveAppSyncInput(any(JsonNode.class), any(ObjectMapper.class)))
+        .thenReturn(mockConfig);
+
+    Text mockText = mock(Text.class);
+    when(urlResolver.resolve(any())).thenReturn(mockText);
+
+    TranslationModel mockModel = mock(TranslationModel.class);
+    when(mockConfig.getModel()).thenReturn(mockModel);
+
+    Text mockTranslatedText = mock(Text.class);
+    when(mockModel.translate(any(), any(), any()))
+        .thenReturn(mockTranslatedText);
+
+    JSONObject mockJsonObject = mock(JSONObject.class);
+    when(mockJsonObject.toString()).thenReturn("translated text");
+    when(appSyncResolver.resolveAppSyncOutPut(mockTranslatedText))
+        .thenReturn(mockJsonObject);
+
+
+    UserConfigHandler userConfigHandler =
+        new UserConfigHandler(objectMapper, appSyncResolver, urlResolver);
+
+
+    InputStream input = new ByteArrayInputStream("dummy input".getBytes());
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+    //Test
+    userConfigHandler.handleRequest(input, output, null);
+
+    // Assert the result
+    assertEquals("translated text", output.toString());
+
+    // Verify the interaction with the mocks
+    verify(objectMapper, times(1)).readTree(any(InputStream.class));
+    verify(appSyncResolver, times(1))
+        .resolveAppSyncInput(any(JsonNode.class), any(ObjectMapper.class));
+    verify(urlResolver, times(1)).resolve(any());
+    verify(mockConfig, times(1)).getModel();
+    verify(mockModel, times(1)).translate(any(), any(), any());
   }
 }

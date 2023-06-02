@@ -41,22 +41,22 @@ public class AmazonTranslateTest {
    */
   @Test
   public void testTranslate() {
+    // Prepare input
     List<Author> authors = List.of(new Author("Mr.", "Jaden", "Smith"));
-    Text text = new Text(Language.ENGLISH, "Ninety", authors,
-        "Come here, mama, I know you want me\n"
-            + "Food from the soul, I know you're hungry\n"
-            + "Gave you my two cents, ain't got money, but\n"
-            + "I'll take you somewhere fun"
-            + " and tell you something funny, hey\n"
-            + "It's something funny, baby"
-            + "\r\r\r\r\r"
-            + "She said \"Jaden, you are my soulmate\" (You are my soul)\n"
-            + "You only say that when you're lonely (When you’re lonely)\n"
-            + "Girl, I'm surprised you even know me, ay\n"
-            + "I'm not gon' ____, but we can kick it like we homies, ay\n"
-            + "'Cause we just homies, baby"
-            + "\r\r\r\r\r");
-
+    String content = "Come here, mama, I know you want me\n"
+        + "Food from the soul, I know you're hungry\n"
+        + "Gave you my two cents, ain't got money, but\n"
+        + "I'll take you somewhere fun"
+        + " and tell you something funny, hey\n"
+        + "It's something funny, baby"
+        + "\r\r\r\r\r"
+        + "She said \"Jaden, you are my soulmate\" (You are my soul)\n"
+        + "You only say that when you're lonely (When you’re lonely)\n"
+        + "Girl, I'm surprised you even know me, ay\n"
+        + "I'm not gon' ____, but we can kick it like we homies, ay\n"
+        + "'Cause we just homies, baby"
+        + "\r\r\r\r\r";
+    Text text = new Text(Language.ENGLISH, "Ninety", authors, content);
 
     TranslateTextResult paragraph1 = new TranslateTextResult();
     paragraph1.setTranslatedText("sumn translated");
@@ -73,27 +73,23 @@ public class AmazonTranslateTest {
     title.setSourceLanguageCode("en");
     title.setTargetLanguageCode("tr");
 
-    //first two invocations of async should add to the result list,
-    //and the last one is the title
     when(translateAsync.translateTextAsync(any())).thenReturn(
         CompletableFuture.completedFuture(paragraph1),
         CompletableFuture.completedFuture(paragraph2),
         CompletableFuture.completedFuture(title)
     );
 
+    // Test
+    Text translatedText =
+        amazonTranslate.translate(text, Language.ENGLISH, Language.TURKISH);
 
-    Text translatedText = amazonTranslate.translate(text, Language.ENGLISH,
-        Language.TURKISH);
-
-    Text expectedText = new Text(Language.TURKISH, title.getTranslatedText(),
-        authors, paragraph1.getTranslatedText()
-        + "\r\r\r\r\r"
-        + paragraph2.getTranslatedText()
-        + "\r\r\r\r\r");
-
-
+    // Assert
+    Text expectedText =
+        new Text(Language.TURKISH, title.getTranslatedText(), authors,
+            paragraph1.getTranslatedText() + "\r\r\r\r\r"
+                + paragraph2.getTranslatedText() + "\r\r\r\r\r");
     assertEquals(expectedText, translatedText);
-    verify(translateAsync, times(3))
-        .translateTextAsync(any());
+
+    verify(translateAsync, times(3)).translateTextAsync(any());
   }
 }
