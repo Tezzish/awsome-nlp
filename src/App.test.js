@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
-import { isValidURL } from './App.js';
+import { isValidURL } from './App';
 
 
 test('checks if frontend can handle URL input change', () => {
@@ -46,4 +46,15 @@ test('Translate Button', () => {
   //checks if it's a button
   expect(app).toBeInstanceOf(HTMLButtonElement);
 });
+
+//test for checking the url input - blog post url
+test('URL Input', () => {
+  expect(isValidURL('https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/')).toBe(true);
+});
+
+//test for checking the url input - not a blog post url
+test('URL Input1', () => {
+  expect(isValidURL('https://en.wikipedia.org/wiki/HTML')).toBe(false);
+});
+
 
