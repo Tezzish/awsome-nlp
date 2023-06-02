@@ -3,6 +3,7 @@ import App from './App';
 import { isValidURL } from './App.js';
 
 
+
 test('checks if frontend can handle URL input change', () => {
   const { getByPlaceholderText } = render(<App />);
   const urlInput = getByPlaceholderText('AWS Blogpost (URL)');
