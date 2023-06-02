@@ -56,11 +56,13 @@ function App() {
 
   //TODO: Check if URL is a valid AWS URL.
   // Current implementation only check if it is a URL
-  const isValidURL = (str) => {
+  function isValidURL(str) {
     try {
       new URL(str);
-      if (str.includes("https://aws.amazon.com/blogs/")) {
+      if (str.contains("https://aws.amazon.com/blogs/")) {
         return true;
+      } else {
+        return false;
       }
     } catch {
       return false;
@@ -165,4 +167,5 @@ function App() {
       </div>
   );
 }
-export default App;
+export default {App, isValidURL};
+
