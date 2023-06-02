@@ -54,20 +54,6 @@ function App() {
   };
 
 
-  //TODO: Check if URL is a valid AWS URL.
-  // Current implementation only check if it is a URL
-  function isValidURL(str) {
-    try {
-      new URL(str);
-      if (str.contains("https://aws.amazon.com/blogs/")) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch {
-      return false;
-    }
-  };
 
   // sends the url of the original blog post to the backend to be parsed
   async function sendOriginalToBackend(url1) {
@@ -167,5 +153,19 @@ function App() {
       </div>
   );
 }
+
+
+  // Current implementation only check if it is a URL
+function isValidURL(str) {
+  try {
+    new URL(str);
+    if (str.includes("https://aws.amazon.com/blogs/")) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+};
+export { isValidURL };
 export default App;
 
