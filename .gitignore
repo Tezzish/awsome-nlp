@@ -41,3 +41,4 @@ amplifytools.xcconfig
 #amplify-do-not-edit-end
 
 
+amplify/backend/function/getBlogContent/test/__pycache__/
