@@ -1,0 +1,63 @@
+\section{Problem Analysis}
+\label{sec:problemanalysis}
+%% What problem are you aiming to solve? What is the context? 
+%Context of AWS blogs
+\indent \indent AWS has an existing blog with thousands of blog posts \cite{ChatGPT2023} written by employees and researchers covering existing AWS technologies/services. These blog posts describe a variety of media types including news, technological guides, and reviews on the extensive technologies provided by AWS. As a part of the AWS infrastructure, it is an instrumental piece in how it interacts with its community: by keeping them up to date on new developments and helping them understand how to use their technologies. 
+
+%Language barrier of AWS blogs
+\indent Unfortunately the vast majority of these blog posts are predominantly written in English, a language only native to 5\% of the world population and spoken as a primary or secondary language by 17\% \cite{ProjectOverview}. While 12 other \textit{editions} of the AWS blog posts exist, in languages like French, Thai, or Korean (among others), they may contain language-specific content not accessible across \textit{editions}. This creates a language barrier for users not speaking the language, meaning non-speakers do not have access to understanding the content and resources provided on these posts.
+
+%Translation to low-resource languages
+\indent While modern software solutions do exist for translating text; there is no easy, clear-cut means for translating these posts in their entirety. Users who want to do this may have to resort to third parties or translate pieces of the blog section by section. This issue is further exacerbated in the scope of low-resource languages where existing solutions may provide a limited or inadequate translation, especially given the technical nature of the blog posts. This is problematic as these valuable AWS blog posts \textbf{should} be accessible to everyone and not present any barriers on the basis of language. 
+
+\indent This section describe our problem analysis, beginning with the problem statement (1.1) and ending with topic research (1.2) with respect to each stakeholder, use case, and existing technology.
+
+
+\subsection{Problem Statement}
+%% What is the exact problem the client asked you to solve? Ensure you write this out separately from the solution you have in mind
+
+\indent \indent AWS has a blog with thousands of blog posts, all containing unique and valuable information, spread across 12 different \textit{editions}; all demarcated, divided, and separated by language. Some of these articles and languages are easy to use for translation, given current machine translation tools, however, others, specifically \acrfull{LRL}s, are not. This means that speakers of certain languages do not have access to valuable information due to a language barrier. This information hinders students, researchers, developers, and employees alike. Our task is to create a tool that reduces the impact of a language barrier and allows these blog posts to be translated from English to a \acrfull{LRL}, namely, Turkish while taking into account that this project should be scalable and extendable to other low-resource languages. 
+
+\subsection{Topic Research}
+
+
+%Who are the stakeholders?
+\subsubsection{Stakeholders}
+
+\indent \indent The stakeholders of this project can be distinguished into two groups: those that are impacted by \textbf{using} the service and those that are impacted by the \textbf{use of} the service. Of the groups that directly use the service, there are two distinct subgroups: Turkish speakers and non-Turkish speakers. The Turkish speakers will be discussed together with the group that is impacted by the \textbf{use of} the service, as they are more similar. 
+
+\subsubsection*{Users}
+
+\indent \indent The first group of stakeholders that will be considered are the people that \textbf{use} the service, otherwise known as users. As AWS already has an infrastructure for blog posts accessible in foreign languages, the group of non-Turkish speakers that wish to use the service will often be contributing to the foreign language \textit{editions} of AWS blog posts. These people include researchers that work with and/or for AWS, developers that have notable findings, blog writers that aim to reach a certain or wider audience, and executives that are publishing regular reports. Ideally, the service would allow a seamless translation of a blog post from one language to the other, allowing foreign language readers to have immediate access to the information on their \textit{edition} of AWS blog posts. The users of this service would then experience greater productivity in translating the paper themselves, as opposed to finding a translator that has the necessary domain knowledge, source language knowledge, and translated language necessary to execute the translation \cite{Koen2010}. Furthermore, the existence of the service may give users a convenient way to translate their posts, reaching an audience that couldn't be reached before.
+
+\subsubsection*{Other stakeholders}
+
+\indent \indent Conversely related to the stakeholders using the service, are the stakeholders being impacted by the \textbf{use of} the service. This group will include students, researchers, and executives wishing to access information in a language they are comfortable in reading, professional bilingual translators, and readers of \textit{pre-translated} blog posts. The first group, students, researchers, and executives, consist of a group that may have some knowledge of the source language, perhaps just enough to comfortably understand the main idea of the blog post, but, not enough to completely comprehend and digest the blog. This group is the aforementioned group that is technically in the users' group but is more similar to the native language \textit{users} in that this will grant them access to information that was not previously accessible to them. 
+
+\indent The final group of stakeholders is professional bilingual translators. It has been shown that monolingual translators aided by a machine translator performed better than bilingual translators \cite{Koen2010}. These professional bilingual translators are certainly to be impacted by this service (at scale), as they will either be aided by its existence, and made more productive, or be replaced by the machine translator and domain knowledge of the monolingual translator, with the latter seeming more likely.
+
+%discuss data deluge and how that may not be what we wish for
+%translators losing jobs
+
+\subsubsection{Use Cases}
+%•	What are the use cases for the product you are going to create? 
+\indent \indent The intended use case for this project involves translating AWS blog posts from a source to a destination language. This would allow interested users who don't speak the source language of an AWS Blogpost to access this content in their native tongue. Although this project is \textbf{intended} to translate from English to Turkish and only to be used for AWS blog posts, a translation tool for written text in a \acrlong{LRL} is widespread. The \acrshort{NLP} aspect of this tool can be extended to receive input and give output through various forms and in other (non) AWS domains.
+
+\indent This project has the additional use case of being able to compare translation methods. AWS already has an existing team of translators who have written certain English texts in Turkish. This team, alongside the existing Amazon Translate technology and the in-house neural translator built by the team will allow AWS (and interested users) to compare these different technologies.
+
+
+\subsubsection{Existing Technologies}
+%•	Are there already existing products/technologies that do things similar to what you need? Investigate them; can you learn from them? Incorporate them? Why (not)?
+\indent \indent There is a wide range of technologies in the domain of machine translation systems.  There has been an emergence of software and research in NLP translation \cite{NLP_Today} and low-resource language translation \cite{NLP_for_LRR}. Perhaps the largest and most popular machine translation software for full website translation is Google Translate, a neural machine translation software capable of translating entire webpages \cite{WebsiteTranslation}. However this technology, among others, is a direct competitor to the client's Amazon Translate and doesn't manage to solve the problem in its entirety. They are not targeted to dealing with AWS blog posts specifically and have a tendency to under-provide and under-perform on low-resource languages, especially for different dialects \cite{Building_LRR_Translation}.
+
+\indent Fortunately, we are asked to incorporate Amazon Translate, a powerful translation tool as part of our solution. In addition to Amazon Translate, we are asked to use \gls{sagemaker}, a Jupyter Notebooks style tool that allows us to build, fine-tune and host a transformer-based language model. This means we will incorporate the existing technology (In \gls{translate}) and develop our own through SageMaker with the aim of solving the problem. We can use heavily researched and readily available knowledge in \gls{NLP} \cite{NLP_Today} and \gls{lrl} translation \cite{NLP_for_LRR} \cite{Building_LRR_Translation} for approaching the task at hand.
+
+
+\subsubsection{User and Expert requirements}
+%•	Does the client have any users or experts you can talk to? Meet with them and find out about their wants and needs
+\indent \indent Fortunately we have easy access to experts to consult in the development of this software project. This project is provided and supervised by \href{https://www.linkedin.com/in/halil-bahadir-6588671/?originalSubdomain=nl}{Halil BAHADIR}, \href{https://www.linkedin.com/in/esrakayabali/?originalSubdomain=tr}{Esra Kayabalı} , and  \href{https://www.linkedin.com/in/aipachni/}{Anastasia Pachni Tsitiridou} who are all experts in designing and implementing tech solutions (AWS Solutions Architects). They can provide valuable information on what is wanted and needed in the project. These precise requirements will be further discussed in section \ref{sec:Requirements}. 
+
+%%TODO CHECK CORRECT
+\indent Our access to users is a little more difficult. Our solution is aimed at translating \textit{English into Turkish} and as of now we do not have access to users who speak Turkish and \textbf{do not} speak English. However, one of our group members (and some of our project providers) are native Turkish Speakers and could be seen as \textit{pseudo-users}.
+
+\subsection{Project Goals}
