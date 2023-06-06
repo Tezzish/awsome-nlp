@@ -32,5 +32,6 @@ jobs:
       working-directory: ./amplify/backend/function/UserConfigFunction/
       run: |
         gradle build
+        gradle check
 
 

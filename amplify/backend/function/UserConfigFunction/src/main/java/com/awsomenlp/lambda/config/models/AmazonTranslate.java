@@ -6,93 +6,121 @@ import com.amazonaws.services.translate.AmazonTranslateAsync;
 import com.amazonaws.services.translate.AmazonTranslateAsyncClient;
 import com.amazonaws.services.translate.model.TranslateTextRequest;
 import com.amazonaws.services.translate.model.TranslateTextResult;
-import com.awsomenlp.lambda.config.objects.AWSBlogPost;
-import com.awsomenlp.lambda.config.objects.Author;
 import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 
 /**
- * Supported Language Codes: https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html
- * API Reference: https://docs.aws.amazon.com/translate/latest/APIReference/welcome.html
+ * Supported Language Codes:
+ * https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html .
+ *
+ * API Reference:
+ * https://docs.aws.amazon.com/translate/latest/APIReference/welcome.html .
  */
 @JsonTypeName("amazonTranslate")
 public class AmazonTranslate extends TranslationModel {
 
-    @JsonIgnore
-    private AmazonTranslateAsync translateAsync;
+  @JsonIgnore
+  private AmazonTranslateAsync translateAsync;
 
-    public AmazonTranslate(String ID) {
-        super(ID);
+  /**
+   * Constructor for AmazonTranslate Object.
+   * @param id
+   */
+  public AmazonTranslate(String id) {
+    super(id);
+  }
+
+  /**
+   * this is required or the whole thing explodes?!?!?!
+   */
+  public AmazonTranslate() {
+    super(null);
+  }
+
+
+  //  TODO ADD CREDENTIALS
+  //  TODO ADD REGION
+  //  TODO ADD CUSTOM TERMS (SUPPORTED)
+  //  TODO ADD TRANSLATING AUTHOR TITLE
+  /**
+   * @param text
+   * @return Translated text or NULL if translation is interrupted or cannot.
+   */
+  @Override
+
+  public Text translate(Text text, Language sourceLanguage,
+                        Language targetLanguage) {
+
+    translateAsync = AmazonTranslateAsyncClient.asyncBuilder()
+        .withCredentials(
+            DefaultAWSCredentialsProviderChain.getInstance())
+        .withRegion(
+            Regions.EU_WEST_1) //should be changed to not be hard coded
+        .build();
+
+    TranslateTextRequest request = new TranslateTextRequest()
+        .withSourceLanguageCode(sourceLanguage.getCode())
+        .withTargetLanguageCode(targetLanguage.getCode());
+
+    Scanner scanner = new Scanner(text.getContent());
+    scanner.useDelimiter("\r\r\r\r\r");
+
+
+    List<Future<TranslateTextResult>> resultList = new ArrayList<>();
+    while (scanner.hasNext()) {
+      request.withText(scanner.next());
+      resultList.add(translateAsync.translateTextAsync(request));
     }
 
-    /**
-     * this is required or the whole thing explodes?!?!?!
-     */
-    public AmazonTranslate() {
-        super(null);
+    Future<TranslateTextResult> translatedTitle = translateAsync
+        .translateTextAsync(request.withText(text.getTitle()));
+
+
+    Text t = text;
+    StringBuilder stringBuilder = new StringBuilder();
+
+
+    //translates everything paragraph by paragraph
+
+    resultList.forEach(x -> {
+      try {
+        stringBuilder.append(x.get().getTranslatedText());
+        stringBuilder.append("\r\r\r\r\r");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } catch (ExecutionException e) {
+        e.printStackTrace();
+      }
+    });
+
+    try {
+      t.setTitle(translatedTitle.get().getTranslatedText());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
     }
 
-
-    /**
-     * TODO: ADD CREDENTIALS
-     * TODO: ADD REGION
-     * TODO: ADD CUSTOM TERMS (SUPPORTED)
-     * TODO: ADD TRANSLATING AUTHOR TITLE
-     * @param text
-     * @return Translated text or NULL if translation is interrupted or cannot.
-     */
-    @Override
-
-    public Text translate(Text text, Language sourceLanguage, Language targetLanguage) {
-
-        translateAsync = AmazonTranslateAsyncClient.asyncBuilder()
-            .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
-            .withRegion(Regions.EU_WEST_1) //should be changed to not be hard coded
-            .build();
+    t.setContent(stringBuilder.toString());
+    t.setLanguage(targetLanguage);
+    return t;
+  }
 
 
-        TranslateTextRequest request = new TranslateTextRequest()
-            .withText(text.getContent())
-            .withSourceLanguageCode(sourceLanguage.getCode())
-            .withTargetLanguageCode(targetLanguage.getCode());
+  public AmazonTranslateAsync getTranslateAsync() {
+    return translateAsync;
+  }
 
-        Future<TranslateTextResult> result = translateAsync.translateTextAsync(request);
-
-        /**
-         * since it is a future, it can be interrupted.
-         */
-        try {
-            /**
-             * really stupid solution that doesnt change anything except the actual text, and
-             * its language.
-             */
-            Text t = text;
-            t.setContent(result.get().getTranslatedText());
-            t.setLanguage(targetLanguage);
-            return t;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return new AWSBlogPost(Language.ENGLISH, "fail",
-            List.of(new Author("fail", "fail", "fail")), List.of("fail"));
-    }
-
-
-    public AmazonTranslateAsync getTranslateAsync() {
-        return translateAsync;
-    }
-
-    public void setTranslateAsync(AmazonTranslateAsync translateAsync) {
-        this.translateAsync = translateAsync;
-    }
+  public void setTranslateAsync(AmazonTranslateAsync translateAsync) {
+    this.translateAsync = translateAsync;
+  }
 }
 

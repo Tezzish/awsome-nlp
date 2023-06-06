@@ -1,57 +1,294 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTranslationJob = /* GraphQL */ `
-  mutation CreateTranslationJob(
-    $input: CreateTranslationJobInput!
-    $condition: ModelTranslationJobConditionInput
+export const createTranslationConfig = /* GraphQL */ `
+  mutation CreateTranslationConfig(
+    $input: CreateTranslationConfigInput!
+    $condition: ModelTranslationConfigConditionInput
   ) {
-    createTranslationJob(input: $input, condition: $condition) {
+    createTranslationConfig(input: $input, condition: $condition) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
     }
   }
 `;
-export const updateTranslationJob = /* GraphQL */ `
-  mutation UpdateTranslationJob(
-    $input: UpdateTranslationJobInput!
-    $condition: ModelTranslationJobConditionInput
+export const updateTranslationConfig = /* GraphQL */ `
+  mutation UpdateTranslationConfig(
+    $input: UpdateTranslationConfigInput!
+    $condition: ModelTranslationConfigConditionInput
   ) {
-    updateTranslationJob(input: $input, condition: $condition) {
+    updateTranslationConfig(input: $input, condition: $condition) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
     }
   }
 `;
-export const deleteTranslationJob = /* GraphQL */ `
-  mutation DeleteTranslationJob(
-    $input: DeleteTranslationJobInput!
-    $condition: ModelTranslationJobConditionInput
+export const deleteTranslationConfig = /* GraphQL */ `
+  mutation DeleteTranslationConfig(
+    $input: DeleteTranslationConfigInput!
+    $condition: ModelTranslationConfigConditionInput
   ) {
-    deleteTranslationJob(input: $input, condition: $condition) {
+    deleteTranslationConfig(input: $input, condition: $condition) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
+    }
+  }
+`;
+export const createBlogPost = /* GraphQL */ `
+  mutation CreateBlogPost(
+    $input: CreateBlogPostInput!
+    $condition: ModelBlogPostConditionInput
+  ) {
+    createBlogPost(input: $input, condition: $condition) {
+      id
+      originalPost {
+        id
+        originalPost {
+          id
+          title
+          authors
+          content
+          createdAt
+          updatedAt
+          blogPostOriginalPostId
+          blogPostLanguageCode
+          blogPostTranslationModelId
+        }
+        language {
+          name
+          code
+          createdAt
+          updatedAt
+        }
+        title
+        authors
+        content
+        translationModel {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const updateBlogPost = /* GraphQL */ `
+  mutation UpdateBlogPost(
+    $input: UpdateBlogPostInput!
+    $condition: ModelBlogPostConditionInput
+  ) {
+    updateBlogPost(input: $input, condition: $condition) {
+      id
+      originalPost {
+        id
+        originalPost {
+          id
+          title
+          authors
+          content
+          createdAt
+          updatedAt
+          blogPostOriginalPostId
+          blogPostLanguageCode
+          blogPostTranslationModelId
+        }
+        language {
+          name
+          code
+          createdAt
+          updatedAt
+        }
+        title
+        authors
+        content
+        translationModel {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const deleteBlogPost = /* GraphQL */ `
+  mutation DeleteBlogPost(
+    $input: DeleteBlogPostInput!
+    $condition: ModelBlogPostConditionInput
+  ) {
+    deleteBlogPost(input: $input, condition: $condition) {
+      id
+      originalPost {
+        id
+        originalPost {
+          id
+          title
+          authors
+          content
+          createdAt
+          updatedAt
+          blogPostOriginalPostId
+          blogPostLanguageCode
+          blogPostTranslationModelId
+        }
+        language {
+          name
+          code
+          createdAt
+          updatedAt
+        }
+        title
+        authors
+        content
+        translationModel {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
     }
   }
 `;
@@ -61,8 +298,8 @@ export const createLanguage = /* GraphQL */ `
     $condition: ModelLanguageConditionInput
   ) {
     createLanguage(input: $input, condition: $condition) {
-      id
       name
+      code
       createdAt
       updatedAt
     }
@@ -74,8 +311,8 @@ export const updateLanguage = /* GraphQL */ `
     $condition: ModelLanguageConditionInput
   ) {
     updateLanguage(input: $input, condition: $condition) {
-      id
       name
+      code
       createdAt
       updatedAt
     }
@@ -87,8 +324,8 @@ export const deleteLanguage = /* GraphQL */ `
     $condition: ModelLanguageConditionInput
   ) {
     deleteLanguage(input: $input, condition: $condition) {
-      id
       name
+      code
       createdAt
       updatedAt
     }
