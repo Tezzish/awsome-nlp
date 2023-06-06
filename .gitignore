@@ -5,7 +5,6 @@ venv/
 .vscode/
 *.iml
 node_modules
-frontend/amplify/backend/function/userConfigurationFunction/.gradle/
 amplify/backend/function/UserConfigFunction/.gradle/
 amplify/backend/function/UserConfigFunction/gradlew
 amplify/backend/function/UserConfigFunction/gradlew.bat
