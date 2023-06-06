@@ -33,8 +33,8 @@ class URLResolverTest {
     Text text = urlResolver.resolve(url);
 
     //Assert
-    assertEquals("Network Coverage delivers secure operations " +
-        "by utilizing Amazon End User Computing services",  text.getTitle());
+    assertEquals("Network Coverage delivers secure operations "
+        + "by utilizing Amazon End User Computing services",  text.getTitle());
     assertNotEquals(0, text.getContent().size());
   }
 
