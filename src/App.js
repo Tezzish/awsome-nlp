@@ -155,20 +155,49 @@ function App() {
 }
 
 
-  // Current implementation only check if it is a URL
-function isValidURL(str) {
-  try {
-    new URL(str);
-    if (str.includes("https://aws.amazon.com/blogs/")) {
+
+function isValidURL(url) {  
+  if(!url.startsWith("https://aws.amazon.com/blogs/")) return false;
+  var request = new XMLHttpRequest();
+  request.open('GET', url, false);
+  request.send();
+  if (request.status === 200) {
       return true;
-    }
-    else {
-      return false;
-    }
-  } catch {
-    return false;
   }
-};
+  else {
+      return false;
+  }
+}
+
+// const urlExists = async url => {
+//   // fetches the url and checks if the status code is 200
+//   //try {
+//     const response = await fetch(url, {
+//       method: 'GET',
+//       mode: 'no-cors'
+//     });
+//     return response.status != 404;
+//   //}
+//   // catch (err) {
+//   //   return false;
+//   // }
+// }
+
+
+// function isValidURL(url) {
+//   if(!url.startsWith("https://aws.amazon.com/blogs/")) return false;
+//   var request = new XMLHttpRequest();
+//   request.open('GET', url, false);
+//   request.send();
+//   if (request.status === 200) {
+//       return true;
+//   }
+//   else {
+//       return false;
+//   }
+// }
+
 export { isValidURL };
+//export { urlExists };
 export default App;
 
