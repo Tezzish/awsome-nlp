@@ -1,3 +1,2 @@
 bs4
-json
-urllib.request
+urllib3
