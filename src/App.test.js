@@ -48,13 +48,18 @@ test('Translate Button', () => {
 });
 
 //test for checking the url input - blog post url
-test('URL Input', () => {
+test('Valid Amazon blog post URL', () => {
   expect(isValidURL('https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/')).toBe(true);
 });
 
 //test for checking the url input - not a blog post url
-test('URL Input1', () => {
+test('Not a Amazon blog post URL', () => {
   expect(isValidURL('https://en.wikipedia.org/wiki/HTML')).toBe(false);
+});
+
+// not a real amazon blog post url
+test('Not a valid Amazon blog post URL', () => {
+  expect(isValidURL('https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/doesnotexist')).toBe(false);
 });
 
 
