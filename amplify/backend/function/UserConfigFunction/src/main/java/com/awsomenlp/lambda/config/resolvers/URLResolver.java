@@ -1,7 +1,6 @@
 package com.awsomenlp.lambda.config.resolvers;
 
 
-import com.awsomenlp.lambda.config.objects.AWSBlogPost;
 import com.awsomenlp.lambda.config.objects.Author;
 import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
@@ -26,10 +25,10 @@ public class URLResolver {
 
   /**
    * Takes an AWS blogpost URL, scrapes it, and returns a matching
-   * AWSBlogPost.
+   * Text.
    *
    * @param url
-   * @return AWSBlogPost
+   * @return Text
    * @throws IOException
    */
   public Text resolve(String url) throws IOException {
@@ -42,11 +41,11 @@ public class URLResolver {
   }
 
   /**
-   * Takes an AWS blogpost HTML Document, scrapes it, and returns a matching
-   * AWSBlogPost.
+   * Takes an AWSblogpost HTML Document, scrapes it, and returns a matching
+   * Text object.
    *
    * @param doc
-   * @return AWSBlogPost
+   * @return Text
    * @throws IOException
    */
   public Text resolveDocument(Document doc) throws IOException {
@@ -72,6 +71,6 @@ public class URLResolver {
       paragraphs.add(ele.text());
     }
 
-    return new AWSBlogPost(Language.ENGLISH, title, auths, paragraphs);
+    return new Text(Language.ENGLISH, title, auths, paragraphs);
   }
 }

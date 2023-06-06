@@ -63,7 +63,7 @@ class AppSyncResolverTest {
     //Prepare Input
     List<Author> authors = (List.of(new Author("Mr.", "Joy", "Again"),
         new Author("Dr.", "Heinz", "Doofenschmirtz")));
-    String content = "ketchup";
+    List<String> content = List.of("ketchup");
     String title = "What im listening to on spotify";
     Text text = new Text(Language.ENGLISH, title, authors, content);
 

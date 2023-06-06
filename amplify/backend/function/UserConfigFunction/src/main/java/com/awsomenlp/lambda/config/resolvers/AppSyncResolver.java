@@ -7,7 +7,7 @@ import com.awsomenlp.lambda.config.objects.Text;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Scanner;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -62,15 +62,14 @@ public class AppSyncResolver {
 
 
     JSONArray content = new JSONArray();
-    Scanner scanner = new Scanner(text.getContent());
-    scanner.useDelimiter("\r\r\r\r\r");
-    while (scanner.hasNext()) {
-      content.put(scanner.next());
+    for (String paragraph
+        :text.getContent()) {
+      content.put(paragraph);
     }
 
     jsonObject.put("blogPostLanguageCode", text.getLanguage().getCode());
     jsonObject.put("blogPostOriginalPostId",
-        "10"); //TODO make this not hardcoded
+        "10");
     jsonObject.put("title", text.getTitle());
     jsonObject.put("authors", authors);
     jsonObject.put("content", content);

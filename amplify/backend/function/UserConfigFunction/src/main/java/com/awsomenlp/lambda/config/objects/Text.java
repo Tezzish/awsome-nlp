@@ -9,7 +9,7 @@ public class Text {
   private Language language;
   private String title;
   private List<Author> authors;
-  private String content;
+  private List<String> content;
 
 
   /**
@@ -21,7 +21,7 @@ public class Text {
    * @param content
    */
   public Text(Language language, String title,
-              List<Author> authors, String content) {
+              List<Author> authors, List<String> content) {
     this.language = language;
     this.title = title;
     this.authors = authors;
@@ -52,11 +52,11 @@ public class Text {
     this.authors = authors;
   }
 
-  public String getContent() {
+  public List<String> getContent() {
     return content;
   }
 
-  public void setContent(String content) {
+  public void setContent(List<String> content) {
     this.content = content;
   }
 

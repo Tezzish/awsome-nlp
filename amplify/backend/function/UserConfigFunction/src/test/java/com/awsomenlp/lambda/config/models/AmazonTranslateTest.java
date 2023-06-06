@@ -43,19 +43,8 @@ public class AmazonTranslateTest {
   public void testTranslate() {
     // Prepare input
     List<Author> authors = List.of(new Author("Mr.", "Jaden", "Smith"));
-    String content = "Come here, mama, I know you want me\n"
-        + "Food from the soul, I know you're hungry\n"
-        + "Gave you my two cents, ain't got money, but\n"
-        + "I'll take you somewhere fun"
-        + " and tell you something funny, hey\n"
-        + "It's something funny, baby"
-        + "\r\r\r\r\r"
-        + "She said \"Jaden, you are my soulmate\" (You are my soul)\n"
-        + "You only say that when you're lonely (When you’re lonely)\n"
-        + "Girl, I'm surprised you even know me, ay\n"
-        + "I'm not gon' ____, but we can kick it like we homies, ay\n"
-        + "'Cause we just homies, baby"
-        + "\r\r\r\r\r";
+    List<String> content = List.of("Come here, mama, I know you want me\n",
+        "Food from the soul, I know you're hungry\n");
     Text text = new Text(Language.ENGLISH, "Ninety", authors, content);
 
     TranslateTextResult paragraph1 = new TranslateTextResult();
@@ -86,8 +75,8 @@ public class AmazonTranslateTest {
     // Assert
     Text expectedText =
         new Text(Language.TURKISH, title.getTranslatedText(), authors,
-            paragraph1.getTranslatedText() + "\r\r\r\r\r"
-                + paragraph2.getTranslatedText() + "\r\r\r\r\r");
+            List.of(paragraph1.getTranslatedText(),
+                paragraph2.getTranslatedText()));
     assertEquals(expectedText, translatedText);
 
     verify(translateAsync, times(3)).translateTextAsync(any());

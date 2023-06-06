@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -73,18 +72,17 @@ public class AmazonTranslate extends TranslationModel {
                         Language targetLanguage) {
 
     TranslateTextRequest request;
-    Scanner scanner = new Scanner(text.getContent());
-    scanner.useDelimiter("\r\r\r\r\r");
 
 
     //get each item in the content and translate individually
     List<Future<TranslateTextResult>> resultList = new ArrayList<>();
-    while (scanner.hasNext()) {
+    for (String paragraph
+        :text.getContent()) {
       request = new TranslateTextRequest()
           .withSourceLanguageCode(sourceLanguage.getCode())
           .withTargetLanguageCode(targetLanguage.getCode());
 
-      request.withText(scanner.next());
+      request.withText(paragraph);
       resultList.add(translateAsync.translateTextAsync(request));
     }
 
@@ -103,12 +101,11 @@ public class AmazonTranslate extends TranslationModel {
                                  List<Future<TranslateTextResult>> resultList,
                                  Future<TranslateTextResult> translatedTitle,
                                  Text text) {
-    StringBuilder stringBuilder = new StringBuilder();
+    List<String> translatedParagraphs = new ArrayList<>();
     //translate the body
     resultList.forEach(x -> {
       try {
-        stringBuilder.append(x.get().getTranslatedText());
-        stringBuilder.append("\r\r\r\r\r");
+        translatedParagraphs.add(x.get().getTranslatedText());
       } catch (InterruptedException e) {
         e.printStackTrace();
       } catch (ExecutionException e) {
@@ -125,7 +122,7 @@ public class AmazonTranslate extends TranslationModel {
       e.printStackTrace();
     }
 
-    text.setContent(stringBuilder.toString());
+    text.setContent(translatedParagraphs);
     text.setLanguage(targetLanguage);
     return text;
   }

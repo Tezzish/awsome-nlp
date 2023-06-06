@@ -38,11 +38,13 @@ class UserConfigHandlerTest {
 
   ObjectMapper objectMapper = new ObjectMapper();
   //I KNOW, TERRIBLE WAY TO STORE IT
-  String apiKey = "6ax7j6di7ff47gfx5pxp3uqgae";
-  String endPoint = "https://gir7li5d5vbv5dcl7jglhmrgri.appsync-api.eu-west-1."
-      + "amazonaws.com/graphql";
+  String apiKey = "da2-o3qctlwtsvcudkwcf7czya63fa";
+  String endPoint = "https://nxab62gupfgqle5xouca3ygqp4."
+      + "appsync-api.eu-west-1.amazonaws.com/graphql";
 
-  @Disabled("Disabled until we get new accounts!")
+  //very flaky! run a couple of times to be sure that it works.
+  // it times out when it shouldnt
+  @Disabled
   @Test
   void integrationTest() throws IOException {
     //Prepare input
@@ -116,6 +118,7 @@ class UserConfigHandlerTest {
     JsonNode[] contents =
         objectMapper.convertValue(output.get("content"), JsonNode[].class);
 
+    assertNotEquals(0, contents.length);
     for (JsonNode paragraph : contents) {
       assertNotEquals(null, paragraph);
       assertNotEquals("", paragraph);
