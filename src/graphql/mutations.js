@@ -236,14 +236,10 @@ export const createRating = /* GraphQL */ `
         title
         authors
         content
-        createdAt
-        updatedAt
         blogPostOriginalPostId
         blogPostLanguageCode
         blogPostTranslationModelId
       }
-      createdAt
-      updatedAt
       ratingBlogPostId
     }
   }
@@ -261,14 +257,10 @@ export const updateRating = /* GraphQL */ `
         title
         authors
         content
-        createdAt
-        updatedAt
         blogPostOriginalPostId
         blogPostLanguageCode
         blogPostTranslationModelId
       }
-      createdAt
-      updatedAt
       ratingBlogPostId
     }
   }
