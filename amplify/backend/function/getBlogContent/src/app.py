@@ -5,6 +5,8 @@ from urllib.request import urlopen
 
 def handler(event, context):
     # check if the url sends a 404 response code
+
+    # the url to check
     url = event['arguments']['url']
     
     try:
