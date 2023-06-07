@@ -56,11 +56,22 @@ button {
 }
 .right-side {
   width: 45%;
-  height: 90vh;  /* change to 90vh to make them equal */
+  height: 90vh;
   padding: 10px;
-  box-sizing: border-box;  /* include padding in element's total width and height */
+  box-sizing: border-box;
   border: solid darkorange;
   border-width: 2px 2px;
   border-radius: 4px;
-  overflow-y: auto;  /* make it scrollable when the content overflows */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rating-section {
+  align-self: flex-end;
+  margin-bottom: 100%;
+}
+.rating-section h4 {
+  font-size: 0.7rem;
 }

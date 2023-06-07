@@ -4,6 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import {getBlogPostParsed, listLanguages, listTranslationModels, translate} from "./graphql/queries";
+import StarRatings from 'react-star-ratings';
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
@@ -124,45 +125,62 @@ function App() {
     }
   };
 
+  const [rating, setRating] = useState(0);
+
+  const changeRating = (newRating) => {
+    setRating(newRating);
+  };
+
 
   return (
-      <div className="App">
+    <div className="App">
         <form>
-          <div className="dropdown-container">
-            <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
-            <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
-              {languages.map((language) => (
-                  <option key={language.code} value={language.name}>
-                    {language.name}
-                  </option>
-              ))}
-            </select>
-            <select id="model" onChange={handleInputChangeModel}>
-              {translationModels.map((model) => (
-                  <option key={model.id} value={model.name}>
-                    {model.name}
-                  </option>
-              ))}
-            </select>
-            <div>
-              <button id="translate" onClick={handleButtonClick}>Translate!</button>
-          </div>
-        </div>
+            <div className="dropdown-container">
+                <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
+                <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
+                    {languages.map((language) => (
+                        <option key={language.code} value={language.name}>
+                            {language.name}
+                        </option>
+                    ))}
+                </select>
+                <select id="model" onChange={handleInputChangeModel}>
+                    {translationModels.map((model) => (
+                        <option key={model.id} value={model.name}>
+                            {model.name}
+                        </option>
+                    ))}
+                </select>
+                <div>
+                    <button id="translate" onClick={handleButtonClick}>Translate!</button>
+                </div>
+            </div>
         </form>
         <div className="content-container">
-          <div
-              className="left-side"
-              id="leftWindow"
-          ></div>
-          <div className="right-side">
-            <h2>{translatedContent.title}</h2>
-            <h3>{translatedContent.authors}</h3>
-            {translatedContent.content.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+            <div className="left-side" id="leftWindow"></div>
+            <div className="right-side">
+                <div>
+                    <h2>{translatedContent.title}</h2>
+                    <h3>{translatedContent.authors}</h3>
+                    {translatedContent.content.split('\n').map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                    ))}
+                </div>
+                <div className="rating-section">
+                    <h4>Rate this translation:</h4>
+                    <StarRatings
+                        rating={rating}
+                        starRatedColor="blue"
+                        changeRating={changeRating}
+                        numberOfStars={5}
+                        name='rating'
+                        starDimension="15px"
+                        starSpacing="3px"
+                    />
+                </div>
+            </div>
         </div>
-      </div>
-  );
+    </div>
+);
 }
 export default App;
