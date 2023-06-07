@@ -56,7 +56,7 @@ function App() {
         sendConfigToBackend(url, lang, translator)
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
     }
   };
 
@@ -84,7 +84,7 @@ function App() {
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
       return response;
     } catch (error) {
-      console.error('Error sending original blog post to backend:', error);
+      console.log('Error sending original blog post to backend:', error);
     }
   }
 
@@ -100,7 +100,7 @@ function App() {
         setLanguages(languagesData.data.listLanguages.items);
         setTranslationModels(modelsData.data.listTranslationModels.items);
       } catch (error) {
-        console.error('Error fetching languages and models:', error);
+        console.log('Error fetching languages and models:', error);
       }
     };
 
