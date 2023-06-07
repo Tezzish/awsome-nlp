@@ -24,9 +24,9 @@ function App() {
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+  const [ratingId] = useState(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+  const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
-  var ratingid;
-  var ratingBlogPostId;
 
 
 
@@ -124,7 +124,7 @@ function App() {
       const title = translatedPost.title;
       const authors = translatedPost.authors.join(', ');
       const content = translatedPost.content.join('\n');
-      ratingBlogPostId = translatedPost.id;
+      setRatingBlogPostId(translatedPost.id);
 
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
@@ -136,23 +136,22 @@ function App() {
   const [rating, setRating] = useState(0);
 
 
-  const changeRating =  async (newRating, name) => {
+  const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
       createRatingFunc(newRating, ratingBlogPostId);
       setRatingSubmitted(true);
     } else {
-      mutateRatingFunc(newRating, ratingBlogPostId);
+      mutateRatingFunc(newRating);
     }
   };
 
 
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
-      ratingid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
       const rating = await API.graphql(graphqlOperation(createRating, {
         input: {
-          id: ratingid, 
+          id: ratingId,
           ratingBlogPostId: ratingBlogPostId,
           stars: star
         }
@@ -163,12 +162,12 @@ function App() {
     }
   }
 
-  
-  async function mutateRatingFunc(star, ratingid) {
+
+  async function mutateRatingFunc(star) {
     try {
       const rating = await API.graphql(graphqlOperation(updateRating, {
         input: {
-          id: ratingid, 
+          id: ratingId,
           stars: star
         }
       }));
@@ -209,14 +208,7 @@ function App() {
       <div className="content-container">
         <div className="left-side" id="leftWindow"></div>
         <div className="right-side">
-          <div>
-            <h2>{translatedContent.title}</h2>
-            <h3>{translatedContent.authors}</h3>
-            {translatedContent.content.split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-          {backendFinished && (
+          <div>  {backendFinished && (
             <div className="rating-section">
               <h4>Rate this translation:</h4>
               <StarRatings
@@ -230,6 +222,12 @@ function App() {
               />
             </div>
           )}
+            <h2>{translatedContent.title}</h2>
+            <h3>{translatedContent.authors}</h3>
+            {translatedContent.content.split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

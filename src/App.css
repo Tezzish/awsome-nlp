@@ -70,7 +70,7 @@ button {
 
 .rating-section {
   align-self: flex-end;
-  margin-bottom: 100%;
+  margin-bottom: auto;
 }
 .rating-section h4 {
   font-size: 0.7rem;
