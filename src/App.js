@@ -19,6 +19,7 @@ function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
+  const [backendFinished, setBackendFinished] = useState(false);
 
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
 
@@ -120,6 +121,7 @@ function App() {
       const content = translatedPost.content.join('\n');
 
       setTranslatedContent({ title, authors, content });
+      setBackendFinished(true)
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
@@ -166,18 +168,20 @@ function App() {
                         <p key={index}>{paragraph}</p>
                     ))}
                 </div>
-                <div className="rating-section">
-                    <h4>Rate this translation:</h4>
-                    <StarRatings
-                        rating={rating}
-                        starRatedColor="blue"
-                        changeRating={changeRating}
-                        numberOfStars={5}
-                        name='rating'
-                        starDimension="15px"
-                        starSpacing="3px"
-                    />
-                </div>
+                {backendFinished && (
+                  <div className="rating-section">
+                      <h4>Rate this translation:</h4>
+                      <StarRatings
+                          rating={rating}
+                          starRatedColor="blue"
+                          changeRating={changeRating}
+                          numberOfStars={5}
+                          name='rating'
+                          starDimension="15px"
+                          starSpacing="3px"
+                      />
+                  </div>
+                ) }
             </div>
         </div>
     </div>
