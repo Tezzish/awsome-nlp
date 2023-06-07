@@ -154,7 +154,7 @@ function App() {
   );
 }
 
-const isValidURL = async url => {
+function isValidURL(url) {
   if(!url.startsWith("https://aws.amazon.com/blogs/")) return false;
   return true;
  }
