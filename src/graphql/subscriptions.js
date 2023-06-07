@@ -103,32 +103,9 @@ export const onCreateBlogPost = /* GraphQL */ `
       id
       originalPost {
         id
-        originalPost {
-          id
-          title
-          authors
-          content
-          createdAt
-          updatedAt
-          blogPostOriginalPostId
-          blogPostLanguageCode
-          blogPostTranslationModelId
-        }
-        language {
-          name
-          code
-          createdAt
-          updatedAt
-        }
         title
         authors
         content
-        translationModel {
-          id
-          name
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
         blogPostOriginalPostId
@@ -164,32 +141,9 @@ export const onUpdateBlogPost = /* GraphQL */ `
       id
       originalPost {
         id
-        originalPost {
-          id
-          title
-          authors
-          content
-          createdAt
-          updatedAt
-          blogPostOriginalPostId
-          blogPostLanguageCode
-          blogPostTranslationModelId
-        }
-        language {
-          name
-          code
-          createdAt
-          updatedAt
-        }
         title
         authors
         content
-        translationModel {
-          id
-          name
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
         blogPostOriginalPostId
@@ -225,32 +179,9 @@ export const onDeleteBlogPost = /* GraphQL */ `
       id
       originalPost {
         id
-        originalPost {
-          id
-          title
-          authors
-          content
-          createdAt
-          updatedAt
-          blogPostOriginalPostId
-          blogPostLanguageCode
-          blogPostTranslationModelId
-        }
-        language {
-          name
-          code
-          createdAt
-          updatedAt
-        }
         title
         authors
         content
-        translationModel {
-          id
-          name
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
         blogPostOriginalPostId
@@ -277,6 +208,72 @@ export const onDeleteBlogPost = /* GraphQL */ `
       blogPostOriginalPostId
       blogPostLanguageCode
       blogPostTranslationModelId
+    }
+  }
+`;
+export const onCreateRating = /* GraphQL */ `
+  subscription OnCreateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onCreateRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
+    }
+  }
+`;
+export const onUpdateRating = /* GraphQL */ `
+  subscription OnUpdateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onUpdateRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
+    }
+  }
+`;
+export const onDeleteRating = /* GraphQL */ `
+  subscription OnDeleteRating($filter: ModelSubscriptionRatingFilterInput) {
+    onDeleteRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
     }
   }
 `;
