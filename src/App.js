@@ -154,50 +154,13 @@ function App() {
   );
 }
 
-
-
-function isValidURL(url) {  
+const isValidURL = async url => {
   if(!url.startsWith("https://aws.amazon.com/blogs/")) return false;
-  var request = new XMLHttpRequest();
-  request.open('GET', url, false);
-  request.send();
-  if (request.status === 200) {
-      return true;
-  }
-  else {
-      return false;
-  }
-}
-
-// const urlExists = async url => {
-//   // fetches the url and checks if the status code is 200
-//   //try {
-//     const response = await fetch(url, {
-//       method: 'GET',
-//       mode: 'no-cors'
-//     });
-//     return response.status != 404;
-//   //}
-//   // catch (err) {
-//   //   return false;
-//   // }
-// }
+  return true;
+ }
 
 
-// function isValidURL(url) {
-//   if(!url.startsWith("https://aws.amazon.com/blogs/")) return false;
-//   var request = new XMLHttpRequest();
-//   request.open('GET', url, false);
-//   request.send();
-//   if (request.status === 200) {
-//       return true;
-//   }
-//   else {
-//       return false;
-//   }
-// }
 
 export { isValidURL };
-//export { urlExists };
 export default App;
 
