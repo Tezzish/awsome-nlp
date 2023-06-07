@@ -151,42 +151,6 @@
           "Ref": "UnauthRoleName"
         }
       }
-    },
-    "apiawsomenlp": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "Parameters": {
-          "AppSyncApiName": "awsomenlp",
-          "DynamoDBBillingMode": "PAY_PER_REQUEST",
-          "DynamoDBEnableServerSideEncryption": false,
-          "S3DeploymentBucket": "amplify-awsomenlp-frontdev-134102-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/5787ff67016cc62f28a274985801da755a1981e7",
-          "env": "frontdev"
-        }
-      }
-    },
-    "functionUserConfigFunction": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-5330712b537a6b4b4639-build.zip",
-          "env": "frontdev"
-        }
-      }
-    },
-    "functiongetBlogContent": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-frontdev-134102-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-frontdev-134102-deployment",
-          "s3Key": "amplify-builds/getBlogContent-5a6e716661576e524269-build.zip",
-          "env": "frontdev"
-        }
-      }
     }
   }
 }
