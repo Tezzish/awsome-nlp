@@ -129,7 +129,7 @@ function App() {
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
     } catch (error) {
-      console.error('Error sending config to backend:', error);
+      console.log('Error sending config to backend:', error);
     }
   };
 
