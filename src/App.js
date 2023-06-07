@@ -75,7 +75,7 @@ function App() {
       console.log('response from backend: ', response);
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
-      return response;
+      //return response;
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }
