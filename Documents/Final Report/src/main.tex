@@ -1,0 +1,93 @@
+    \documentclass[a4paper]{article}
+
+%%%%%%%% CREATE DOCUMENT STRUCTURE %%%%%%%%
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[nottoc,numbib]{tocbibind}
+%\usepackage{subfig}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{sectsty}
+\usepackage{float}
+\usepackage{titling} 
+\usepackage{blindtext}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.0, 0.4, 0.0}
+\usepackage[numbers]{natbib}
+\bibliographystyle{IEEEtran}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{shapes,arrows,positioning}
+\usepackage{titlesec}
+\usepackage{shellesc}
+\usepackage{blindtext}
+\usepackage{appendix}
+
+
+
+\setcounter{secnumdepth}{4}
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\loadglsentries{0Front/03Glossary}
+
+
+
+%%%%%%%% DOCUMENT %%%%%%%%
+\begin{document}
+
+\include{0Front/00TitlePage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\printglossary[type=\acronymtype]
+\printglossary
+\newpage
+
+\include{0Front/01Preface}
+\include{0Front/02Summary}
+
+\pagenumbering{arabic}
+
+\include{1Body/01Introduction}
+\include{1Body/02ProblemAnalysis}
+\include{1Body/03FeasibilityStudyandRiskAnalysis}
+\include{1Body/04Requirements}
+\include{1Body/05ProjectApproach}
+\include{1Body/06DevelopmentMethodology}
+\include{1Body/07Design&SLC}
+\include{1Body/08ImplementationProcess}
+\include{1Body/09DevelopmentIssues}
+\include{1Body/10Testing}
+\include{1Body/11Eval&Solution}
+\include{1Body/12Ethics&Value}
+\include{1Body/13Conclusion}
+
+\newpage
+\clearpage
+
+\bibliography{ref}
+
+\newpage
+\clearpage
+\pagenumbering{alph}
+
+\begin{appendices}
+    \include{2Back/appendixA}
+\end{appendices}
+
+
+\end{document}

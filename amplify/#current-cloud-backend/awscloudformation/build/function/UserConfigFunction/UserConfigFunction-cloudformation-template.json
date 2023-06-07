@@ -43,7 +43,7 @@
             "Ref": "s3Key"
           }
         },
-        "Handler": "example.LambdaRequestHandler::handleRequest",
+        "Handler": "index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
@@ -78,7 +78,7 @@
             "Arn"
           ]
         },
-        "Runtime": "java11",
+        "Runtime": "python3.8",
         "Layers": [],
         "Timeout": 25
       }

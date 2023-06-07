@@ -3,7 +3,7 @@ import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-import {listLanguages, listTranslationModels, translate} from "./graphql/queries";
+import {getBlogPostParsed, listLanguages, listTranslationModels, translate} from "./graphql/queries";
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
@@ -17,9 +17,8 @@ function App() {
   const [translationModels, setTranslationModels] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  const [URLValue, setURLValue] = useState("https://en.wikipedia.org/wiki/HTML");
+  const [URLValue, setURLValue] = useState();
 
-  const [leftIframeSrc, setLeftIframeSrc] = useState("https://en.wikipedia.org/wiki/HTML");
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
 
 
@@ -39,14 +38,18 @@ function App() {
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
     e.preventDefault();
-
+    console.log("Button Clicked");
     const url = URLValue;
     const lang = selectedLanguage;
     const translator = selectedModel;
-
-    if (isValidURL(url)) {
-      setLeftIframeSrc(url);
+    try {
+      // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
+      if(isValidURL(url)) {
+      sendOriginalToBackend(url);
       sendConfigToBackend(url, lang, translator)
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -56,11 +59,27 @@ function App() {
   const isValidURL = (str) => {
     try {
       new URL(str);
-      return true;
+      if (str.includes("https://aws.amazon.com/blogs/")) {
+        return true;
+      }
     } catch {
       return false;
     }
   };
+
+  // sends the url of the original blog post to the backend to be parsed
+  async function sendOriginalToBackend(url1) {
+    console.log('sending original blog post url to backend: URL =' + url1);
+    try {
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{  url: url1 }));
+      console.log('response from backend: ', response);
+      const leftWindow = document.getElementById('leftWindow');
+      leftWindow.innerHTML = response.data.getBlogPostParsed.file;
+      return response;
+    } catch (error) {
+      console.error('Error sending original blog post to backend:', error);
+    }
+  }
 
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
@@ -131,11 +150,10 @@ function App() {
         </div>
         </form>
         <div className="content-container">
-          <iframe
+          <div
               className="left-side"
-              title="Left Content"
-              src={leftIframeSrc}
-          ></iframe>
+              id="leftWindow"
+          ></div>
           <div className="right-side">
             <h2>{translatedContent.title}</h2>
             <h3>{translatedContent.authors}</h3>
@@ -147,5 +165,4 @@ function App() {
       </div>
   );
 }
-
 export default App;

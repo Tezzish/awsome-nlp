@@ -1,0 +1,22 @@
+\section{Design \& Sub Level Concepts}
+
+\indent \indent The application aims to combine eight different AWS services. There include AWS Amplify, AWS AppSync, AWS Lambda, AWS Step Functions, Amazon Translate, AWS SageMaker, Amazon S3, and Amazon DynamoDB. The use of each of these services, and their use in building our application, will be discussed in this section. Overall, in an architecturally complex application with a vast amount of moving parts, the optimal and efficient use of the different AWS service will allow us to have a scalable, accurate and reliable full-stack web application for translating Amazon blog posts.
+
+\subsection{Development and Communication Services}
+\textbf{AWS Amplify} is introduced as a development platform for building web applications. AWS Amplify simplifies the development process and facilitates integration with other AWS services, such as Amazon S3 and AWS AppSync. Amplify  allows scalability and security benefits for handling a large number of translation requests and other languages.
+
+\textbf{AWS AppSync}, a fully managed service for developing GraphQL APIs will be used in order to create a GraphQL API that interfaces with translation services. In fact, AWS AppSync can be configured to connect to translation services, such as Amazon Translate, using AWS Lambda for executing the translation logic.
+
+\subsection{Backend Services}
+\textbf{AWS Lambda}, a serverless computing service, is the gateway between AWS AppSync and the translation engines. One of Lambda's capabilities is to handle quick computation and incorporate business logic between the gateway and translation engines.
+
+Finally, \textbf{AWS Step Functions}, a serverless workflow service, is as a tool used to orchestrate the translation workflow and managing the flow of data between translation services. Using Step Functions has numerous benefits, including defining dependencies and the ease of managing the application flow using a JSON document.
+
+The architecture of the application starts with \textbf{Amazon DynamoDB}, a serverless and highly scalable NoSQL database, which is chosen as the database for storing the URLs of translated blog posts.
+
+Next, \textbf{Amazon S3} (Simple Storage Service) is introduced as the storage solution for the actual content of translated blog posts. DynamoDB and S3 are integrated to enable efficient storage and retrieval of translated AWS blog posts.
+
+\subsection{Translation and ML Services}
+Amazon Translate, a natural language translation service, is discussed as one of the translation modes in the project. The Amazon Translate API is used for translating HTML documents while preserving images and other blog-specific elements. The customization feature of Amazon Translate is also utilised in order to keep technical terms untranslated.
+
+Following is \textbf{Amazon SageMaker}, a platform for machine learning operations, which provides tools for training, testing, deploying, and managing machine learning models. SageMaker is used in data preparation, preprocessing, training, hyperparameter tuning, model evaluation, deployment, inference, monitoring, and iteration processes in order to build a fine-tuned translation model.
