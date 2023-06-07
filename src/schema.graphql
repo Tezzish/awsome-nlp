@@ -1,207 +1,61 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type TranslationConfig {
-  id: ID!
-  url: String!
-  targetLanguage: Language!
-  sourceLanguage: Language!
-  translationModel: TranslationModel!
+input ConfigInput {
+    url: String
+    targetLanguage: CreateLanguageInput
+    sourceLanguage: CreateLanguageInput
+    translationModel: TranslationModelInput
 }
 
-interface BlogPost {
-  id: ID!
-  language: Language!
-  title: String!
-  authors: [String]!
-  content: Content
+input TranslationModelInput {
+    type: String
+}
+input CreateLanguageInput {
+    name: String!
+    code: String!
 }
 
-type OriginalBlogPost implements BlogPost {
-  id: ID!
-  language: Language!
-  title: String!
-  authors: [String]!
-  content: Content
+type TranslationConfig @model {
+    id: ID!
+    url: String!
+    targetLanguage: Language @hasOne  #you dont always need a target language, for simplicity sake we'll keep it
+    sourceLanguage: Language @hasOne
+    translationModel: TranslationModel
 }
 
-type TranslatedBlogPost implements BlogPost {
-  id: ID!
-  originalPost: OriginalBlogPost!
-  language: Language!
-  title: String!
-  authors: [String]!
-  content: Content
+type BlogPost @model{
+    id: ID!
+    originalPost: BlogPost @hasOne
+    language: Language! @hasOne
+    title: String!
+    authors: [String]!
+    content: [String]
+    translationModel: TranslationModel @hasOne
 }
 
-type Content {
-  paragraphs: [String]
+type Rating @model {
+    id: ID!
+    stars: Int
+    blogPost: BlogPost! @hasOne
+}
+
+type Language @model {
+    name: String!
+    code: String! @primaryKey  #Language code: ie. "en" for English, "tr" for Turkish
+}
+
+type TranslationModel @model {
+    id: ID!
+    name: String!
 }
 
 type html {
-	file: String
+    file: String
 }
 
-type Language {
-  id: ID!
-  name: String!
-  code: String!
-}
-
-type TranslationModel {
-  id: ID!
-  name: String!
-}
-
-input ModelStringInput {
-  ne: String
-  eq: String
-  le: String
-  lt: String
-  ge: String
-  gt: String
-  contains: String
-  notContains: String
-  between: [String]
-  beginsWith: String
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  size: ModelSizeInput
-}
-
-input ModelIntInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-}
-
-input ModelFloatInput {
-  ne: Float
-  eq: Float
-  le: Float
-  lt: Float
-  ge: Float
-  gt: Float
-  between: [Float]
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-}
-
-input ModelBooleanInput {
-  ne: Boolean
-  eq: Boolean
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-}
 type Query {
-	getBlogPostParsed(url: String): html
-	getTodo(id: ID!): Todo
-	listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection
+    translate(input: ConfigInput): BlogPost
+    getBlogPostParsed(url: String): html
 }
-input ModelIDInput {
-  ne: ID
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  contains: ID
-  notContains: ID
-  between: [ID]
-  beginsWith: ID
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  size: ModelSizeInput
-}
-
-input ModelSubscriptionStringInput {
-  ne: String
-  eq: String
-  le: String
-  lt: String
-  ge: String
-  gt: String
-  contains: String
-  notContains: String
-  between: [String]
-  beginsWith: String
-  in: [String]
-  notIn: [String]
-}
-
-input ModelSubscriptionIntInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
-  in: [Int]
-  notIn: [Int]
-}
-
-input ModelSubscriptionFloatInput {
-  ne: Float
-  eq: Float
-  le: Float
-  lt: Float
-  ge: Float
-  gt: Float
-  between: [Float]
-  in: [Float]
-  notIn: [Float]
-}
-
-input ModelSubscriptionBooleanInput {
-  ne: Boolean
-  eq: Boolean
-}
-
-input ModelSubscriptionIDInput {
-  ne: ID
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  contains: ID
-  notContains: ID
-  between: [ID]
-  beginsWith: ID
-  in: [ID]
-  notIn: [ID]
-}
-
-enum ModelAttributeTypes {
-  binary
-  binarySet
-  bool
-  list
-  map
-  number
-  numberSet
-  string
-  stringSet
-  _null
-}
-
-input ModelSizeInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
-}
-
-enum ModelSortDirection {
-  ASC
-  DESC
-}
-
