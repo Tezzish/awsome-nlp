@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("AWSomeNLPTranslator")
 public class AWSomeNLPTranslator extends TranslationModel {
 
+
   //TODO
 
   /**
@@ -30,4 +31,10 @@ public class AWSomeNLPTranslator extends TranslationModel {
     super(id);
   }
 
+  /**
+   * Empty Constructor.
+   */
+  public AWSomeNLPTranslator() {
+    super(null);
+  }
 }

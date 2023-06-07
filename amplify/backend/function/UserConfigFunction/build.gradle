@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: 'jacoco'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -40,12 +41,20 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin
     implementation 'org.apache.maven.plugins:maven-checkstyle-plugin:3.3.0'
 
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation 'org.mockito:mockito-core:5.3.1'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
+    // https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
+    implementation 'org.jacoco:jacoco-maven-plugin:0.8.10'
 
 }
+
+
 
 jar.archiveBaseName = 'latest_build'
 
@@ -62,4 +71,8 @@ test {
     useJUnitPlatform()
 }
 
-build.dependsOn buildZip
+
+
+build.dependsOn
+
+
