@@ -136,7 +136,7 @@ function App() {
   const [rating, setRating] = useState(0);
 
 
-  const changeRating = (newRating, name) => {
+  const changeRating =  async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
       createRatingFunc(newRating, ratingBlogPostId);
@@ -147,10 +147,10 @@ function App() {
   };
 
 
-  function createRatingFunc(star, ratingBlogPostId) {
+  async function createRatingFunc(star, ratingBlogPostId) {
     try {
       ratingid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-      const rating = API.graphql(graphqlOperation(createRating, {
+      const rating = await API.graphql(graphqlOperation(createRating, {
         input: {
           id: ratingid, 
           ratingBlogPostId: ratingBlogPostId,
@@ -164,9 +164,9 @@ function App() {
   }
 
   
-  function mutateRatingFunc(star, ratingid) {
+  async function mutateRatingFunc(star, ratingid) {
     try {
-      const rating = API.graphql(graphqlOperation(updateRating, {
+      const rating = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingid, 
           stars: star
