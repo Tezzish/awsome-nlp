@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
-import {Amplify} from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsExports from './aws-exports';
-import {getBlogPostParsed, listLanguages, listTranslationModels, translate} from "./graphql/queries";
+import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
+import { createRating, updateRating } from "./graphql/mutations";
 import StarRatings from 'react-star-ratings';
 
 
@@ -20,8 +21,12 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
   const [backendFinished, setBackendFinished] = useState(false);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+
+  var ratingid;
+  var ratingBlogPostId;
 
 
 
@@ -46,9 +51,9 @@ function App() {
     const translator = selectedModel;
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
-      if(isValidURL(url)) {
-      sendOriginalToBackend(url);
-      sendConfigToBackend(url, lang, translator)
+      if (isValidURL(url)) {
+        sendOriginalToBackend(url);
+        sendConfigToBackend(url, lang, translator)
       }
     } catch (error) {
       console.error("Error:", error);
@@ -73,7 +78,7 @@ function App() {
   async function sendOriginalToBackend(url1) {
     console.log('sending original blog post url to backend: URL =' + url1);
     try {
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{  url: url1 }));
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
       console.log('response from backend: ', response);
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = response.data.getBlogPostParsed.file;
@@ -119,6 +124,7 @@ function App() {
       const title = translatedPost.title;
       const authors = translatedPost.authors.join(', ');
       const content = translatedPost.content.join('\n');
+      ratingBlogPostId = translatedPost.id;
 
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
@@ -129,62 +135,104 @@ function App() {
 
   const [rating, setRating] = useState(0);
 
-  const changeRating = (newRating) => {
+
+  const changeRating = (newRating, name) => {
     setRating(newRating);
+    if (!ratingSubmitted) {
+      createRatingFunc(newRating, ratingBlogPostId);
+      setRatingSubmitted(true);
+    } else {
+      mutateRatingFunc(newRating, ratingBlogPostId);
+    }
   };
+
+
+  function createRatingFunc(star, ratingBlogPostId) {
+    try {
+      ratingid = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+      const rating = API.graphql(graphqlOperation(createRating, {
+        input: {
+          id: ratingid, 
+          ratingBlogPostId: ratingBlogPostId,
+          stars: star
+        }
+      }));
+      console.log(rating);
+    } catch (error) {
+      console.log("Rating not created:", error)
+    }
+  }
+
+  
+  function mutateRatingFunc(star, ratingid) {
+    try {
+      const rating = API.graphql(graphqlOperation(updateRating, {
+        input: {
+          id: ratingid, 
+          stars: star
+        }
+      }));
+      console.log(rating);
+    } catch (error) {
+      console.log("Rating not updated:", error)
+    }
+  }
+
+
+
 
 
   return (
     <div className="App">
-        <form>
-            <div className="dropdown-container">
-                <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
-                <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
-                    {languages.map((language) => (
-                        <option key={language.code} value={language.name}>
-                            {language.name}
-                        </option>
-                    ))}
-                </select>
-                <select id="model" onChange={handleInputChangeModel}>
-                    {translationModels.map((model) => (
-                        <option key={model.id} value={model.name}>
-                            {model.name}
-                        </option>
-                    ))}
-                </select>
-                <div>
-                    <button id="translate" onClick={handleButtonClick}>Translate!</button>
-                </div>
-            </div>
-        </form>
-        <div className="content-container">
-            <div className="left-side" id="leftWindow"></div>
-            <div className="right-side">
-                <div>
-                    <h2>{translatedContent.title}</h2>
-                    <h3>{translatedContent.authors}</h3>
-                    {translatedContent.content.split('\n').map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                    ))}
-                </div>
-                {backendFinished && (
-                  <div className="rating-section">
-                      <h4>Rate this translation:</h4>
-                      <StarRatings
-                          rating={rating}
-                          starRatedColor="blue"
-                          changeRating={changeRating}
-                          numberOfStars={5}
-                          name='rating'
-                          starDimension="15px"
-                          starSpacing="3px"
-                      />
-                  </div>
-                ) }
-            </div>
+      <form>
+        <div className="dropdown-container">
+          <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
+          <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
+            {languages.map((language) => (
+              <option key={language.code} value={language.name}>
+                {language.name}
+              </option>
+            ))}
+          </select>
+          <select id="model" onChange={handleInputChangeModel}>
+            {translationModels.map((model) => (
+              <option key={model.id} value={model.name}>
+                {model.name}
+              </option>
+            ))}
+          </select>
+          <div>
+            <button id="translate" onClick={handleButtonClick}>Translate!</button>
+          </div>
         </div>
+      </form>
+      <div className="content-container">
+        <div className="left-side" id="leftWindow"></div>
+        <div className="right-side">
+          <div>
+            <h2>{translatedContent.title}</h2>
+            <h3>{translatedContent.authors}</h3>
+            {translatedContent.content.split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+          {backendFinished && (
+            <div className="rating-section">
+              <h4>Rate this translation:</h4>
+              <StarRatings
+                rating={rating}
+                starRatedColor="blue"
+                changeRating={changeRating}
+                numberOfStars={5}
+                name='rating'
+                starDimension="15px"
+                starSpacing="3px"
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
-);
+  );
 }
 export default App;
