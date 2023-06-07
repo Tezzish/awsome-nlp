@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -20,7 +19,7 @@ import java.util.concurrent.Future;
 /**
  * Supported Language Codes:
  * https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html .
- *
+ * <p>
  * API Reference:
  * https://docs.aws.amazon.com/translate/latest/APIReference/welcome.html .
  */
@@ -32,10 +31,12 @@ public class AmazonTranslate extends TranslationModel {
 
   /**
    * Constructor for AmazonTranslate Object.
+   *
    * @param id
    */
   public AmazonTranslate(String id) {
     super(id);
+    translateAsync = buildAsync();
   }
 
   /**
@@ -43,6 +44,16 @@ public class AmazonTranslate extends TranslationModel {
    */
   public AmazonTranslate() {
     super(null);
+    translateAsync = buildAsync();
+  }
+
+  protected AmazonTranslateAsync buildAsync() {
+    return AmazonTranslateAsyncClient.asyncBuilder()
+        .withCredentials(
+            DefaultAWSCredentialsProviderChain.getInstance())
+        .withRegion(
+            Regions.EU_WEST_1) //should be changed to not be hard coded
+        .build();
   }
 
 
@@ -50,50 +61,51 @@ public class AmazonTranslate extends TranslationModel {
   //  TODO ADD REGION
   //  TODO ADD CUSTOM TERMS (SUPPORTED)
   //  TODO ADD TRANSLATING AUTHOR TITLE
+
   /**
    * @param text
-   * @return Translated text or NULL if translation is interrupted or cannot.
+   * @return Translated text or partially translated text if it was
+   * interrupted.
    */
   @Override
-
   public Text translate(Text text, Language sourceLanguage,
                         Language targetLanguage) {
 
-    translateAsync = AmazonTranslateAsyncClient.asyncBuilder()
-        .withCredentials(
-            DefaultAWSCredentialsProviderChain.getInstance())
-        .withRegion(
-            Regions.EU_WEST_1) //should be changed to not be hard coded
-        .build();
-
-    TranslateTextRequest request = new TranslateTextRequest()
-        .withSourceLanguageCode(sourceLanguage.getCode())
-        .withTargetLanguageCode(targetLanguage.getCode());
-
-    Scanner scanner = new Scanner(text.getContent());
-    scanner.useDelimiter("\r\r\r\r\r");
+    TranslateTextRequest request;
 
 
+    //get each item in the content and translate individually
     List<Future<TranslateTextResult>> resultList = new ArrayList<>();
-    while (scanner.hasNext()) {
-      request.withText(scanner.next());
+    for (String paragraph
+        :text.getContent()) {
+      request = new TranslateTextRequest()
+          .withSourceLanguageCode(sourceLanguage.getCode())
+          .withTargetLanguageCode(targetLanguage.getCode());
+
+      request.withText(paragraph);
       resultList.add(translateAsync.translateTextAsync(request));
     }
 
+    request = new TranslateTextRequest()
+        .withSourceLanguageCode(sourceLanguage.getCode())
+        .withTargetLanguageCode(targetLanguage.getCode());
     Future<TranslateTextResult> translatedTitle = translateAsync
         .translateTextAsync(request.withText(text.getTitle()));
 
-
-    Text t = text;
-    StringBuilder stringBuilder = new StringBuilder();
-
-
     //translates everything paragraph by paragraph
+    return getTranslatedText(targetLanguage, resultList, translatedTitle,
+        text);
+  }
 
+  private Text getTranslatedText(Language targetLanguage,
+                                 List<Future<TranslateTextResult>> resultList,
+                                 Future<TranslateTextResult> translatedTitle,
+                                 Text text) {
+    List<String> translatedParagraphs = new ArrayList<>();
+    //translate the body
     resultList.forEach(x -> {
       try {
-        stringBuilder.append(x.get().getTranslatedText());
-        stringBuilder.append("\r\r\r\r\r");
+        translatedParagraphs.add(x.get().getTranslatedText());
       } catch (InterruptedException e) {
         e.printStackTrace();
       } catch (ExecutionException e) {
@@ -101,17 +113,18 @@ public class AmazonTranslate extends TranslationModel {
       }
     });
 
+    //translate the title
     try {
-      t.setTitle(translatedTitle.get().getTranslatedText());
+      text.setTitle(translatedTitle.get().getTranslatedText());
     } catch (InterruptedException e) {
       e.printStackTrace();
     } catch (ExecutionException e) {
       e.printStackTrace();
     }
 
-    t.setContent(stringBuilder.toString());
-    t.setLanguage(targetLanguage);
-    return t;
+    text.setContent(translatedParagraphs);
+    text.setLanguage(targetLanguage);
+    return text;
   }
 
 

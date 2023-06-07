@@ -16,30 +16,49 @@ import java.nio.charset.StandardCharsets;
 
 public class UserConfigHandler implements RequestStreamHandler {
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
-  private final AppSyncResolver appSyncResolver = new AppSyncResolver();
-  private final URLResolver urlResolver = new URLResolver();
+  private final ObjectMapper objectMapper;
+  private final AppSyncResolver appSyncResolver;
+  private final URLResolver urlResolver;
+
+  /**
+   * Constructor for UserConfigHandler.
+   *
+   * @param objectMapper
+   * @param appSyncResolver
+   * @param urlResolver
+   */
+  public UserConfigHandler(
+      ObjectMapper objectMapper,
+      AppSyncResolver appSyncResolver,
+      URLResolver urlResolver) {
+    this.objectMapper = objectMapper;
+    this.appSyncResolver = appSyncResolver;
+    this.urlResolver = urlResolver;
+  }
+
+  /**
+   * Default Constructor.
+   */
+  public UserConfigHandler() {
+    this.objectMapper = new ObjectMapper();
+    this.appSyncResolver = new AppSyncResolver();
+    this.urlResolver = new URLResolver();
+  }
+
 
   @Override
   public void handleRequest(InputStream input, OutputStream output,
                             Context context) throws IOException {
-
-    //TODO Add a way to see where this request is coming from.
-
     JsonNode rootNode = objectMapper.readTree(input);
     Config config = appSyncResolver
         .resolveAppSyncInput(rootNode.path("arguments"), objectMapper);
-
     TranslationModel model = config.getModel();
     Text text = urlResolver.resolve(config.getUrl());
-
     Text translatedText = model.translate(text, config.getSourceLanguage(),
         config.getTargetLanguage());
-
     output.write(
         appSyncResolver.resolveAppSyncOutPut(translatedText).toString()
             .getBytes(
                 StandardCharsets.UTF_8));
   }
-
 }
