@@ -8,7 +8,6 @@ def handler(event, context):
 
     # the url to check
     url = event['arguments']['url']
-    
     try:
         response = requests.get(url)
         if response.status_code == 200:

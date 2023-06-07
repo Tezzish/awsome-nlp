@@ -35,6 +35,12 @@ type BlogPost @model{
     translationModel: TranslationModel @hasOne
 }
 
+type Rating @model {
+    id: ID!
+    stars: Int
+    blogPost: BlogPost! @hasOne
+}
+
 type Language @model {
     name: String!
     code: String! @primaryKey  #Language code: ie. "en" for English, "tr" for Turkish
@@ -46,10 +52,10 @@ type TranslationModel @model {
 }
 
 type html {
-	file: String
+    file: String
 }
 
 type Query {
     translate(input: ConfigInput): BlogPost
-	getBlogPostParsed(url: String): html
+    getBlogPostParsed(url: String): html
 }
