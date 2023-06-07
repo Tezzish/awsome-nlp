@@ -10,7 +10,7 @@ def handler(event, context):
   response = parser(event['arguments']['url'])
 #   print(parser(event['url']))
   # body = parser(event['url'])
-
+#lutfen calis
   return {
       'statusCode': 200,
       'headers': {
