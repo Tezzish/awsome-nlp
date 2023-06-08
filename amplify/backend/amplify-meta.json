@@ -31,11 +31,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T15:20:28.759Z",
-=======
-      "lastPushTimeStamp": "2023-06-08T15:20:03.930Z",
->>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -55,11 +51,7 @@
         "Name": "UserConfigFunction-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-stepback"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T15:20:28.775Z",
-=======
-      "lastPushTimeStamp": "2023-06-08T15:20:03.940Z",
->>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -85,11 +77,7 @@
         "Name": "getBlogContent-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-stepback"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T15:20:28.787Z",
-=======
-      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
->>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -120,11 +108,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
         "logicalId": "functioncheckDB"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T15:20:28.797Z",
-=======
-      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
->>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::090854337836:role/awsomenlpLambdaRoledfa28a33-stepback",
         "Region": "eu-west-1",
