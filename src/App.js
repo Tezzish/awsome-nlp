@@ -5,11 +5,14 @@ import { Amplify } from "aws-amplify";
 import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
-import StarRatings from 'react-star-ratings';
 import "@cloudscape-design/global-styles/index.css"
 import Button from "@cloudscape-design/components/button"
-import Select from "@cloudscape-design/components/select"
-import Input from "@cloudscape-design/components/input";
+import {Alert, Form} from "@cloudscape-design/components";
+import TextContent from "@cloudscape-design/components/text-content";
+import LanguageSelect from './components/LanguageSelect';
+import TranslationModelSelect from './components/TranslationModelSelect';
+import URLInput from "./components/URLInput";
+import RatingStars from "./components/RatingStars";
 
 
 
@@ -32,19 +35,16 @@ function App() {
   const [ratingId] = useState(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
-
-
-
-  const handleInputChangeURL = (e) => {
-    setURLValue(e.target.value);
+  const handleInputChangeURL = (newValue) => {
+    setURLValue(newValue);
   };
 
-  const handleInputChangeLanguage = (e) => {
-    setSelectedLanguage(e.target.value);
+  const handleInputChangeLanguage = (selectedOption) => {
+    setSelectedLanguage(selectedOption.value);
   };
 
-  const handleInputChangeModel = (e) => {
-    setSelectedModel(e.target.value);
+  const handleInputChangeModel = (selectedOption) => {
+    setSelectedModel(selectedOption.value);
   };
 
   //TODO: Currently we are displaying the same values for the left and right iframes
@@ -85,13 +85,30 @@ function App() {
     try {
       const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
       console.log('response from backend: ', response);
+
+      // Parse HTML string into document
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
+
+      // Iterate over all elements and remove 'style' attribute
+      const elements = doc.getElementsByTagName('*');
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].removeAttribute('style');
+      }
+
+      // Serialize document back into HTML string
+      const serializer = new XMLSerializer();
+      const strippedHTML = serializer.serializeToString(doc);
+
       const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = response.data.getBlogPostParsed.file;
+      leftWindow.innerHTML = strippedHTML;
+
       return response;
     } catch (error) {
       console.log('Error sending original blog post to backend:', error);
     }
   }
+
 
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
@@ -183,51 +200,39 @@ function App() {
   }
   return (
     <div className="App">
-      <form>
+      <Form>
+        <Alert
+            dismissible
+            statusIconAriaLabel="Info"
+            type="warning"
+            header={
+              <React.Fragment>Incorrect Link</React.Fragment>
+            }
+        >
+          The link you placed appears to be incorrect. Please
+          make sure that this URL is reachable and directs to
+          an AWS Blogpost (https://aws.amazon.com/blogs/...).{" "}
+        </Alert>
         <div className="dropdown-container">
-          <Input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
-          <Select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
-            {languages.map((language) => (
-              <option key={language.code} value={language.name}>
-                {language.name}
-              </option>
-            ))}
-          </Select>
-          <Select id="model" placeholder="Translation Model" onChange={handleInputChangeModel}>
-            {translationModels.map((model) => (
-              <option key={model.id} value={model.name}>
-                {model.name}
-              </option>
-            ))}
-          </Select>
+          <URLInput onChange={handleInputChangeURL} />
+          <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
           <div>
             <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
         </div>
-      </form>
+      </Form>
       <div className="content-container">
         <div className="left-side" id="leftWindow"></div>
         <div className="right-side">
-          <div>  {backendFinished && (
-            <div className="rating-section">
-              <h4>Rate this translation:</h4>
-              <StarRatings
-                rating={rating}
-                starRatedColor="blue"
-                changeRating={changeRating}
-                numberOfStars={5}
-                name='rating'
-                starDimension="15px"
-                starSpacing="3px"
-              />
-            </div>
-          )}
-            <h2>{translatedContent.title}</h2>
+          <TextContent>
+          {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
+          <h2>{translatedContent.title}</h2>
             <h3>{translatedContent.authors}</h3>
             {translatedContent.content.split('\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
-          </div>
+          </TextContent>
         </div>
       </div>
     </div>
