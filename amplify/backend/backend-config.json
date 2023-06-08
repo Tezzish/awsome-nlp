@@ -28,6 +28,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "checkingDatabase": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "getBlogContent": {
       "build": true,
       "providerPlugin": "awscloudformation",

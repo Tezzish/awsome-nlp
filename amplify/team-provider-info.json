@@ -19,7 +19,7 @@
         },
         "getBlogContent": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
+          "s3Key": "amplify-builds/getBlogContent-6f3231752f626e6f6b4c-build.zip"
         },
         "checkDB": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
