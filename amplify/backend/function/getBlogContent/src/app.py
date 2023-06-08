@@ -28,8 +28,13 @@ def handler(event, context):
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
+      # get the author and title from the url
+      #'author' : response.find('div', class_='aws-blog-meta').find('a').text,
+      #'title' : response.find('h1', class_='aws-blog-title').text,
       'file' : response
   }
+
+
 
 # changing function called when the url is passed to the lambda function
 def parser(url):
@@ -37,7 +42,12 @@ def parser(url):
     soup = bs.BeautifulSoup(html, 'html.parser')
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
-    
+# return the author and title of the blog
+#
 
-print(parser("https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el"))
+response = parser("https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el")
+#author_list = [item.find('a').text for item in response.find_all('div', class_='aws-blog-meta')]
+title = response.find('h1', class_='aws-blog-title').text
 
+#print(author_list)
+print(title)
