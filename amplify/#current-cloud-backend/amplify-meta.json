@@ -114,7 +114,11 @@
       "distZipFilename": "getBlogContent-38716856475959694d5a-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+<<<<<<< HEAD
+        "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
+=======
         "s3Key": "amplify-builds/getBlogContent-6f3231752f626e6f6b4c-build.zip"
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       },
       "lastPushDirHash": "Ey2cghPx2VTW7Jjt7UOZ9zerlM0="
     }
