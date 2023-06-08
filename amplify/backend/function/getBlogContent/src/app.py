@@ -2,12 +2,9 @@ import json
 import bs4 as bs
 import requests
 from urllib.request import urlopen
-
+    
 def handler(event, context):
     # check if the url sends a 404 response code
-
-    # the url to check
-    url = event['arguments']['url']
 
     # try:
     #     response = requests.get(url)
@@ -23,7 +20,7 @@ def handler(event, context):
     #     return False  
     
     # # if the url exists, call the parser function  
-    response = parser(url)
+    response = parser(event['arguments']['url'])
     return {
       'statusCode': 200,
       'headers': {
