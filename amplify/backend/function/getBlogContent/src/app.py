@@ -21,7 +21,7 @@ def handler(event, context):
       'file' : response
   }
 
-# # function called when the url is passed to the lambda function
+# changing function called when the url is passed to the lambda function
 def parser(url):
 
     # gets the html from the website
