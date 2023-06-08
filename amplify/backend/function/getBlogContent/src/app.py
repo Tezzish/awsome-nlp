@@ -13,7 +13,7 @@ def handler(event, context):
             # if page exists, and has correct response continue
             print("Page exists")
         else:
-            # if page doesn't exis
+            # if page doesn't exist
             return False
     except requests.exceptions.RequestException as e:
         # if an error occurs
@@ -34,10 +34,9 @@ def handler(event, context):
 # changing function called when the url is passed to the lambda function
 def parser(url):
 
-    # gets the html from the website
+    
     html = urlopen(url).read()
-    # print(html)
-
+  
     soup = bs.BeautifulSoup(html, 'html.parser')
     title = soup.find('h1', class_='lb-h2 blog-post-title')
     content = soup.find('section', class_='blog-post-content lb-rtxt')
@@ -45,7 +44,7 @@ def parser(url):
     paragraphList = []
     for i in paragraphs:
         paragraphList.append(str(i))
-    # print(title.text + content.text + '\n'.join(paragraphList))
+    
     beginning = '''<!DOCTYPE html>
                   <html>
                   <head>
