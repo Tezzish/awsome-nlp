@@ -31,8 +31,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2023-06-08T16:24:05.563Z",
-      "lastPushTimeStamp": "2023-06-08T15:20:03.930Z",
+      "lastPushTimeStamp": "2023-06-08T16:28:11.435Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -52,8 +51,7 @@
         "Name": "UserConfigFunction-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-stepback"
       },
-      "lastPushTimeStamp": "2023-06-08T16:24:05.573Z",
-      "lastPushTimeStamp": "2023-06-08T15:20:03.940Z",
+      "lastPushTimeStamp": "2023-06-08T16:28:11.450Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -79,8 +77,7 @@
         "Name": "getBlogContent-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-stepback"
       },
-      "lastPushTimeStamp": "2023-06-08T16:24:05.584Z",
-      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
+      "lastPushTimeStamp": "2023-06-08T16:28:11.466Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -111,8 +108,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
         "logicalId": "functioncheckDB"
       },
-      "lastPushTimeStamp": "2023-06-08T16:24:05.594Z",
-      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
+      "lastPushTimeStamp": "2023-06-08T16:28:11.479Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::090854337836:role/awsomenlpLambdaRoledfa28a33-stepback",
         "Region": "eu-west-1",
