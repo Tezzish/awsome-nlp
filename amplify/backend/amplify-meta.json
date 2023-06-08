@@ -32,6 +32,7 @@
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
       "lastPushTimeStamp": "2023-06-08T16:24:05.563Z",
+      "lastPushTimeStamp": "2023-06-08T15:20:03.930Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -52,6 +53,7 @@
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-stepback"
       },
       "lastPushTimeStamp": "2023-06-08T16:24:05.573Z",
+      "lastPushTimeStamp": "2023-06-08T15:20:03.940Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -78,6 +80,7 @@
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-stepback"
       },
       "lastPushTimeStamp": "2023-06-08T16:24:05.584Z",
+      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -109,6 +112,7 @@
         "logicalId": "functioncheckDB"
       },
       "lastPushTimeStamp": "2023-06-08T16:24:05.594Z",
+      "lastPushTimeStamp": "2023-06-08T15:20:04.225Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::090854337836:role/awsomenlpLambdaRoledfa28a33-stepback",
         "Region": "eu-west-1",
