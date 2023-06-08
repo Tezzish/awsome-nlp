@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "Root Stack for AWS Amplify Console",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -155,25 +155,47 @@
     "apiawsomenlp": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-poof-144344-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "awsomenlp",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
-          "S3DeploymentBucket": "amplify-awsomenlp-poof-144344-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/44e2b675954299cd88d54c315468713b01f0c199",
-          "env": "poof"
+          "S3DeploymentBucket": "amplify-awsomenlp-stepback-175216-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/19d422a30a7f57c6814e1ceaa212b6cc606ba922",
+          "env": "stepback"
         }
       }
     },
     "functionUserConfigFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-poof-144344-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-poof-144344-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-6c4f4470587177797668-build.zip",
-          "env": "poof"
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip",
+          "env": "stepback"
+        }
+      }
+    },
+    "functiongetBlogContent": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip",
+          "env": "stepback"
+        }
+      }
+    },
+    "functioncheckDB": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/checkDB-34544c4f37666d6f6f4a-build.zip",
+          "env": "stepback"
         }
       }
     }

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.0.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.0.3\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -43,16 +43,16 @@
             "Ref": "s3Key"
           }
         },
-        "Handler": "example.LambdaRequestHandler::handleRequest",
+        "Handler": "index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "UserConfigFunction",
+            "checkDB",
             {
               "Fn::Join": [
                 "",
                 [
-                  "UserConfigFunction",
+                  "checkDB",
                   "-",
                   {
                     "Ref": "env"
@@ -78,7 +78,7 @@
             "Arn"
           ]
         },
-        "Runtime": "java11",
+        "Runtime": "python3.8",
         "Layers": [],
         "Timeout": 25
       }
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "awsomenlpLambdaRolee754d004",
+            "awsomenlpLambdaRoledfa28a33",
             {
               "Fn::Join": [
                 "",
                 [
-                  "awsomenlpLambdaRolee754d004",
+                  "awsomenlpLambdaRoledfa28a33",
                   "-",
                   {
                     "Ref": "env"
