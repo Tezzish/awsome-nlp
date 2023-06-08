@@ -198,6 +198,17 @@
           "env": "stepback"
         }
       }
+    },
+    "functioncheckingDatabase": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkingDatabase-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/checkingDatabase-784a4874447462626362-build.zip",
+          "env": "stepback"
+        }
+      }
     }
   }
 }
