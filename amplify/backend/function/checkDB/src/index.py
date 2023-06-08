@@ -3,7 +3,7 @@ import json
 def handler(event, context):
   print('received event:')
   print(event)
-  # check if url exists on database
+  
   return {
       'statusCode': 200,
       'headers': {

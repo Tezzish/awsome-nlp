@@ -296,3 +296,19 @@ export const fetchByPath = (input, path = "", accumlator = []) => {
   }
   return accumlator[0];
 };
+<<<<<<< HEAD
+=======
+export const processFile = async ({ file }) => {
+  const fileExtension = file.name.split(".").pop();
+  return file
+    .arrayBuffer()
+    .then((filebuffer) => window.crypto.subtle.digest("SHA-1", filebuffer))
+    .then((hashBuffer) => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray
+        .map((a) => a.toString(16).padStart(2, "0"))
+        .join("");
+      return { file, key: `${hashHex}.${fileExtension}` };
+    });
+};
+>>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
