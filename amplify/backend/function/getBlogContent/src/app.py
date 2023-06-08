@@ -3,14 +3,9 @@ import bs4 as bs
 from urllib.request import urlopen
 
 def handler(event, context):
-  # url = event['arguments']['url']
-  print('received event:')
-  print(event)
-  print(event['arguments'])
+  
   response = parser(event['arguments']['url'])
-#   print(parser(event['url']))
-  # body = parser(event['url'])
-#lutfen calis
+
   return {
       'statusCode': 200,
       'headers': {
