@@ -37,23 +37,10 @@ def handler(event, context):
 # changing function called when the url is passed to the lambda function
 def parser(url):
     html = urlopen(url).read()
-  
     soup = bs.BeautifulSoup(html, 'html.parser')
-    title = soup.find('h1', class_='lb-h2 blog-post-title')
-    content = soup.find('section', class_='blog-post-content lb-rtxt')
-    paragraphs = soup.find_all('p')
-    paragraphList = []
-    for i in paragraphs:
-        paragraphList.append(str(i))
-    
-    beginning = '''<!DOCTYPE html>
-                  <html>
-                  <head>
-                  </head>
-                  <body>
-                  '''
-
-    return (beginning + str(title) + str(content) + '\n'.join(paragraphList) + '</body></html>')
+    blog_content = soup.find('div', class_='aws-blog-content').prettify()
+    return blog_content
     
 
 print(parser("https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el"))
+
