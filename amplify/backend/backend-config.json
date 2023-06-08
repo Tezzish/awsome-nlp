@@ -67,22 +67,6 @@
         }
       ]
     },
-    "AMPLIFY_function_checkingDatabase_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "checkingDatabase"
-        }
-      ]
-    },
-    "AMPLIFY_function_checkingDatabase_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "checkingDatabase"
-        }
-      ]
-    },
     "AMPLIFY_function_getBlogContent_deploymentBucketName": {
       "usedBy": [
         {

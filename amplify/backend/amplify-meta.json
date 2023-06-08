@@ -31,7 +31,11 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T16:58:44.839Z",
+=======
+      "lastPushTimeStamp": "2023-06-08T16:50:53.668Z",
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -51,7 +55,11 @@
         "Name": "UserConfigFunction-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-stepback"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T16:58:44.850Z",
+=======
+      "lastPushTimeStamp": "2023-06-08T16:50:53.687Z",
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -77,7 +85,11 @@
         "Name": "checkDB-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRoledfa28a33-stepback"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T16:58:44.860Z",
+=======
+      "lastPushTimeStamp": "2023-06-08T16:50:53.705Z",
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
         "logicalId": "functioncheckDB"
@@ -103,7 +115,11 @@
         "Name": "getBlogContent-stepback",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-stepback"
       },
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-08T16:58:44.871Z",
+=======
+      "lastPushTimeStamp": "2023-06-08T16:50:53.722Z",
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -114,7 +130,11 @@
       "distZipFilename": "getBlogContent-38716856475959694d5a-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+<<<<<<< HEAD
         "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
+=======
+        "s3Key": "amplify-builds/getBlogContent-6f3231752f626e6f6b4c-build.zip"
+>>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
       },
       "lastPushDirHash": "Ey2cghPx2VTW7Jjt7UOZ9zerlM0="
     }
