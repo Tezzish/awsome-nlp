@@ -8,9 +8,10 @@ def handler(event, context):
 
     # the url to check
     url = event['arguments']['url']
+
     try:
         response = requests.get(url)
-        if response.status_code == 200:
+        if response.status_code != 404:
             # if page exists, and has correct response continue
             print("Page exists")
         else:
@@ -21,6 +22,7 @@ def handler(event, context):
         print("Error checking if URL exists:", e)
         return False  
     
+    # if the url exists, call the parser function  
     response = parser(url)
     return {
       'statusCode': 200,
@@ -34,8 +36,6 @@ def handler(event, context):
 
 # changing function called when the url is passed to the lambda function
 def parser(url):
-
-    
     html = urlopen(url).read()
   
     soup = bs.BeautifulSoup(html, 'html.parser')
@@ -55,7 +55,5 @@ def parser(url):
 
     return (beginning + str(title) + str(content) + '\n'.join(paragraphList) + '</body></html>')
     
-    
-    
-# parser("https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el")
-# print(handler({'arguments': {'url': 'https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el'}}, 1))
+
+print(parser("https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el"))
