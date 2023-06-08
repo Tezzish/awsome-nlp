@@ -3,10 +3,25 @@ import bs4 as bs
 from urllib.request import urlopen
 
 def handler(event, context):
-  
-  response = parser(event['arguments']['url'])
+    # check if the url sends a 404 response code
 
-  return {
+    # the url to check
+    url = event['arguments']['url']
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            # if page exists, and has correct response continue
+            print("Page exists")
+        else:
+            # if page doesn't exis
+            return False
+    except requests.exceptions.RequestException as e:
+        # if an error occurs
+        print("Error checking if URL exists:", e)
+        return False  
+    
+    response = parser(url)
+    return {
       'statusCode': 200,
       'headers': {
           'Access-Control-Allow-Headers': '*',
