@@ -1,7 +1,5 @@
 {
   "stepback": {
-<<<<<<< HEAD
-=======
     "awscloudformation": {
       "AuthRoleName": "amplify-awsomenlp-stepback-175216-authRole",
       "UnauthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-unauthRole",
@@ -25,7 +23,7 @@
         },
         "checkDB": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkDB-34544c4f37666d6f6f4a-build.zip"
+          "s3Key": "amplify-builds/checkDB-785559443644756e2f56-build.zip"
         }
       },
       "api": {
@@ -34,7 +32,6 @@
     }
   },
   "frontdev": {
->>>>>>> f030128dc26b983d960594080b7cc882eb83df9d
     "awscloudformation": {
       "AuthRoleName": "amplify-awsomenlp-stepback-175216-authRole",
       "UnauthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-unauthRole",
