@@ -6,6 +6,11 @@ import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
 import StarRatings from 'react-star-ratings';
+import "@cloudscape-design/global-styles/index.css"
+import Button from "@cloudscape-design/components/button"
+import Select from "@cloudscape-design/components/select"
+import Input from "@cloudscape-design/components/input";
+
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
@@ -176,32 +181,27 @@ function App() {
       console.log("Rating not updated:", error)
     }
   }
-
-
-
-
-
   return (
     <div className="App">
       <form>
         <div className="dropdown-container">
-          <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
-          <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
+          <Input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
+          <Select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
             {languages.map((language) => (
               <option key={language.code} value={language.name}>
                 {language.name}
               </option>
             ))}
-          </select>
-          <select id="model" onChange={handleInputChangeModel}>
+          </Select>
+          <Select id="model" placeholder="Translation Model" onChange={handleInputChangeModel}>
             {translationModels.map((model) => (
               <option key={model.id} value={model.name}>
                 {model.name}
               </option>
             ))}
-          </select>
+          </Select>
           <div>
-            <button id="translate" onClick={handleButtonClick}>Translate!</button>
+            <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
         </div>
       </form>
