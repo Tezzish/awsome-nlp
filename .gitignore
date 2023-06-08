@@ -17,6 +17,10 @@ amplify/team-provider-info.json
 amplify/backend/awscloudformation/build/
 amplify/backend/function/UserConfigFunction/.gradle
 amplify/backend/amplify-meta.json
+
+
+amplify/backend/function/getBlogContent/test/__pycache__/
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -38,6 +42,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-
-amplify/backend/function/getBlogContent/test/__pycache__/

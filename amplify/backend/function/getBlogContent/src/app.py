@@ -4,9 +4,9 @@ from urllib.request import urlopen
 import requests
 
 def handler(event, context):
-  blogUrl = event['arguments']['url']
+
   try:
-    response = requests.get(blogUrl)
+    response = requests.get(event['arguments']['url'])
     if response.status_code != 404:
       # if page exists, and has correct response continue
       print("Page exists")
@@ -17,8 +17,8 @@ def handler(event, context):
       # if an error occurs
       print("Error checking if URL exists:")
       return False
-
-  postReturned = parser(blogUrl)
+  
+  postReturned = parser(event['arguments']['url'])
 
   return {
       'statusCode': 200,
@@ -35,11 +35,3 @@ def parser(url):
     soup = bs.BeautifulSoup(html, 'html.parser')
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
-
-
-# print(handler({'arguments' : { 
-#       'url' : 'https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el'
-#       }}
-#       , None))
-
-#print(parser("https://aws.amazon.com/blogs/database/cost-effective-bulk-processing-with-amazon-dynamodb/?trk=1921da0f-a305-430a-9bf6-a72d94007afa&sc_channel=el"))

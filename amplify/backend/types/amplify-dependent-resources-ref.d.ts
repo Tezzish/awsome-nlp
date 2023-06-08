@@ -1,18 +1,32 @@
 export type AmplifyDependentResourcesAttributes = {
-    "function": {
-      "UserConfigFunction": {
-        "Arn": "string",
-        "LambdaExecutionRole": "string",
-        "LambdaExecutionRoleArn": "string",
-        "Name": "string",
-        "Region": "string"
-      },
-      "getBlogContent": {
-        "Arn": "string",
-        "LambdaExecutionRole": "string",
-        "LambdaExecutionRoleArn": "string",
-        "Name": "string",
-        "Region": "string"
-      }
+  "api": {
+    "awsomenlp": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
+  "function": {
+    "UserConfigFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "checkDB": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "getBlogContent": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
     }
   }
+}
