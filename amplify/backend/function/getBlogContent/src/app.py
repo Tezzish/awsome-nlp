@@ -9,20 +9,20 @@ def handler(event, context):
     # the url to check
     url = event['arguments']['url']
 
-    try:
-        response = requests.get(url)
-        if response.status_code != 404:
-            # if page exists, and has correct response continue
-            print("Page exists")
-        else:
-            # if page doesn't exist
-            return False
-    except requests.exceptions.RequestException as e:
-        # if an error occurs
-        print("Error checking if URL exists:", e)
-        return False  
+    # try:
+    #     response = requests.get(url)
+    #     if response.status_code != 404:
+    #         # if page exists, and has correct response continue
+    #         print("Page exists")
+    #     else:
+    #         # if page doesn't exist
+    #         return False
+    # except requests.exceptions.RequestException as e:
+    #     # if an error occurs
+    #     print("Error checking if URL exists:", e)
+    #     return False  
     
-    # if the url exists, call the parser function  
+    # # if the url exists, call the parser function  
     response = parser(url)
     return {
       'statusCode': 200,
