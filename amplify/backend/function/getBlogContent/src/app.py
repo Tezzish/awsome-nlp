@@ -1,5 +1,6 @@
 import json
 import bs4 as bs
+import requests
 from urllib.request import urlopen
 
 def handler(event, context):
