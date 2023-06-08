@@ -24,13 +24,6 @@
         "checkDB": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
           "s3Key": "amplify-builds/checkDB-785559443644756e2f56-build.zip"
-<<<<<<< HEAD
-        },
-        "checkingDatabase": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkingDatabase-784a4874447462626362-build.zip"
-=======
->>>>>>> e9c082e6e41ffc684c4ee6ccefed51f92e3260f3
         }
       },
       "api": {
