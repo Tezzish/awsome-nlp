@@ -183,7 +183,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip",
+          "s3Key": "amplify-builds/getBlogContent-6f3231752f626e6f6b4c-build.zip",
           "env": "stepback"
         }
       }
@@ -194,7 +194,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkDB-34544c4f37666d6f6f4a-build.zip",
+          "s3Key": "amplify-builds/checkDB-666f4b68774544586c67-build.zip",
           "env": "stepback"
         }
       }
