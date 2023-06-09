@@ -1,62 +1,287 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTranslationJob = /* GraphQL */ `
-  subscription OnCreateTranslationJob(
-    $filter: ModelSubscriptionTranslationJobFilterInput
+export const onCreateTranslationConfig = /* GraphQL */ `
+  subscription OnCreateTranslationConfig(
+    $filter: ModelSubscriptionTranslationConfigFilterInput
   ) {
-    onCreateTranslationJob(filter: $filter) {
+    onCreateTranslationConfig(filter: $filter) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
     }
   }
 `;
-export const onUpdateTranslationJob = /* GraphQL */ `
-  subscription OnUpdateTranslationJob(
-    $filter: ModelSubscriptionTranslationJobFilterInput
+export const onUpdateTranslationConfig = /* GraphQL */ `
+  subscription OnUpdateTranslationConfig(
+    $filter: ModelSubscriptionTranslationConfigFilterInput
   ) {
-    onUpdateTranslationJob(filter: $filter) {
+    onUpdateTranslationConfig(filter: $filter) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
     }
   }
 `;
-export const onDeleteTranslationJob = /* GraphQL */ `
-  subscription OnDeleteTranslationJob(
-    $filter: ModelSubscriptionTranslationJobFilterInput
+export const onDeleteTranslationConfig = /* GraphQL */ `
+  subscription OnDeleteTranslationConfig(
+    $filter: ModelSubscriptionTranslationConfigFilterInput
   ) {
-    onDeleteTranslationJob(filter: $filter) {
+    onDeleteTranslationConfig(filter: $filter) {
       id
       url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
+    }
+  }
+`;
+export const onCreateBlogPost = /* GraphQL */ `
+  subscription OnCreateBlogPost($filter: ModelSubscriptionBlogPostFilterInput) {
+    onCreateBlogPost(filter: $filter) {
+      id
+      originalPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const onUpdateBlogPost = /* GraphQL */ `
+  subscription OnUpdateBlogPost($filter: ModelSubscriptionBlogPostFilterInput) {
+    onUpdateBlogPost(filter: $filter) {
+      id
+      originalPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const onDeleteBlogPost = /* GraphQL */ `
+  subscription OnDeleteBlogPost($filter: ModelSubscriptionBlogPostFilterInput) {
+    onDeleteBlogPost(filter: $filter) {
+      id
+      originalPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const onCreateRating = /* GraphQL */ `
+  subscription OnCreateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onCreateRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
+    }
+  }
+`;
+export const onUpdateRating = /* GraphQL */ `
+  subscription OnUpdateRating($filter: ModelSubscriptionRatingFilterInput) {
+    onUpdateRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
+    }
+  }
+`;
+export const onDeleteRating = /* GraphQL */ `
+  subscription OnDeleteRating($filter: ModelSubscriptionRatingFilterInput) {
+    onDeleteRating(filter: $filter) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
     }
   }
 `;
 export const onCreateLanguage = /* GraphQL */ `
   subscription OnCreateLanguage($filter: ModelSubscriptionLanguageFilterInput) {
     onCreateLanguage(filter: $filter) {
-      id
       name
+      code
       createdAt
       updatedAt
     }
@@ -65,8 +290,8 @@ export const onCreateLanguage = /* GraphQL */ `
 export const onUpdateLanguage = /* GraphQL */ `
   subscription OnUpdateLanguage($filter: ModelSubscriptionLanguageFilterInput) {
     onUpdateLanguage(filter: $filter) {
-      id
       name
+      code
       createdAt
       updatedAt
     }
@@ -75,8 +300,8 @@ export const onUpdateLanguage = /* GraphQL */ `
 export const onDeleteLanguage = /* GraphQL */ `
   subscription OnDeleteLanguage($filter: ModelSubscriptionLanguageFilterInput) {
     onDeleteLanguage(filter: $filter) {
-      id
       name
+      code
       createdAt
       updatedAt
     }

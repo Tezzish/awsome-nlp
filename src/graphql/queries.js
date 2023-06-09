@@ -1,48 +1,184 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTranslationJob = /* GraphQL */ `
-  query GetTranslationJob($id: ID!) {
-    getTranslationJob(id: $id) {
+export const translate = /* GraphQL */ `
+  query Translate($input: ConfigInput) {
+    translate(input: $input) {
       id
-      url
-      language
-      translationModel
-      status
-      originalContent
-      translatedContent
-      createdAt
-      updatedAt
+      title
+      authors
+      content
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
     }
   }
 `;
-export const listTranslationJobs = /* GraphQL */ `
-  query ListTranslationJobs(
-    $filter: ModelTranslationJobFilterInput
+export const getBlogPostParsed = /* GraphQL */ `
+  query GetBlogPostParsed($url: String) {
+    getBlogPostParsed(url: $url) {
+      file
+    }
+  }
+`;
+export const getTranslationConfig = /* GraphQL */ `
+  query GetTranslationConfig($id: ID!) {
+    getTranslationConfig(id: $id) {
+      id
+      url
+      targetLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      sourceLanguage {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      translationConfigTargetLanguageCode
+      translationConfigSourceLanguageCode
+    }
+  }
+`;
+export const listTranslationConfigs = /* GraphQL */ `
+  query ListTranslationConfigs(
+    $filter: ModelTranslationConfigFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTranslationJobs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTranslationConfigs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         url
-        language
-        translationModel
-        status
-        originalContent
-        translatedContent
         createdAt
         updatedAt
+        translationConfigTargetLanguageCode
+        translationConfigSourceLanguageCode
+      }
+      nextToken
+    }
+  }
+`;
+export const getBlogPost = /* GraphQL */ `
+  query GetBlogPost($id: ID!) {
+    getBlogPost(id: $id) {
+      id
+      originalPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      title
+      authors
+      content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      blogPostOriginalPostId
+      blogPostLanguageCode
+      blogPostTranslationModelId
+    }
+  }
+`;
+export const listBlogPosts = /* GraphQL */ `
+  query ListBlogPosts(
+    $filter: ModelBlogPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBlogPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      nextToken
+    }
+  }
+`;
+export const getRating = /* GraphQL */ `
+  query GetRating($id: ID!) {
+    getRating(id: $id) {
+      id
+      stars
+      blogPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      createdAt
+      updatedAt
+      ratingBlogPostId
+    }
+  }
+`;
+export const listRatings = /* GraphQL */ `
+  query ListRatings(
+    $filter: ModelRatingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRatings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        stars
+        createdAt
+        updatedAt
+        ratingBlogPostId
       }
       nextToken
     }
   }
 `;
 export const getLanguage = /* GraphQL */ `
-  query GetLanguage($id: ID!) {
-    getLanguage(id: $id) {
-      id
+  query GetLanguage($code: String!) {
+    getLanguage(code: $code) {
       name
+      code
       createdAt
       updatedAt
     }
@@ -50,14 +186,22 @@ export const getLanguage = /* GraphQL */ `
 `;
 export const listLanguages = /* GraphQL */ `
   query ListLanguages(
+    $code: String
     $filter: ModelLanguageFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listLanguages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listLanguages(
+      code: $code
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         name
+        code
         createdAt
         updatedAt
       }
