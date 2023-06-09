@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 .App-header {
@@ -16,9 +17,18 @@
   color: white;
 }
 
-
 .App-link {
   color: #61dafb;
+}
+
+.icon-container img {
+  position: absolute;
+  top: 10px; /* Adjust these values as needed */
+  left: 40px;
+  z-index: 1; /* Ensure the icon appears above other elements */
+  width: 50px; /* Adjust these values to resize the image */
+  height: 50px; /* Adjust these values to resize the image */
+  object-fit: contain; /* This will ensure your image maintains aspect ratio and doesn't stretch */
 }
 
 .dropdown-container {
@@ -36,6 +46,7 @@ button {
   border-radius: 4px;
   background-color: #f1f1f1;
 }
+
 .content-container {
   display: flex;
   justify-content: center;
@@ -49,23 +60,22 @@ button {
   height: 90vh;  /* change to 90vh to make them equal */
   padding: 10px;
   box-sizing: border-box;  /* include padding in element's total width and height */
-  border: solid darkorange;
-  border-width: 2px 2px;
-  border-radius: 4px;
   overflow-y: auto;  /* make it scrollable when the content overflows */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .right-side {
   width: 45%;
   height: 90vh;
   padding: 10px;
   box-sizing: border-box;
-  border: solid darkorange;
-  border-width: 2px 2px;
-  border-radius: 4px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  /*justifyContent: 'center', alignItems: 'center'*/
 }
 
 .rating-section {
@@ -74,4 +84,17 @@ button {
 }
 .rating-section h4 {
   font-size: 0.7rem;
+}
+
+hr {
+  border: 1px solid ;
+  height: 1px;
+  background: black; /* or any color you prefer */
+  width: 80%;
+}
+
+.vertical-divider {
+  border-left: 1px solid #000;
+  height: 90%;
+  margin: 0 10px; /* to give some space from left and right */
 }

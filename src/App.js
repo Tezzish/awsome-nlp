@@ -7,7 +7,7 @@ import { getBlogPostParsed, listLanguages, listTranslationModels, translate } fr
 import { createRating, updateRating } from "./graphql/mutations";
 import "@cloudscape-design/global-styles/index.css"
 import Button from "@cloudscape-design/components/button"
-import {Form} from "@cloudscape-design/components";
+import {Box, Form} from "@cloudscape-design/components";
 import Alert from "./components/Alert"
 import TextContent from "@cloudscape-design/components/text-content";
 import LanguageSelect from './components/LanguageSelect';
@@ -15,6 +15,7 @@ import TranslationModelSelect from './components/TranslationModelSelect';
 import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
+import logo from './logo.png';
 
 
 
@@ -77,6 +78,7 @@ function App() {
     setAlertIsVisible(false)
 
     if (!isValidURL(url)) {
+      console.log("invalid url")
       setAlertIsVisible(true);
       setAlertHeader(<React.Fragment>Incorrect Link</React.Fragment>);
       setAlertContent("The link you placed appears to be incorrect. Please make sure that this URL is reachable and directs to an AWS Blogpost (https://aws.amazon.com/blogs/...).");
@@ -110,8 +112,6 @@ function App() {
   };
 
 
-
-
   //Booleans
   const isValidURL = (str) => {
     try {
@@ -121,7 +121,6 @@ function App() {
       return false;
     }
   };
-
 
 
   //API communication
@@ -247,6 +246,9 @@ function App() {
   //APP
   return (
     <div className="App">
+      <div className="icon-container">
+        <img src={logo} alt="Logo" />
+      </div>
       <Form>
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
         <div className="dropdown-container">
@@ -258,9 +260,11 @@ function App() {
           </div>
         </div>
       </Form>
-      <div className="content-container">
-        <div className="left-side" id="leftWindow"></div>
-        <div className="right-side">
+      <hr />
+      <Box className="content-container">
+        <Box variant="div" className="left-side" id="leftWindow"></Box>
+        <div className="vertical-divider"></div>
+        <Box variant="div" className="right-side">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
@@ -273,9 +277,8 @@ function App() {
                 ))}
               </TextContent>
           )}
-        </div>
-
-      </div>
+        </Box>
+      </Box>
     </div>
   );
 }
