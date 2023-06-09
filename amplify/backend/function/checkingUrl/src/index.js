@@ -3,6 +3,8 @@
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
+
+// function to query dynamoDB table
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
