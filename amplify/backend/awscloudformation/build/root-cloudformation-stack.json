@@ -177,17 +177,6 @@
         }
       }
     },
-    "functioncheckDB": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkDB-785559443644756e2f56-build.zip",
-          "env": "stepback"
-        }
-      }
-    },
     "functiongetBlogContent": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -195,6 +184,17 @@
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
           "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip",
+          "env": "stepback"
+        }
+      }
+    },
+    "functioncheckDatabase": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDatabase-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/checkDatabase-3571617658524d413161-build.zip",
           "env": "stepback"
         }
       }
