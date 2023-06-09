@@ -21,13 +21,9 @@
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
           "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
         },
-        "checkDB": {
+        "checkingUrl": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkDB-785559443644756e2f56-build.zip"
-        },
-        "checkingDatabase": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkingDatabase-784a4874447462626362-build.zip"
+          "s3Key": "amplify-builds/checkingUrl-61734b46644269617848-build.zip"
         }
       },
       "api": {

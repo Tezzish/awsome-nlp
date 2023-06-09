@@ -23,7 +23,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "checkDB": {
+    "checkingUrl": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -51,19 +51,19 @@
         }
       ]
     },
-    "AMPLIFY_function_checkDB_deploymentBucketName": {
+    "AMPLIFY_function_checkingUrl_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "checkDB"
+          "resourceName": "checkingUrl"
         }
       ]
     },
-    "AMPLIFY_function_checkDB_s3Key": {
+    "AMPLIFY_function_checkingUrl_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "checkDB"
+          "resourceName": "checkingUrl"
         }
       ]
     },
@@ -99,5 +99,6 @@
         }
       ]
     }
-  }
+  },
+  "storage": {}
 }

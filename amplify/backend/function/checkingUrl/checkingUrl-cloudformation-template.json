@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "checkDB",
+            "checkingUrl",
             {
               "Fn::Join": [
                 "",
                 [
-                  "checkDB",
+                  "checkingUrl",
                   "-",
                   {
                     "Ref": "env"
@@ -78,7 +78,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "Runtime": "nodejs18.x",
         "Layers": [],
         "Timeout": 25
       }
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "awsomenlpLambdaRoledfa28a33",
+            "awsomenlpLambdaRole19b815c5",
             {
               "Fn::Join": [
                 "",
                 [
-                  "awsomenlpLambdaRoledfa28a33",
+                  "awsomenlpLambdaRole19b815c5",
                   "-",
                   {
                     "Ref": "env"
