@@ -178,6 +178,7 @@
       }
     },
     "functiongetBlogContent": {
+<<<<<<< HEAD
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
@@ -200,16 +201,23 @@
       }
     },
     "functioncheckDB": {
+=======
+>>>>>>> d96e855c81883d7fd10d27e90bb2e57b2d157b61
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDB-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+<<<<<<< HEAD
           "s3Key": "amplify-builds/checkDB-594144566a3949315256-build.zip",
+=======
+          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip",
+>>>>>>> d96e855c81883d7fd10d27e90bb2e57b2d157b61
           "env": "stepback"
         }
       }
     },
+<<<<<<< HEAD
     "functioncheckingUrl": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -217,6 +225,15 @@
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
           "s3Key": "amplify-builds/checkingUrl-61734b46644269617848-build.zip",
+=======
+    "functioncheckDatabase": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-stepback-175216-deployment/amplify-cfn-templates/function/checkDatabase-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "s3Key": "amplify-builds/checkDatabase-3571617658524d413161-build.zip",
+>>>>>>> d96e855c81883d7fd10d27e90bb2e57b2d157b61
           "env": "stepback"
         }
       }
