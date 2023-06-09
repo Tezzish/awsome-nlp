@@ -76,6 +76,8 @@ button {
   padding: 10px;
   box-sizing: border-box;  /* include padding in element's total width and height */
   overflow-y: auto;  /* make it scrollable when the content overflows */
+  max-width: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

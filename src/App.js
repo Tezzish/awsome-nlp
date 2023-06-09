@@ -155,6 +155,12 @@ function App() {
         elements[i].removeAttribute('style');
       }
 
+      // Remove all elements with class 'blog-share-dialog'
+      const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
+      for (let i = 0; i < shareDialogs.length; i++) {
+        shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
+      }
+
       // Serialize document back into HTML string
       const serializer = new XMLSerializer();
       const strippedHTML = serializer.serializeToString(doc);
@@ -167,6 +173,7 @@ function App() {
       console.log('Error sending original blog post to backend:', error);
     }
   }
+
 
   const sendConfigToBackend = async (url, language, translationModel) => {
     try {
@@ -196,6 +203,7 @@ function App() {
     }
   };
 
+  //Rating Functions
   const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
@@ -206,7 +214,6 @@ function App() {
     }
   };
 
-  //Rating Functions
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
       const rating = await API.graphql(graphqlOperation(createRating, {
@@ -254,7 +261,7 @@ function App() {
         </div>
       </Form>
       <Box className="content-container">
-        <Box variant="div" className="left-side" id="leftWindow"></Box>
+        <TextContent variant="div" className="left-side" id="leftWindow"></TextContent>
         <div className="vertical-divider"></div>
         <Box variant="div" className="right-side">
           {isLoading ? (
