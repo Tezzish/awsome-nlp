@@ -2,7 +2,6 @@ import json
 import bs4 as bs
 import urllib.request
 from urllib.request import urlopen
-import requests
 
 def handler(event, context):
   blogUrl = event['arguments']['url']
