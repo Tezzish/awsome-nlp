@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.highlight {
+  color: #FF9900;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -21,30 +25,41 @@
   color: #61dafb;
 }
 
-.icon-container img {
+.icon {
   position: absolute;
-  top: 10px; /* Adjust these values as needed */
+  top: 10px;
   left: 40px;
-  z-index: 1; /* Ensure the icon appears above other elements */
-  width: 50px; /* Adjust these values to resize the image */
-  height: 50px; /* Adjust these values to resize the image */
-  object-fit: contain; /* This will ensure your image maintains aspect ratio and doesn't stretch */
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.icon-alert {
+  position: absolute;
+  top: 80px;
+  left: 40px;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
 
 .dropdown-container {
   display: flex;
   justify-content: space-evenly;
-  width: 95%;
+  width: 100%;
   padding: 1rem;
-  border-radius: 4px;
+  background: #232f3e;
 }
 
 input,
 select,
 button {
+  background-color: #00A6D6;
+  color: white;
   padding: 0.5rem;
   border-radius: 4px;
-  background-color: #f1f1f1;
 }
 
 .content-container {
@@ -96,5 +111,5 @@ hr {
 .vertical-divider {
   border-left: 1px solid #000;
   height: 90%;
-  margin: 0 10px; /* to give some space from left and right */
+  margin: 20px 10px 0 10px; /* Add a top margin */
 }

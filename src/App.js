@@ -17,8 +17,6 @@ import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from './logo.png';
 
-
-
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
  */
@@ -48,7 +46,6 @@ function App() {
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
-
 
   //Handlers
   const handleInputChangeURL = (newValue) => {
@@ -111,7 +108,6 @@ function App() {
     }
   };
 
-
   //Booleans
   const isValidURL = (str) => {
     try {
@@ -121,7 +117,6 @@ function App() {
       return false;
     }
   };
-
 
   //API communication
   useEffect(() => {
@@ -212,7 +207,6 @@ function App() {
   };
 
   //Rating Functions
-
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
       const rating = await API.graphql(graphqlOperation(createRating, {
@@ -227,7 +221,6 @@ function App() {
       console.log("Rating not created:", error)
     }
   }
-
 
   async function mutateRatingFunc(star) {
     try {
@@ -247,7 +240,7 @@ function App() {
   return (
     <div className="App">
       <div className="icon-container">
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
       </div>
       <Form>
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
@@ -260,7 +253,6 @@ function App() {
           </div>
         </div>
       </Form>
-      <hr />
       <Box className="content-container">
         <Box variant="div" className="left-side" id="leftWindow"></Box>
         <div className="vertical-divider"></div>
