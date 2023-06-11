@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +44,8 @@
     ]
   },
   "devDependencies": {
+    "@cloudscape-design/jest-preset": "^2.0.8",
+    "jest": "^29.5.0",
     "jest-watch-typeahead": "^0.6.5"
   }
 }
