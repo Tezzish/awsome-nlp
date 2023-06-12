@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
-import { Amplify } from "aws-amplify";
+import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
