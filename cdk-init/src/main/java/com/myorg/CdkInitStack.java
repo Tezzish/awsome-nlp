@@ -1,6 +1,7 @@
 package com.myorg;
 
 
+import java.util.Arrays;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
@@ -11,12 +12,14 @@ import software.amazon.awscdk.services.appsync.BaseResolverProps;
 import software.amazon.awscdk.services.appsync.GraphqlApi;
 import software.amazon.awscdk.services.appsync.LambdaDataSource;
 import software.amazon.awscdk.services.appsync.MappingTemplate;
-import software.amazon.awscdk.services.appsync.PrimaryKey;
 import software.amazon.awscdk.services.appsync.SchemaFile;
-import software.amazon.awscdk.services.appsync.Values;
+import software.amazon.awscdk.services.iam.ManagedPolicy;
+import software.amazon.awscdk.services.iam.Role;
+import software.amazon.awscdk.services.iam.ServicePrincipal;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Runtime;
+import software.amazon.awscdk.services.s3.IBucket;
 import software.constructs.Construct;
 
 public class CdkInitStack extends Stack {
@@ -28,22 +31,30 @@ public class CdkInitStack extends Stack {
                       final StackProps props) {
     super(scope, id, props);
 
-    // Add IAM permissions to the Lambda function
-//        PolicyStatement translateAccessPolicy = PolicyStatement.Builder.create()
-//            .effect(Effect.ALLOW)
-//            .actions(Actions.translate("*")) // Grants full access to the Translate service
-//            .resources("*") // Specifies all resources
-//            .build();
+    Role userConfigFunctionRole = Role.Builder.create(this, "LambdaExecutionRole")
+        .assumedBy(new ServicePrincipal("lambda.amazonaws.com"))
+        .managedPolicies(Arrays.asList(
+            ManagedPolicy.fromAwsManagedPolicyName("TranslateFullAccess"),
+            ManagedPolicy.fromAwsManagedPolicyName("IAMFullAccess")))
+        .build();
 
-    Function
-        myLambdaFunction =
+
+    Function userConfigFunctionCDK =
         Function.Builder.create(this, "UserConfigFunctionCDK")
+            .role(userConfigFunctionRole)
             .runtime(Runtime.JAVA_17)
-            .code(Code.fromAsset(
-                "../amplify/backend/function/UserConfigFunction/build/distributions/latest_build.zip"))
-            .handler(
-                "com.awsomenlp.lambda.config.UserConfigHandler::handleRequest")
-            .description("Initial Attempt at making a lambda with CDK")
+            .code(Code.fromBucket(Bucket.fromBucketName(this, "Bucket", "codejava"), "latest_build.zip"))
+            .handler("com.awsomenlp.lambda.config.UserConfigHandler::handleRequest")
+            .description("UserConfigLambda")
+            .memorySize(256)
+            .timeout(Duration.seconds(45))
+            .build();
+
+    Function getBlogPostParsedFunction =
+        Function.Builder.create(this, "GetBlogPostParsedFunction")
+            .runtime(Runtime.PYTHON_3_10)
+            .code(Code.fromBucket(Bucket.fromBucketName(this, "Bucket", "codepython"), "get_blog_content.zip"))
+            .description("Function to get blog post parsed")
             .memorySize(256)
             .timeout(Duration.seconds(45))
             .build();
@@ -60,14 +71,27 @@ public class CdkInitStack extends Stack {
             .build())
         .build();
 
-    LambdaDataSource lambdaDataSource =
-        api.addLambdaDataSource("lambdaDS", myLambdaFunction);
-    lambdaDataSource.createResolver("resolver",
+    LambdaDataSource translateDS =
+        api.addLambdaDataSource("lambdaDS", userConfigFunctionCDK);
+
+    translateDS.createResolver("resolver",
         BaseResolverProps.builder()
             .typeName("Query")
             .requestMappingTemplate(MappingTemplate.lambdaRequest())
             .responseMappingTemplate(MappingTemplate.lambdaRequest())
             .fieldName("translate")
             .build());
+
+    LambdaDataSource blogPostLambdaDataSource =
+        api.addLambdaDataSource("blogPostLambdaDS", getBlogPostParsedFunction);
+
+    blogPostLambdaDataSource.createResolver("blogPostResolver",
+        BaseResolverProps.builder()
+            .typeName("Query")
+            .requestMappingTemplate(MappingTemplate.lambdaRequest())
+            .responseMappingTemplate(MappingTemplate.lambdaRequest())
+            .fieldName("getBlogPostParsed")
+            .build());
   }
+
 }
