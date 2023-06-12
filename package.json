@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.1",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@cloudscape-design/components": "^3.0.307",
+    "@cloudscape-design/global-styles": "^1.0.9",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "aws-amplify": "^5.2.0",
@@ -13,13 +14,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
+    "react-spinners": "^0.13.8",
     "react-star-ratings": "^2.3.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,6 +43,24 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@cloudscape-design/jest-preset": "^2.0.8",
+    "@testing-library/jest-dom": "^5.16.5",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "jest-watch-typeahead": "^0.6.5"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@cloudscape-design)"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "testEnvironment": "jest-environment-jsdom"
   }
 }
