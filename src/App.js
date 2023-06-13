@@ -71,11 +71,11 @@ function App() {
   async function sendOriginalToBackend(url1) {
     console.log('sending original blog post url to backend: URL =' + url1);
     try {
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed,{  url: url1 }));
+      const response = await API.graphql(graphqlOperation(getStepFunctionInvoker,{  url: url1 }));
       console.log('response from backend: ', response);
       const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = response.data.getBlogPostParsed.file;
-      return response;
+      leftWindow.innerHTML = response.data.getStepFunctionInvoker.file.lhs;
+      return response.lhs;
     } catch (error) {
       console.error('Error sending original blog post to backend:', error);
     }

@@ -9,7 +9,12 @@ def handler(event, context):
 
     response = client.start_execution(
     stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
-    input = json.dumps({'url' : event['url']})
+    input = json.dumps({
+        'url' : event['url'],
+        'targetLanguage' : event['targetLanguage'],
+        'sourceLanguage' : event['sourceLanguage'],
+        'translationModel': event['translationModel']
+        })
   )
     try:
         return json.dumps(response, indent=4, sort_keys=True, default=str)
