@@ -32,6 +32,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "stepFunctionInvoker": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -67,22 +72,6 @@
         }
       ]
     },
-    "AMPLIFY_function_checkingDatabase_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "checkingDatabase"
-        }
-      ]
-    },
-    "AMPLIFY_function_checkingDatabase_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "checkingDatabase"
-        }
-      ]
-    },
     "AMPLIFY_function_getBlogContent_deploymentBucketName": {
       "usedBy": [
         {
@@ -96,6 +85,22 @@
         {
           "category": "function",
           "resourceName": "getBlogContent"
+        }
+      ]
+    },
+    "AMPLIFY_function_stepFunctionInvoker_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stepFunctionInvoker"
+        }
+      ]
+    },
+    "AMPLIFY_function_stepFunctionInvoker_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stepFunctionInvoker"
         }
       ]
     }

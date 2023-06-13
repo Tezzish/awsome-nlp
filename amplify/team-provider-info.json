@@ -1,66 +1,38 @@
 {
-  "stepback": {
+  "transdev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-awsomenlp-stepback-175216-authRole",
-      "UnauthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-authRole",
+      "AuthRoleName": "amplify-awsomenlp-transdev-145032-authRole",
+      "UnauthRoleArn": "arn:aws:iam::755811905719:role/amplify-awsomenlp-transdev-145032-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::755811905719:role/amplify-awsomenlp-transdev-145032-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-      "UnauthRoleName": "amplify-awsomenlp-stepback-175216-unauthRole",
-      "StackName": "amplify-awsomenlp-stepback-175216",
-      "StackId": "arn:aws:cloudformation:eu-west-1:090854337836:stack/amplify-awsomenlp-stepback-175216/0abd1cc0-055c-11ee-9bcc-0acc4f4782df",
-      "AmplifyAppId": "dp80ryxt97csm"
+      "DeploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
+      "UnauthRoleName": "amplify-awsomenlp-transdev-145032-unauthRole",
+      "StackName": "amplify-awsomenlp-transdev-145032",
+      "StackId": "arn:aws:cloudformation:eu-west-1:755811905719:stack/amplify-awsomenlp-transdev-145032/7b32a1a0-0930-11ee-be4b-02c2c4e76eaf",
+      "AmplifyAppId": "dwapbqykinfdb"
     },
     "categories": {
       "function": {
         "UserConfigFunction": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
+          "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
           "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip"
         },
-        "getBlogContent": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
-        },
         "checkingUrl": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkingUrl-61734b46644269617848-build.zip"
+          "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
+          "s3Key": "amplify-builds/checkingUrl-487a70314163635a514a-build.zip"
+        },
+        "getBlogContent": {
+          "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
+          "s3Key": "amplify-builds/getBlogContent-5078434233705378346e-build.zip"
+        },
+        "stepFunctionInvoker": {
+          "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
+          "s3Key": "amplify-builds/stepFunctionInvoker-446753314a4259575654-build.zip"
         }
       },
       "api": {
         "awsomenlp": {}
       }
     }
-  },
-  "frontdev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-awsomenlp-stepback-175216-authRole",
-      "UnauthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::090854337836:role/amplify-awsomenlp-stepback-175216-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-      "UnauthRoleName": "amplify-awsomenlp-stepback-175216-unauthRole",
-      "StackName": "amplify-awsomenlp-stepback-175216",
-      "StackId": "arn:aws:cloudformation:eu-west-1:090854337836:stack/amplify-awsomenlp-stepback-175216/0abd1cc0-055c-11ee-9bcc-0acc4f4782df",
-      "AmplifyAppId": "dp80ryxt97csm"
-    },
-    "categories": {
-      "function": {
-        "UserConfigFunction": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip"
-        },
-        "getBlogContent": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/getBlogContent-38716856475959694d5a-build.zip"
-        },
-        "checkDB": {
-          "deploymentBucketName": "amplify-awsomenlp-stepback-175216-deployment",
-          "s3Key": "amplify-builds/checkDB-34544c4f37666d6f6f4a-build.zip"
-        }
-      }
-    }
-  },
-  "stepdev": {
-    "awscloudformation": {}
   }
 }
