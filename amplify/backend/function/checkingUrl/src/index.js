@@ -5,6 +5,7 @@
 // function to query dynamoDB table
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+const s3 = new AWS.S3();
 
 exports.handler = async (event, context) => {
   var segments = event['url'].split('/');
@@ -25,24 +26,43 @@ exports.handler = async (event, context) => {
      };
   }
   else {
-  //   // Specify the bucket name
-  // const bucketName = data['Item']['RHS_s3_loc'];
-
-  // // Specify the file names you want to retrieve
-  // const fileNames = ['file1.txt', 'file2.txt', 'file3.txt'];
-
-  // try {
-    // const promises = fileNames.map(async (fileName) => {
-    //   // Retrieve the contents of each file
-    //   const response = await s3.getObject({ Bucket: bucketName, Key: fileName }).promise();
-    //   const content = response.Body.toString('utf-8');
-
-    //   return { fileName, content };
-    // });
-
-    // // Wait for all promises to resolve
-    // const results = await Promise.all(promises);
-  return {urlPresent: true,
-         body: JSON.stringify(data)};
+          // Specify the URLs of the LHS and RHS files
+    const lhsUrl = data['Item']['LHS_s3_loc'];
+    const rhsUrl = data['Item']['RHS_s3_loc'];
+  
+    try {
+      // Extract the bucket name and object key from the URLs
+      const lhsParams = extractBucketAndKey(lhsUrl);
+      const rhsParams = extractBucketAndKey(rhsUrl);
+      console.log(data['Item']['RHS_s3_loc'])
+  
+      // Retrieve the contents of the LHS file
+      const lhsResponse = await s3.getObject({ Bucket: lhsParams.bucket, Key: lhsParams.key }).promise();
+      const lhsContent = lhsResponse.Body.toString('utf-8');
+  
+      // Retrieve the contents of the RHS file
+      const rhsResponse = await s3.getObject({ Bucket: rhsParams.bucket, Key: rhsParams.key }).promise();
+      const rhsContent = rhsResponse.Body.toString('utf-8');
+  
+      return {
+        statusCode: 200,
+        urlPresent: true,
+        body: JSON.stringify({ lhs: lhsContent, rhs: rhsContent }),
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: error.message }),
+      };
+    }
   }
 };
+
+// Helper function to extract the bucket name and object key from the S3 URL
+function extractBucketAndKey(url) {
+  const urlParts = url.replace('https://s3.amazonaws.com/', '').split('/');
+  const bucket = urlParts.shift();
+  const key = urlParts.join('/');
+
+  return { bucket, key };
+}
