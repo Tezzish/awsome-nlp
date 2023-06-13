@@ -54,6 +54,7 @@ public class CdkInitStack extends Stack {
         Function.Builder.create(this, "GetBlogPostParsedFunction")
             .runtime(Runtime.PYTHON_3_10)
             .code(Code.fromBucket(Bucket.fromBucketName(this, "Bucket", "codepython"), "get_blog_content.zip"))
+            .handler("app.handler")
             .description("Function to get blog post parsed")
             .memorySize(256)
             .timeout(Duration.seconds(45))
