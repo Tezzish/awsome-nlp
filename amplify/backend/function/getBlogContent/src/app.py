@@ -5,7 +5,7 @@ from urllib.request import urlopen
 
 def handler(event, context):
   blogUrl = event['arguments']['url']
-  
+
   try:
     response = urllib.request.urlopen(blogUrl)
     if response.status != 404:
@@ -20,7 +20,12 @@ def handler(event, context):
       return False
 
   
+  # html content of the blog post 
   postReturned = parser(blogUrl)
+  # title of the blog post
+  postTitle = getTitle(blogUrl)
+  # author(s) of the blog post
+  postAuthors = getAuthorNames(blogUrl)
 
 
   return {
@@ -30,9 +35,12 @@ def handler(event, context):
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
-      'file' : postReturned
+      'file' : postReturned,
+      'title' : postTitle,
+      'author' : postAuthors
   }
 
+# this function retrieves the title of the blog post
 def getTitle(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
@@ -43,6 +51,7 @@ def getTitle(url):
         title = None
     return title
 
+# this function retrieves the authors of the blog post
 def getAuthorNames(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
@@ -55,13 +64,11 @@ def getAuthorNames(url):
     return author_names
 
 
-
-print(getTitle("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el"))
-print(getAuthorNames("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el"))
 def parser(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
 
-#print(handler({'arguments': {'url': 'https://aws.amazon.com/blogs/devops/optimize-software-development-with-amazon-codewhisperer/?trk=7a3f46e1-9c31-4493-9807-8174ec76e623&sc_channel=el'}}, None))
+handler("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el", None)
+
