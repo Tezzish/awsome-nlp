@@ -27,7 +27,7 @@
         },
         "stepFunctionInvoker": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-446753314a4259575654-build.zip"
+          "s3Key": "amplify-builds/stepFunctionInvoker-5a4b747479432b7a764f-build.zip"
         }
       },
       "api": {

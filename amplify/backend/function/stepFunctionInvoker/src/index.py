@@ -11,7 +11,7 @@ def handler(event, context):
 #   print(event)
     response = client.start_execution(
     stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
-    url = event['url']
+    url = event['arguments']['url']
   )
 #   return {
 #       'statusCode': 200,
