@@ -4,6 +4,7 @@ import urllib.request
 from urllib.request import urlopen
 
 def handler(event, context):
+  
   blogUrl = event['arguments']['url']
 
   try:
@@ -70,5 +71,12 @@ def parser(url):
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
 
-handler("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el", None)
+#handler("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el", None)
 
+# event = {
+#     'arguments': {
+#         'url': 'https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el'
+#     }
+# }
+
+# print(handler(event, None))
