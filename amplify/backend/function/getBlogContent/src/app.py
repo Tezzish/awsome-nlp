@@ -22,6 +22,7 @@ def handler(event, context):
   
   postReturned = parser(blogUrl)
 
+
   return {
       'statusCode': 200,
       'headers': {
@@ -32,6 +33,31 @@ def handler(event, context):
       'file' : postReturned
   }
 
+def getTitle(url):
+    html = urlopen(url).read()
+    soup = bs.BeautifulSoup(html, 'html.parser')
+    title_element = soup.find('h1', class_='lb-h2 blog-post-title')
+    if title_element:
+        title = title_element.text.strip()
+    else:
+        title = None
+    return title
+
+def getAuthorNames(url):
+    html = urlopen(url).read()
+    soup = bs.BeautifulSoup(html, 'html.parser')
+    author_elements = soup.find_all('span', attrs={'property': 'author'})
+    author_names = []
+    for author_element in author_elements:
+        name_element = author_element.find('span', attrs={'property': 'name'})
+        if name_element:
+            author_names.append(name_element.text.strip())
+    return author_names
+
+
+
+print(getTitle("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el"))
+print(getAuthorNames("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el"))
 def parser(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
