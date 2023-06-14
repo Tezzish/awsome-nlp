@@ -6,7 +6,8 @@ client = boto3.client('stepfunctions')
 
 # function to invoke step function state machine with url as input
 def handler(event, context):
-
+    
+  try:  
     # invoke step function state machine with the correct ARN
     response = client.start_execution(
     stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
@@ -21,10 +22,27 @@ def handler(event, context):
         'translationModel': event['translationModel']
         })
   )
-    try:
-        # ensures the correct response is returned
-        return json.dumps(response, indent=4, sort_keys=True, default=str)
-    except Exception as e:
-        print(e)
-        return
+    
+    execution_status = response['status']
+    execution_output = response['output']
+
+    return {
+            'statusCode': 200,
+            'body': {
+                'executionStatus': execution_status,
+                'executionOutput': json.loads(execution_output)
+            }
+        }
+  except Exception as e:
+
+    return {
+            'statusCode': 500,
+            'body': str(e)
+        }
+    # try:
+    #     # ensures the correct response is returned
+    #     return json.dumps(response, indent=4, sort_keys=True, default=str)
+    # except Exception as e:
+    #     print(e)
+    #     return
     
