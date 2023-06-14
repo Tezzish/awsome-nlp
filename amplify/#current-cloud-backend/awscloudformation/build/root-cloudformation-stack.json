@@ -205,7 +205,19 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-41684756544473507072-build.zip",
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          "s3Key": "amplify-builds/stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip",
+=======
+          "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip",
+>>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+          "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip",
+>>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+          "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip",
+>>>>>>> parent of 18a4bd7 (steo invoker works fully)
           "env": "transdev"
         }
       }

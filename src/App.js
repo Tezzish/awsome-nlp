@@ -43,6 +43,7 @@ function App() {
           url: url,
           sourceLanguage: { name: "ENGLISH", code: "en" },
           targetLanguage: { name: "TURKISH", code: "tr" },
+          
           translationModel: { type: "amazonTranslate" }
         }
       }));
@@ -59,7 +60,7 @@ function App() {
       const rightWindow = document.getElementById('rightWindow');
       rightWindow.innerHTML = translatedPost;      
 
-      setTranslatedContent({ translatedPost});
+      // setTranslatedContent({ translatedPost});
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
