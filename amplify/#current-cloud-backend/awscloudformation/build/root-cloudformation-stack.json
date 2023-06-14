@@ -209,6 +209,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "s3Key": "amplify-builds/stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip",
 =======
           "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip",
@@ -222,6 +223,9 @@
 =======
           "s3Key": "amplify-builds/stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip",
 >>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+=======
+          "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip",
+>>>>>>> parent of 18a4bd7 (steo invoker works fully)
           "env": "transdev"
         }
       }

@@ -31,15 +31,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "lastPushTimeStamp": "2023-06-14T11:56:05.477Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.055Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
-      "lastPushTimeStamp": "2023-06-14T11:56:05.477Z",
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+      "lastPushTimeStamp": "2023-06-14T11:44:24.743Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -59,22 +51,14 @@
         "Name": "UserConfigFunction-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-transdev"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "lastPushTimeStamp": "2023-06-14T11:56:05.466Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.068Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
-      "lastPushTimeStamp": "2023-06-14T11:56:05.466Z",
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+      "lastPushTimeStamp": "2023-06-14T11:44:24.758Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastBuildTimeStamp": "2023-06-14T11:52:30.256Z",
+      "lastBuildTimeStamp": "2023-06-14T10:23:22.349Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:52:30.506Z",
+      "lastPackageTimeStamp": "2023-06-14T10:23:22.545Z",
       "distZipFilename": "UserConfigFunction-30396c50793166426d54-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
@@ -93,22 +77,14 @@
         "Name": "checkingUrl-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole19b815c5-transdev"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "lastPushTimeStamp": "2023-06-14T11:56:05.435Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.079Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
-      "lastPushTimeStamp": "2023-06-14T11:56:05.435Z",
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+      "lastPushTimeStamp": "2023-06-14T11:44:24.772Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
       },
-      "lastBuildTimeStamp": "2023-06-14T11:52:30.268Z",
+      "lastBuildTimeStamp": "2023-06-14T10:23:22.359Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:52:30.421Z",
+      "lastPackageTimeStamp": "2023-06-14T10:23:22.475Z",
       "distZipFilename": "checkingUrl-49754e4348775a2b586e-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
@@ -127,15 +103,7 @@
         "Name": "getBlogContent-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-transdev"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "lastPushTimeStamp": "2023-06-14T11:56:05.468Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.091Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
-      "lastPushTimeStamp": "2023-06-14T11:56:05.468Z",
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+      "lastPushTimeStamp": "2023-06-14T11:44:24.785Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -144,9 +112,9 @@
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/getBlogContent-696a5656524d66537936-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-14T11:52:33.542Z",
+      "lastBuildTimeStamp": "2023-06-14T10:23:25.186Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:52:41.782Z",
+      "lastPackageTimeStamp": "2023-06-14T10:23:28.010Z",
       "distZipFilename": "getBlogContent-696a5656524d66537936-build.zip",
       "lastPushDirHash": "vcSmE4iCpFz2OGJd+u3MzEmw8Rk="
     },
@@ -154,43 +122,19 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
-      "lastBuildTimeStamp": "2023-06-14T11:52:33.506Z",
+      "lastBuildTimeStamp": "2023-06-14T11:42:33.583Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:52:41.749Z",
-      "distZipFilename": "stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip",
+      "lastPackageTimeStamp": "2023-06-14T11:42:35.650Z",
+      "distZipFilename": "stepFunctionInvoker-41684756544473507072-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-        "s3Key": "amplify-builds/stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip"
-<<<<<<< HEAD
-=======
-      "lastBuildTimeStamp": "2023-06-14T11:28:55.869Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:28:57.966Z",
-      "distZipFilename": "stepFunctionInvoker-5952783836504f785970-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-        "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip"
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+        "s3Key": "amplify-builds/stepFunctionInvoker-41684756544473507072-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "logicalId": "functionstepFunctionInvoker"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "lastPushTimeStamp": "2023-06-14T11:56:05.486Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.294Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
-=======
-      "lastPushTimeStamp": "2023-06-14T11:56:05.486Z",
->>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
+      "lastPushTimeStamp": "2023-06-14T11:44:24.801Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::755811905719:role/awsomenlpLambdaRole42be966f-transdev",
         "Region": "eu-west-1",
@@ -198,7 +142,7 @@
         "Name": "stepFunctionInvoker-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole42be966f-transdev"
       },
-      "lastPushDirHash": "YRx86POxYp86be89YT5ygswG1Ks="
+      "lastPushDirHash": "AhGVTDsPprC5yxc1obv5VC8VS+Y="
     }
   },
   "storage": {}

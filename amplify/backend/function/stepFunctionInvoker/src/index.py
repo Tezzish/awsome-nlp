@@ -11,11 +11,11 @@ def handler(event, context):
         response = client.start_execution(
             stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
             input=json.dumps({
-                'url': event['arguments']['url'],
-                'targetLanguage': event['arguments']['targetLanguage'],
-                'sourceLanguage': event['arguments']['sourceLanguage'],
+                'url': event['arguments']['input']['url'],
+                'targetLanguage': event['arguments']['input']['targetLanguage'],
+                'sourceLanguage': event['arguments']['input']['sourceLanguage'],
                 # custom model vs Amazon Translate
-                'translationModel': event['arguments']['translationModel']
+                'translationModel': event['arguments']['input']['translationModel']
             })
         )
 
@@ -33,12 +33,8 @@ def handler(event, context):
                 # Execution completed
                 execution_output = json.loads(execution_details.get('output', '{}'))
                 return {
-                    'statusCode': 200,
-                    'body': {
-                        #'executionOutput': execution_output
-                        'lhs': execution_output['body']['lhs'],
-                        'rhs': execution_output['body']['rhs']
-                    }
+                    'lhs': execution_output['body']['lhs'],
+                    'rhs': execution_output['body']['rhs']
                 }
 
             # Wait for a few seconds before the next poll
@@ -49,5 +45,3 @@ def handler(event, context):
             'statusCode': 500,
             'body': str(e)
         }
-
-
