@@ -11,11 +11,11 @@ def handler(event, context):
         response = client.start_execution(
             stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
             input=json.dumps({
-                'url': event['url'],
-                'targetLanguage': event['targetLanguage'],
-                'sourceLanguage': event['sourceLanguage'],
+                'url': event['arguments']['url'],
+                'targetLanguage': event['arguments']['targetLanguage'],
+                'sourceLanguage': event['arguments']['sourceLanguage'],
                 # custom model vs Amazon Translate
-                'translationModel': event['translationModel']
+                'translationModel': event['arguments']['translationModel']
             })
         )
 

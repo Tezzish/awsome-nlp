@@ -19,7 +19,7 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
 
-  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+  const [translatedContent, setTranslatedContent] = useState({content: '' });
 
 
 
@@ -35,18 +35,50 @@ function App() {
     setSelectedModel(e.target.value);
   };
 
+
+  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+    try {
+      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+        input: {
+          url: url,
+          sourceLanguage: { name: "ENGLISH", code: "en" },
+          targetLanguage: { name: "TURKISH", code: "tr" },
+          translationModel: { type: "amazonTranslate" }
+        }
+      }));
+
+      console.log('send successful');
+      console.log(JSON.stringify(output))
+
+      const originalPost = output.lhs;
+      const translatedPost = output.rhs;
+
+      const leftWindow = document.getElementById('leftWindow');
+      leftWindow.innerHTML = originalPost;
+
+      const rightWindow = document.getElementById('rightWindow');
+      rightWindow.innerHTML = translatedPost;      
+
+      setTranslatedContent({ translatedPost});
+    } catch (error) {
+      console.error('Error sending config to backend:', error);
+    }
+  };
+
+
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
     e.preventDefault();
     console.log("Button Clicked");
     const url = URLValue;
-    const lang = selectedLanguage;
+    const sourceLanguage = { name: "ENGLISH", code: "en" };
+    const targetLanguage = { name: "TURKISH", code: "tr" };
     const translator = selectedModel;
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
       if(isValidURL(url)) {
-      //sendOriginalToBackend(url);
-      sendConfigToBackend(url, lang, translator)
+      // calls the function to trigger step function 
+      sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
       }
     } catch (error) {
       console.error("Error:", error);
@@ -67,20 +99,6 @@ function App() {
     }
   };
 
-  // // sends the url of the original blog post to the backend to be parsed
-  // async function sendOriginalToBackend(url1) {
-  //   console.log('sending original blog post url to backend: URL =' + url1);
-  //   try {
-  //     //const response = await API.graphql(graphqlOperation(getStepFunctionInvoker,{  url: url1 }));
-  //     console.log('response from backend: ', response);
-  //     const leftWindow = document.getElementById('leftWindow');
-  //     leftWindow.innerHTML = response.data.getStepFunctionInvoker.file.lhs;
-  //     return response.lhs;
-  //   } catch (error) {
-  //     console.error('Error sending original blog post to backend:', error);
-  //   }
-  // }
-
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
       try {
@@ -100,29 +118,7 @@ function App() {
     fetchLanguagesAndModels();
   }, []);
 
-  const sendConfigToBackend = async (url, language, translationModel) => {
-    try {
-      const output = await API.graphql(graphqlOperation(translate, {
-        input: {
-          url: url,
-          targetLanguage: { name: "TURKISH", code: "tr" },
-          sourceLanguage: { name: "ENGLISH", code: "en" },
-          translationModel: { type: "amazonTranslate" }
-        }
-      }));
-      console.log('send successful');
-      console.log(JSON.stringify(output))
-
-      const translatedPost = output.data.translate;
-      const title = translatedPost.title;
-      const authors = translatedPost.authors.join(', ');
-      const content = translatedPost.content.join('\n');
-
-      setTranslatedContent({ title, authors, content });
-    } catch (error) {
-      console.error('Error sending config to backend:', error);
-    }
-  };
+  
 
 
   return (
@@ -154,15 +150,17 @@ function App() {
               className="left-side"
               id="leftWindow"
           ></div>
-          <div className="right-side">
-            <h2>{translatedContent.title}</h2>
-            <h3>{translatedContent.authors}</h3>
-            {translatedContent.content.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+          <div className="right-side"
+               id="rightWindow" 
+          ></div>
         </div>
       </div>
   );
 }
 export default App;
+
+// {/* <h2>{translatedContent.title}</h2>
+//             <h3>{translatedContent.authors}</h3> */} 
+//             {/* {translatedContent.content.split('\n').map((paragraph, index) => (
+//                 <p key={index}>{paragraph}</p>
+//             ))} */}
