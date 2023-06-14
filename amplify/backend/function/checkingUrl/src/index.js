@@ -22,7 +22,10 @@ exports.handler = async (event, context) => {
   console.log(data);
   if (JSON.stringify(data) == "{}"){
      return {urlPresent: false,
-       url: event['url']
+        url: event['url'],
+        targetLanguage : event['targetLanguage'],
+        sourceLanguage : event['sourceLanguage'],
+        translationModel: event['translationModel']
      };
   }
   else {
