@@ -1,48 +1,51 @@
 import json
 import boto3
-
+import time
 
 client = boto3.client('stepfunctions')
 
-# function to invoke step function state machine with url as input
+# Function to invoke Step Function state machine with URL as input
 def handler(event, context):
-    
-  try:  
-    # invoke step function state machine with the correct ARN
-    response = client.start_execution(
-    stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
-    input = json.dumps({
-        # url of the blog post
-        'url' : event['url'],
-        # target language for translation
-        'targetLanguage' : event['targetLanguage'],
-        # source language for translation
-        'sourceLanguage' : event['sourceLanguage'],
-        # translation model to use (AWS Translate or Custom)
-        'translationModel': event['translationModel']
-        })
-  )
-    
-    execution_status = response['status']
-    execution_output = response['output']
+    try:
+        # Invoke Step Function state machine with the correct ARN
+        response = client.start_execution(
+            stateMachineArn='arn:aws:states:eu-west-1:755811905719:stateMachine:applicationWorkflow',
+            input=json.dumps({
+                'url': event['url'],
+                'targetLanguage': event['targetLanguage'],
+                'sourceLanguage': event['sourceLanguage'],
+                # custom model vs Amazon Translate
+                'translationModel': event['translationModel']
+            })
+        )
 
-    return {
-            'statusCode': 200,
-            'body': {
-                'executionStatus': execution_status,
-                'executionOutput': json.loads(execution_output)
-            }
-        }
-  except Exception as e:
+        execution_arn = response['executionArn']
 
-    return {
+        # Polling loop to check execution status
+        while True:
+            execution_details = client.describe_execution(
+                executionArn=execution_arn
+            )
+            
+            status = execution_details['status']
+
+            if status in ['SUCCEEDED', 'FAILED', 'TIMED_OUT', 'ABORTED']:
+                # Execution completed
+                execution_output = json.loads(execution_details.get('output', '{}'))
+                return {
+                    'statusCode': 200,
+                    'body': {
+                        'executionOutput': execution_output
+                    }
+                }
+
+            # Wait for a few seconds before the next poll
+            time.sleep(2)
+
+    except Exception as e:
+        return {
             'statusCode': 500,
             'body': str(e)
         }
-    # try:
-    #     # ensures the correct response is returned
-    #     return json.dumps(response, indent=4, sort_keys=True, default=str)
-    # except Exception as e:
-    #     print(e)
-    #     return
-    
+
+
