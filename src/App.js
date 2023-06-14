@@ -45,7 +45,7 @@ function App() {
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
       if(isValidURL(url)) {
-      sendOriginalToBackend(url);
+      //sendOriginalToBackend(url);
       sendConfigToBackend(url, lang, translator)
       }
     } catch (error) {
@@ -67,19 +67,19 @@ function App() {
     }
   };
 
-  // sends the url of the original blog post to the backend to be parsed
-  async function sendOriginalToBackend(url1) {
-    console.log('sending original blog post url to backend: URL =' + url1);
-    try {
-      const response = await API.graphql(graphqlOperation(getStepFunctionInvoker,{  url: url1 }));
-      console.log('response from backend: ', response);
-      const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = response.data.getStepFunctionInvoker.file.lhs;
-      return response.lhs;
-    } catch (error) {
-      console.error('Error sending original blog post to backend:', error);
-    }
-  }
+  // // sends the url of the original blog post to the backend to be parsed
+  // async function sendOriginalToBackend(url1) {
+  //   console.log('sending original blog post url to backend: URL =' + url1);
+  //   try {
+  //     //const response = await API.graphql(graphqlOperation(getStepFunctionInvoker,{  url: url1 }));
+  //     console.log('response from backend: ', response);
+  //     const leftWindow = document.getElementById('leftWindow');
+  //     leftWindow.innerHTML = response.data.getStepFunctionInvoker.file.lhs;
+  //     return response.lhs;
+  //   } catch (error) {
+  //     console.error('Error sending original blog post to backend:', error);
+  //   }
+  // }
 
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
