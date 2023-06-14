@@ -32,10 +32,14 @@
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:56:05.477Z",
 =======
       "lastPushTimeStamp": "2023-06-14T11:30:03.055Z",
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+      "lastPushTimeStamp": "2023-06-14T11:56:05.477Z",
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -56,10 +60,14 @@
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-transdev"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:56:05.466Z",
 =======
       "lastPushTimeStamp": "2023-06-14T11:30:03.068Z",
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+      "lastPushTimeStamp": "2023-06-14T11:56:05.466Z",
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -86,10 +94,14 @@
         "LambdaExecutionRole": "awsomenlpLambdaRole19b815c5-transdev"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:56:05.435Z",
 =======
       "lastPushTimeStamp": "2023-06-14T11:30:03.079Z",
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+      "lastPushTimeStamp": "2023-06-14T11:56:05.435Z",
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
@@ -116,10 +128,14 @@
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-transdev"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:56:05.468Z",
 =======
       "lastPushTimeStamp": "2023-06-14T11:30:03.091Z",
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+      "lastPushTimeStamp": "2023-06-14T11:56:05.468Z",
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -139,6 +155,9 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "lastBuildTimeStamp": "2023-06-14T11:52:33.506Z",
       "lastBuildType": "PROD",
       "lastPackageTimeStamp": "2023-06-14T11:52:41.749Z",
@@ -146,6 +165,7 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/stepFunctionInvoker-612b2b5a5175374c6b2f-build.zip"
+<<<<<<< HEAD
 =======
       "lastBuildTimeStamp": "2023-06-14T11:28:55.869Z",
       "lastBuildType": "PROD",
@@ -155,16 +175,22 @@
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip"
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "logicalId": "functionstepFunctionInvoker"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:56:05.486Z",
 =======
       "lastPushTimeStamp": "2023-06-14T11:30:03.294Z",
 >>>>>>> parent of 18a4bd7 (steo invoker works fully)
+=======
+      "lastPushTimeStamp": "2023-06-14T11:56:05.486Z",
+>>>>>>> 1136ed8a7ebbc53012540349df4e3d16eafe8a4e
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::755811905719:role/awsomenlpLambdaRole42be966f-transdev",
         "Region": "eu-west-1",
