@@ -41,3 +41,5 @@ amplifytools.xcconfig
 
 
 amplify/backend/function/getBlogContent/test/__pycache__/
+amplify/backend/function/UserConfigFunction/out/
+cdk-init/cdk.out/
