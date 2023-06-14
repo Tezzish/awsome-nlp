@@ -35,7 +35,9 @@ def handler(event, context):
                 return {
                     'statusCode': 200,
                     'body': {
-                        'executionOutput': execution_output
+                        #'executionOutput': execution_output
+                        'lhs': execution_output['body']['lhs'],
+                        'rhs': execution_output['body']['rhs']
                     }
                 }
 
