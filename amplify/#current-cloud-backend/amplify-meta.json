@@ -31,16 +31,11 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:51:32.915Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.055Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushDirHash": "95qrNbY152kTt+ELqyrc3TuwizA="
       "lastPushDirHash": "95qrNbY152kTt+ELqyrc3TuwizA="
     }
   },
@@ -56,28 +51,19 @@
         "Name": "UserConfigFunction-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-transdev"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:51:32.915Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.068Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
       "lastBuildTimeStamp": "2023-06-14T11:48:53.607Z",
-      "lastBuildTimeStamp": "2023-06-14T11:48:53.607Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:48:53.715Z",
-      "distZipFilename": "UserConfigFunction-51757a42566d70756f6a-build.zip",
       "lastPackageTimeStamp": "2023-06-14T11:48:53.715Z",
       "distZipFilename": "UserConfigFunction-51757a42566d70756f6a-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip"
-        "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip"
       },
-      "lastPushDirHash": "HI6UNiBJytlPfFIE/mzVVCn2w0U="
       "lastPushDirHash": "HI6UNiBJytlPfFIE/mzVVCn2w0U="
     },
     "checkingUrl": {
@@ -91,11 +77,7 @@
         "Name": "checkingUrl-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole19b815c5-transdev"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:51:32.915Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.079Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
@@ -110,9 +92,7 @@
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/checkingUrl-72755034344265377875-build.zip"
-        "s3Key": "amplify-builds/checkingUrl-72755034344265377875-build.zip"
       },
-      "lastPushDirHash": "EwipcKubVT0Ks/Js65qzuw2Iyis="
       "lastPushDirHash": "EwipcKubVT0Ks/Js65qzuw2Iyis="
     },
     "getBlogContent": {
@@ -126,11 +106,7 @@
         "Name": "getBlogContent-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-transdev"
       },
-<<<<<<< HEAD
       "lastPushTimeStamp": "2023-06-14T11:51:32.915Z",
-=======
-      "lastPushTimeStamp": "2023-06-14T11:30:03.091Z",
->>>>>>> parent of 18a4bd7 (steo invoker works fully)
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -139,17 +115,14 @@
       "lastBuildType": "PROD",
       "lastPackageTimeStamp": "2023-06-14T11:48:58.931Z",
       "distZipFilename": "getBlogContent-58473763533741337272-build.zip",
-      "lastBuildTimeStamp": "2023-06-14T11:48:56.928Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-14T11:48:58.931Z",
-      "distZipFilename": "getBlogContent-58473763533741337272-build.zip",
+
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
         "s3Key": "amplify-builds/getBlogContent-58473763533741337272-build.zip"
-        "s3Key": "amplify-builds/getBlogContent-58473763533741337272-build.zip"
+        
       },
       "lastPushDirHash": "BjfPSGsgSRChjHMV8x5rK964jU4="
-      "lastPushDirHash": "BjfPSGsgSRChjHMV8x5rK964jU4="
+     
     },
     "stepFunctionInvoker": {
       "build": true,
