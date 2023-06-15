@@ -161,7 +161,7 @@
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
           "S3DeploymentBucket": "amplify-awsomenlp-transdev-145032-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/19d422a30a7f57c6814e1ceaa212b6cc606ba922",
+          "S3DeploymentRootKey": "amplify-appsync-files/f7fa29847878b3f2b742098ea3218f9892a6f89a",
           "env": "transdev"
         }
       }

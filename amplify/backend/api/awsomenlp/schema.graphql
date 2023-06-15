@@ -56,6 +56,12 @@ type html {
 }
 
 type Query {
+    getStepFunctionInvoker(input: ConfigInput): lhsAndRhs
     translate(input: ConfigInput): BlogPost
     getBlogPostParsed(url: String): html
+}
+
+type lhsAndRhs {
+	lhs: String
+	rhs: String
 }

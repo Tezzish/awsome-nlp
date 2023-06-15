@@ -2,7 +2,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const getStepFunctionInvoker = /* GraphQL */ `
-  query GetStepFunctionInvoker($input: ConfigInput) {
+  query getStepFunctionInvoker($input: ConfigInput) {
     getStepFunctionInvoker(input: $input) {
       lhs
       rhs
