@@ -34,7 +34,7 @@ function App() {
   //Rating State Declarations
   const [rating, setRating] = useState(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
-  const [ratingId] = useState(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+  const [ratingId, setRatingId] = useState('');
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
   //Alert State Declarations
@@ -216,14 +216,14 @@ function App() {
 
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
-      const rating = await API.graphql(graphqlOperation(createRating, {
+      const output = await API.graphql(graphqlOperation(createRating, {
         input: {
-          id: ratingId,
           ratingBlogPostId: ratingBlogPostId,
           stars: star
         }
       }));
-      console.log(rating);
+      setRatingId(output.data.createRating.id)
+      console.log(output.data.createRating);
     } catch (error) {
       console.log("Rating not created:", error)
     }
@@ -231,13 +231,13 @@ function App() {
 
   async function mutateRatingFunc(star) {
     try {
-      const rating = await API.graphql(graphqlOperation(updateRating, {
+      const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingId,
           stars: star
         }
       }));
-      console.log(rating);
+      console.log(output);
     } catch (error) {
       console.log("Rating not updated:", error)
     }
