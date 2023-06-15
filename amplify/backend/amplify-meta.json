@@ -35,7 +35,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.355Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.689Z",
       "lastPushDirHash": "T9svqWhWdcf/upBZ/AtGeuHCSVs="
     }
   },
@@ -56,7 +56,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.369Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.705Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::287206048984:role/awsomenlpLambdaRolee754d004-newtrans",
         "Region": "eu-west-1",
@@ -82,7 +82,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.385Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.719Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::287206048984:role/awsomenlpLambdaRole19b815c5-newtrans",
         "Region": "eu-west-1",
@@ -108,7 +108,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.400Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.732Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::287206048984:role/awsomenlpLambdaRole4c31b8f7-newtrans",
         "Region": "eu-west-1",
@@ -134,7 +134,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "logicalId": "functionstepFunctionInvoker"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.414Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.746Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::287206048984:role/awsomenlpLambdaRole42be966f-newtrans",
         "Region": "eu-west-1",
@@ -160,7 +160,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
         "logicalId": "functionstoringTranslation"
       },
-      "lastPushTimeStamp": "2023-06-15T13:19:52.684Z",
+      "lastPushTimeStamp": "2023-06-15T13:28:01.790Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::287206048984:role/awsomenlpLambdaRole36b86eed-newtrans",
         "Region": "eu-west-1",
