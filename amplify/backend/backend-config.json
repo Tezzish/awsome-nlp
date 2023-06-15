@@ -38,7 +38,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "storeTranslation": {
+    "storingTranslation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -109,19 +109,19 @@
         }
       ]
     },
-    "AMPLIFY_function_storeTranslation_deploymentBucketName": {
+    "AMPLIFY_function_storingTranslation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "storeTranslation"
+          "resourceName": "storingTranslation"
         }
       ]
     },
-    "AMPLIFY_function_storeTranslation_s3Key": {
+    "AMPLIFY_function_storingTranslation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "storeTranslation"
+          "resourceName": "storingTranslation"
         }
       ]
     }

@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "storeTranslation",
+            "storingTranslation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "storeTranslation",
+                  "storingTranslation",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "awsomenlpLambdaRole595018ea",
+            "awsomenlpLambdaRole36b86eed",
             {
               "Fn::Join": [
                 "",
                 [
-                  "awsomenlpLambdaRole595018ea",
+                  "awsomenlpLambdaRole36b86eed",
                   "-",
                   {
                     "Ref": "env"

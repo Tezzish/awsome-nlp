@@ -111,7 +111,7 @@
             "ApiId"
           ]
         },
-        "Expires": 1687436407
+        "Expires": 1687439526
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -760,5 +760,6 @@
         }
       }
     }
-  }
+  },
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.0.0\",\"stackType\":\"api-AppSync\",\"metadata\":{}}"
 }
