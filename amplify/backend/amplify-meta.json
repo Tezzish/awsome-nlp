@@ -31,7 +31,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2023-06-15T12:22:47.676Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.769Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -51,7 +51,7 @@
         "Name": "UserConfigFunction-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-transdev"
       },
-      "lastPushTimeStamp": "2023-06-15T12:22:46.598Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.783Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -77,7 +77,7 @@
         "Name": "checkingUrl-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole19b815c5-transdev"
       },
-      "lastPushTimeStamp": "2023-06-15T12:22:46.651Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.798Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
@@ -103,7 +103,7 @@
         "Name": "getBlogContent-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-transdev"
       },
-      "lastPushTimeStamp": "2023-06-15T12:22:46.663Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.814Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
@@ -129,7 +129,7 @@
         "Name": "stepFunctionInvoker-transdev",
         "LambdaExecutionRole": "awsomenlpLambdaRole42be966f-transdev"
       },
-      "lastPushTimeStamp": "2023-06-15T12:22:46.677Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.830Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "logicalId": "functionstepFunctionInvoker"
@@ -160,7 +160,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-transdev-145032-deployment/amplify-cfn-templates/function/storeTranslation-cloudformation-template.json",
         "logicalId": "functionstoreTranslation"
       },
-      "lastPushTimeStamp": "2023-06-15T12:22:46.689Z",
+      "lastPushTimeStamp": "2023-06-15T12:27:24.845Z",
       "output": {
         "LambdaExecutionRoleArn": "arn:aws:iam::755811905719:role/awsomenlpLambdaRole595018ea-transdev",
         "Region": "eu-west-1",

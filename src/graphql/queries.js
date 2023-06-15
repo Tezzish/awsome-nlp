@@ -1,14 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getStepFunctionInvoker = /* GraphQL */ `
-  query getStepFunctionInvoker($input: ConfigInput) {
-    getStepFunctionInvoker(input: $input) {
-      lhs
-      rhs
-    }
-  }
-`;
+
 export const translate = /* GraphQL */ `
   query Translate($input: ConfigInput) {
     translate(input: $input) {
@@ -51,6 +44,15 @@ export const getBlogPostParsed = /* GraphQL */ `
   query GetBlogPostParsed($url: String) {
     getBlogPostParsed(url: $url) {
       file
+    }
+  }
+`;
+
+export const getStepFunctionInvoker = /* GraphQL */ `
+  query GetStepFunctionInvoker($input: ConfigInput) {
+    getStepFunctionInvoker(input: $input) {
+      lhs
+      rhs
     }
   }
 `;
