@@ -3,7 +3,7 @@ import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-import {getBlogPostParsed, listLanguages, listTranslationModels, translate} from "./graphql/queries";
+import {getBlogPostParsed, listLanguages, listTranslationModels, translate, getStepFunctionInvoker} from "./graphql/queries";
 
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
@@ -38,29 +38,29 @@ function App() {
 
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
-      // const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
-      //   input: {
-      //     url: url,
-      //     sourceLanguage: { name: "ENGLISH", code: "en" },
-      //     targetLanguage: { name: "TURKISH", code: "tr" },
+      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+        input: {
+          url: url,
+          sourceLanguage: { name: "ENGLISH", code: "en" },
+          targetLanguage: { name: "TURKISH", code: "tr" },
           
-      //     translationModel: { type: "amazonTranslate" }
-      //   }
-      // }));
+          translationModel: { type: "amazonTranslate" }
+        }
+      }));
 
-      // console.log('send successful');
-      // console.log(JSON.stringify(output))
+      console.log('send successful');
+      console.log(JSON.stringify(output))
 
-      // const originalPost = output.lhs;
-      // const translatedPost = output.rhs;
+      const originalPost = output.lhs;
+      const translatedPost = output.rhs;
 
-      // const leftWindow = document.getElementById('leftWindow');
-      // leftWindow.innerHTML = originalPost;
+      const leftWindow = document.getElementById('leftWindow');
+      leftWindow.innerHTML = originalPost;
 
-      // const rightWindow = document.getElementById('rightWindow');
-      // rightWindow.innerHTML = translatedPost;      
+      const rightWindow = document.getElementById('rightWindow');
+      rightWindow.innerHTML = translatedPost;      
 
-      // setTranslatedContent({ translatedPost});
+      setTranslatedContent({ translatedPost});
     } catch (error) {
       console.error('Error sending config to backend:', error);
     }
