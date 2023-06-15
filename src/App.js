@@ -38,27 +38,27 @@ function App() {
 
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
-      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
-        input: {
-          url: url,
-          sourceLanguage: { name: "ENGLISH", code: "en" },
-          targetLanguage: { name: "TURKISH", code: "tr" },
+      // const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+      //   input: {
+      //     url: url,
+      //     sourceLanguage: { name: "ENGLISH", code: "en" },
+      //     targetLanguage: { name: "TURKISH", code: "tr" },
           
-          translationModel: { type: "amazonTranslate" }
-        }
-      }));
+      //     translationModel: { type: "amazonTranslate" }
+      //   }
+      // }));
 
-      console.log('send successful');
-      console.log(JSON.stringify(output))
+      // console.log('send successful');
+      // console.log(JSON.stringify(output))
 
-      const originalPost = output.lhs;
-      const translatedPost = output.rhs;
+      // const originalPost = output.lhs;
+      // const translatedPost = output.rhs;
 
-      const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = originalPost;
+      // const leftWindow = document.getElementById('leftWindow');
+      // leftWindow.innerHTML = originalPost;
 
-      const rightWindow = document.getElementById('rightWindow');
-      rightWindow.innerHTML = translatedPost;      
+      // const rightWindow = document.getElementById('rightWindow');
+      // rightWindow.innerHTML = translatedPost;      
 
       // setTranslatedContent({ translatedPost});
     } catch (error) {
