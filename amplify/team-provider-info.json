@@ -15,19 +15,23 @@
       "function": {
         "UserConfigFunction": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-30396c50793166426d54-build.zip"
+          "s3Key": "amplify-builds/UserConfigFunction-51757a42566d70756f6a-build.zip"
         },
         "checkingUrl": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/checkingUrl-49754e4348775a2b586e-build.zip"
+          "s3Key": "amplify-builds/checkingUrl-72755034344265377875-build.zip"
         },
         "getBlogContent": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/getBlogContent-696a5656524d66537936-build.zip"
+          "s3Key": "amplify-builds/getBlogContent-58473763533741337272-build.zip"
         },
         "stepFunctionInvoker": {
           "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-5952783836504f785970-build.zip"
+          "s3Key": "amplify-builds/stepFunctionInvoker-5244584e322f2b685062-build.zip"
+        },
+        "storeTranslation": {
+          "deploymentBucketName": "amplify-awsomenlp-transdev-145032-deployment",
+          "s3Key": "amplify-builds/storeTranslation-6b392b2b4267386c4531-build.zip"
         }
       },
       "api": {

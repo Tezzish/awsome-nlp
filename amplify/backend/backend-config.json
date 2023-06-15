@@ -37,6 +37,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "storeTranslation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -101,6 +106,22 @@
         {
           "category": "function",
           "resourceName": "stepFunctionInvoker"
+        }
+      ]
+    },
+    "AMPLIFY_function_storeTranslation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "storeTranslation"
+        }
+      ]
+    },
+    "AMPLIFY_function_storeTranslation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "storeTranslation"
         }
       ]
     }

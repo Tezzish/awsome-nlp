@@ -4,6 +4,10 @@
       "Type": "String",
       "Default": "NONE"
     },
+    "AppSyncApiName": {
+      "Type": "String",
+      "Default": "AppSyncSimpleTransform"
+    },
     "DynamoDBModelTableReadIOPS": {
       "Type": "Number",
       "Default": 5,
@@ -40,10 +44,6 @@
         "false"
       ],
       "Description": "Enable server side encryption powered by KMS."
-    },
-    "AppSyncApiName": {
-      "Type": "String",
-      "Default": "AppSyncSimpleTransform"
     },
     "S3DeploymentBucket": {
       "Type": "String",
@@ -111,7 +111,7 @@
             "ApiId"
           ]
         },
-        "Expires": 1687348366
+        "Expires": 1687348140
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
