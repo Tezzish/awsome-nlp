@@ -20,6 +20,7 @@ exports.handler = async (event, context) => {
   };
   const data = await docClient.get(params).promise();
   console.log(data);
+  console.log(event['url'])
   if (JSON.stringify(data) == "{}"){
      return {urlPresent: false,
         url: event['url'],
@@ -50,7 +51,7 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 200,
         urlPresent: true,
-        body: JSON.stringify({ lhs: lhsContent, rhs: rhsContent }),
+        body: { lhs: lhsContent, rhs: rhsContent },
       };
     } catch (error) {
       return {
