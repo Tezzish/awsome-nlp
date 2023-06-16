@@ -21,8 +21,15 @@ def lambda_handler(event, context):
     #get url from event
     URL = event['url']
     #create file name from url (this is our key)
+
+    # if url ends with a /, remove it
+    if URL[-1] == '/':
+        URL = URL[:-1]
+    
+    print(URL)
+
     FILE_NAME = URL.split('/')[-1]
-    #pass the url to the lhs lambda to get back html
+    # pass the url to the lhs lambda to get back html
     try:
         lhs_html = get_html(URL, 'getBlogContent-newtrans')
     except Exception as e:
