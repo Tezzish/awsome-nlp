@@ -21,6 +21,13 @@ def lambda_handler(event, context):
     #get url from event
     URL = event['url']
     #create file name from url (this is our key)
+
+    # if url ends with a /, remove it
+    if URL[-1] == '/':
+        URL = URL[:-1]
+    
+    print(URL)
+
     FILE_NAME = URL.split('/')[-1]
     #first check if the entry exists in the db
     response = table.get_item(Key={'URL': FILE_NAME})
