@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     FILE_NAME = URL.split('/')[-1]
     #pass the url to the lhs lambda to get back html
     try:
-        lhs_html = get_html(URL, 'getBlogContent-staging')
+        lhs_html = get_html(URL, 'getBlogContent-newtrans')
     except Exception as e:
         return {
             'statusCode': 500,

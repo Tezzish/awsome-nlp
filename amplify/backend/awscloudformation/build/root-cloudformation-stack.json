@@ -205,7 +205,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-5244584e322f2b685062-build.zip",
+          "s3Key": "amplify-builds/stepFunctionInvoker-6e4c42544a5a674e5232-build.zip",
           "env": "newtrans"
         }
       }
@@ -216,7 +216,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/storingTranslation-6974497276314368386f-build.zip",
+          "s3Key": "amplify-builds/storingTranslation-7337466c646a79564945-build.zip",
           "env": "newtrans"
         }
       }
