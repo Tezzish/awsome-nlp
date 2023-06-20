@@ -64,6 +64,9 @@ def getAuthorNames(url):
             author_names.append(name_element.text.strip())
     return author_names
 
+print(getAuthorNames("https://aws.amazon.com/blogs/aws/simplify-how-you-manage-authorization-in-your-applications-with-amazon-verified-permissions-now-generally-available/?trk=da17f24c-7c0d-4554-be7d-a898693dca8f&sc_channel=el"))
+
+
 
 def parser(url):
     html = urlopen(url).read()
@@ -71,7 +74,7 @@ def parser(url):
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
 
-#handler("https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el", None)
+# handler("https://aws.amazon.com/blogs/aws/simplify-how-you-manage-authorization-in-your-applications-with-amazon-verified-permissions-now-generally-available/?trk=da17f24c-7c0d-4554-be7d-a898693dca8f&sc_channel=el", None)
 
 # event = {
 #     'arguments': {

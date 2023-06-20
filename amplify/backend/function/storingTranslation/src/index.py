@@ -42,15 +42,22 @@ def handler(event, context):
         }
     # store the html in s3
     try:
-        s3_connection.put_object(Bucket=BUCKET, Key=FILE_NAME + '-lhs'+'.html', Body=lhs_html.encode())
-        
-        rhs_name = FILE_NAME + '-' + '[translated]' + "-" + event['targetLanguage']['code'] + '-' + event['translationModel']['type'] +  '-rhs'+'.html'
-       
+        # print("AM I EVEN TRYING")
+        # file_exists = any(obj.key == FILE_NAME for obj in s3.Bucket(BUCKET).objects.all())
+        print("FILE EXISTS KINDA DOES STH")
+        if 'Item' not in response:
+            s3_connection.put_object(Bucket=BUCKET, Key=FILE_NAME + '-lhs'+'.html', Body=lhs_html.encode())
+            print("IS THIS EVEN WORKING")
+        print("1")
+        rhs_name = FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' + event['translationModel']['type'] +  '-rhs'+'.html'
+        print("2")
+        print(rhs_name)
         rhs_title, rhs_authors, rhs_content = get_translated(URL, event['sourceLanguage'], event['targetLanguage'], event['translationModel'])
-    
+        print(rhs_content)
+        print(rhs_authors)
         
         rhs_html = replace_text_with_translation(lhs_content, rhs_content)['file']
-
+        print(rhs_html)
         s3_connection.put_object(Bucket=BUCKET, Key=rhs_name, Body=rhs_html.encode())
     except Exception as e:
         return {
@@ -71,27 +78,30 @@ def handler(event, context):
         table.put_item(
             Item={
                 'URL': FILE_NAME,
-                'authors': lhs_authors,
+                'authors': rhs_authors,
                 'title': lhs_title,
                 'language' : event['sourceLanguage']['code'],
-                'LHS_s3_loc': 'https://s3.amazonaws.com/' + BUCKET + '/' + FILE_NAME + '-lhs.html'
+                'S3_loc': 'https://s3.amazonaws.com/' + BUCKET + '/' + FILE_NAME + '-lhs.html'
             }
         )
     table.put_item (
-        Item={
-            'URL': FILE_NAME + '[translated]' + event['targetLanguage']['code'] + '-' + event['translationModel']['type'],
+        Item= {
+            'URL': FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' + event['translationModel']['type'],
             'originalBlog' : FILE_NAME,
             'average_rating': 0,
             'number_of_ratings': 0,
             'authors': rhs_authors,
             'title': rhs_title,
-            'RHS_s3_loc': 'https://s3.amazonaws.com/' + BUCKET + '/' + FILE_NAME + '-rhs.html'
+            'LHS_s3_loc': 'https://s3.amazonaws.com/' + BUCKET + '/' + FILE_NAME + '-lhs.html',
+            'RHS_s3_loc': 'https://s3.amazonaws.com/' + BUCKET + '/' + FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' + event['translationModel']['type'] + '-rhs.html'
         }
     )
     return {
         'statusCode': 200,
         'body':'great success',
         'url': URL,
+        'targetLanguage' : event['targetLanguage'],
+        'translationModel' : event['translationModel']
     }
 
 # function to get html from url by calling a lambda
