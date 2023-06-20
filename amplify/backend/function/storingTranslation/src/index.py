@@ -25,18 +25,15 @@ def handler(event, context):
     if URL[-1] == '/':
         URL = URL[:-1]
     
-    print(URL)
 
     FILE_NAME = URL.split('/')[-1]
     
-    print(FILE_NAME)
     # first check if the entry exists in the db
     response = table.get_item(Key={'URL': FILE_NAME})
     # pass the url to the lhs lambda to get back html
     try:
         if 'Item' not in response:
              lhs_title, lhs_authors, lhs_content, lhs_html = get_html(URL, event['sourceLanguage'], event['targetLanguage'], event['translationModel'],'getBlogContent-storagedev')
-             print(lhs_content)
 
     except Exception as e:
         return {
@@ -51,12 +48,9 @@ def handler(event, context):
        
         rhs_title, rhs_authors, rhs_content = get_translated(URL, event['sourceLanguage'], event['targetLanguage'], event['translationModel'])
     
-        print(rhs_content)
-        print(lhs_content)
-        print("RIGHT BEFORE PABLOS FUNCTION")
+        
         rhs_html = replace_text_with_translation(lhs_content, rhs_content)['file']
 
-        print(rhs_html)
         s3_connection.put_object(Bucket=BUCKET, Key=rhs_name, Body=rhs_html.encode())
     except Exception as e:
         return {
@@ -160,7 +154,7 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
         )
         #get the html from the response
         response_json = json.load(response['Payload'])
-        print(response_json)
+       
     except Exception as e:
         raise e
     return response_json['title'], response_json['authors'], response_json
@@ -169,17 +163,13 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
 
 # Given the translations and lhs_html, reconstruct the rhs_html by replacing the lhs_html text elements with the translated text elements
 def replace_text_with_translation(lhs_content, rhs_content):
-    print("test")
+   
     # Create a copy of lhs to avoid modifying the original data
     rhs = deepcopy(lhs_content)
-
-    print("THIS IS RHS BEFORE SOUP")
     
     # Parse the HTML content
     soup = bs.BeautifulSoup(rhs['file'], 'html.parser')
-
-    print("this is rhs at first")
-    print(rhs)
+    
     # Get the first content element and remove it from translated_content
     translated_content = rhs_content.get('content', [])  # provide a default value to prevent key errors
     first_content = translated_content.pop(0) if translated_content else None
@@ -189,19 +179,16 @@ def replace_text_with_translation(lhs_content, rhs_content):
     if blog_title and rhs_content.get('title'):
         blog_title.string = rhs_content['title']
 
-    print("1")
     # Replace the authors
     authors = soup.find_all(property="name")
     translated_authors = rhs_content.get('author', [])  # provide a default value to prevent key errors
     if authors and len(authors) == len(translated_authors):
         for author, new_author in zip(authors, translated_authors):
             author.string = new_author
-    print("2")
     # Replace the h2 blog-title with the first content element, if it exists
     h2_blog_title = soup.find('h2', class_="lb-h5 blog-title")
     if h2_blog_title and first_content:
         h2_blog_title.string = first_content
-    print("3")
     # Get the content section
     content_section = soup.find(class_="blog-post-content lb-rtxt", property="articleBody")
     if content_section:
@@ -221,7 +208,6 @@ def replace_text_with_translation(lhs_content, rhs_content):
                 element.string = translated_content[translated_content_counter]
                 # Increment the translated content counter
                 translated_content_counter += 1
-    print("4")
     # Update the file in rhs
     rhs['file'] = str(soup)
     
