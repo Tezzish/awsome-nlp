@@ -4,8 +4,8 @@ import { Role, ServicePrincipal, ManagedPolicy } from 'aws-cdk-lib/aws-iam';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 import { Function, Runtime, Code } from 'aws-cdk-lib/aws-lambda';
-import { FunctionRuntime, GraphqlApi, MappingTemplate, SchemaFile } from 'aws-cdk-lib/aws-appsync';
-import { AuthorizationConfig, AuthorizationType, BaseResolverProps } from 'aws-cdk-lib/aws-appsync';
+import { GraphqlApi, SchemaFile } from 'aws-cdk-lib/aws-appsync';
+import { AuthorizationType} from 'aws-cdk-lib/aws-appsync';
 import * as amplify from '@aws-cdk/aws-amplify-alpha'
 
 
@@ -89,6 +89,8 @@ export class CdkInitTsStack extends cdk.Stack {
       typeName: 'Query',
       fieldName: 'getBlogPostParsed'
     });
+    
+    
 
     const amplifyApp = new amplify.App(this, 'app', {
       sourceCodeProvider:  new amplify.GitHubSourceCodeProvider({

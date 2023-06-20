@@ -1,6 +1,7 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } }
+
 
 input ConfigInput {
     url: String
@@ -12,7 +13,7 @@ input ConfigInput {
 input TranslationModelInput {
     type: String
 }
-input CreateLanguageInput {
+input LanguageInput {
     name: String!
     code: String!
 }
@@ -33,6 +34,8 @@ type BlogPost @model{
     authors: [String]!
     content: [String]
     translationModel: TranslationModel @hasOne
+    url: String
+    s3Url: String
 }
 
 type Rating @model {
