@@ -39,6 +39,7 @@ function App() {
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend')
+      console.log(selectedLanguage)
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
