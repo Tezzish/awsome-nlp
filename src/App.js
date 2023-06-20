@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
-import { Amplify } from "aws-amplify";
+import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
@@ -30,8 +30,6 @@ function App() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
-  const [backendFinished, setBackendFinished] = useState(false);
-  const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
   //Rating State Declarations
   const [rating, setRating] = useState(0);
@@ -245,89 +243,41 @@ function App() {
     }
   }
 
-  async function createRatingFunc(star, ratingBlogPostId) {
-    try {
-      const rating = await API.graphql(graphqlOperation(createRating, {
-        input: {
-          id: ratingId,
-          ratingBlogPostId: ratingBlogPostId,
-          stars: star
-        }
-      }));
-      console.log(rating);
-    } catch (error) {
-      console.log("Rating not created:", error)
-    }
-  }
-
-
-  async function mutateRatingFunc(star) {
-    try {
-      const rating = await API.graphql(graphqlOperation(updateRating, {
-        input: {
-          id: ratingId,
-          stars: star
-        }
-      }));
-      console.log(rating);
-    } catch (error) {
-      console.log("Rating not updated:", error)
-    }
-  }
-
-
-
-
-
+  //APP
   return (
     <div className="App">
-      <form>
-        <div className="dropdown-container">
-          <input id="url" placeholder="AWS Blogpost (URL)" onChange={handleInputChangeURL} />
-          <select id="lang" placeholder="Target Language" onChange={handleInputChangeLanguage}>
-            {languages.map((language) => (
-              <option key={language.code} value={language.name}>
-                {language.name}
-              </option>
-            ))}
-          </select>
-          <select id="model" onChange={handleInputChangeModel}>
-            {translationModels.map((model) => (
-              <option key={model.id} value={model.name}>
-                {model.name}
-              </option>
-            ))}
-          </select>
-          <div>
-            <button id="translate" onClick={handleButtonClick}>Translate!</button>
-          </div>
-        </div>
-      </form>
-      <div className="content-container">
-        <div className="left-side" id="leftWindow"></div>
-        <div className="right-side">
-          <div>  {backendFinished && (
-            <div className="rating-section">
-              <h4>Rate this translation:</h4>
-              <StarRatings
-                rating={rating}
-                starRatedColor="blue"
-                changeRating={changeRating}
-                numberOfStars={5}
-                name='rating'
-                starDimension="15px"
-                starSpacing="3px"
-              />
-            </div>
-          )}
-            <h2>{translatedContent.title}</h2>
-            <h3>{translatedContent.authors}</h3>
-            {translatedContent.content.split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
+      <div className="icon-container">
+        <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
       </div>
+      <Form>
+        <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
+        <div className="dropdown-container">
+          <URLInput onChange={handleInputChangeURL} />
+          <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
+          <div>
+            <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
+          </div>
+        </div>
+      </Form>
+      <Box className="content-container">
+        <TextContent variant="div" className="left-side" id="leftWindow"></TextContent>
+        <div className="vertical-divider"></div>
+        <Box variant="div" className="right-side">
+          {isLoading ? (
+              <ClipLoader color="#000000" loading={isLoading} size={50} />
+          ) : (
+              <TextContent>
+                {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
+                <h2>{translatedContent.title}</h2>
+                <h3>{translatedContent.authors}</h3>
+                {translatedContent.content.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
+              </TextContent>
+          )}
+        </Box>
+      </Box>
     </div>
   );
 }
