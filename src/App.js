@@ -15,7 +15,7 @@ Amplify.configure(awsExports);
 function App() {
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
-  //const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [URLValue, setURLValue] = useState();
 
@@ -27,9 +27,9 @@ function App() {
     setURLValue(e.target.value);
   };
 
-  // const handleInputChangeLanguage = (e) => {
-  //   setSelectedLanguage(e.target.value);
-  // };
+  const handleInputChangeLanguage = (e) => {
+    setSelectedLanguage(e.target.value);
+  };
 
   const handleInputChangeModel = (e) => {
     setSelectedModel(e.target.value);
@@ -38,6 +38,7 @@ function App() {
 
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
+      console.log('sending config to backend')
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
@@ -50,8 +51,8 @@ function App() {
       console.log('send successful');
       console.log(JSON.stringify(output))
 
-      const originalPost = output.lhs;
-      const translatedPost = output.rhs;
+      const originalPost = output.data.getStepFunctionInvoker.lhs;
+      const translatedPost = output.data.getStepFunctionInvoker.rhs;
 
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = originalPost;
@@ -63,8 +64,8 @@ function App() {
      } catch (error) {
        console.error('Error sending config to backend:', error);
      }
-  // };
-
+  // }}
+  }
 
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
@@ -156,5 +157,4 @@ function App() {
         </div>
       </div>
   );
-}
 }
