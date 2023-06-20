@@ -5,7 +5,7 @@ from urllib.request import urlopen
 
 def handler(event, context):
   
-  blogUrl = event['arguments']['url']
+  blogUrl = event['url']
 
   try:
     response = urllib.request.urlopen(blogUrl)
