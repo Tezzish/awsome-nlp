@@ -89,14 +89,16 @@ export class CdkInitTsStack extends cdk.Stack {
       typeName: 'Query',
       fieldName: 'getBlogPostParsed'
     });
-    
-    
 
+    /**
+     * This is missing the creation of DynamoDB tables for everything. This can be justified with the fact that we'd have to manually
+     * add everything in CDK, after which, modification would be near impossible.
+     */
     const amplifyApp = new amplify.App(this, 'app', {
       sourceCodeProvider:  new amplify.GitHubSourceCodeProvider({
-        owner: 'kyonc2022',
+        owner: 'Tezzish',
         repository: 'awsome-nlp',
-        oauthToken: cdk.SecretValue.secretsManager('kyonkey'),
+        oauthToken: cdk.SecretValue.secretsManager('ishankey'),
       }),
       environmentVariables: {
         'ENDPOINT': api.graphqlUrl,
@@ -104,8 +106,9 @@ export class CdkInitTsStack extends cdk.Stack {
         'API_KEY': (api.apiKey ? api.apiKey : "null")
       }
     });
-    amplifyApp.addBranch("main");
-
+    //amplifyApp.addBranch("dev");
+    amplifyApp.addBranch("cdk_init");
+    
     // The code that defines your stack goes here
 
     // example resource
