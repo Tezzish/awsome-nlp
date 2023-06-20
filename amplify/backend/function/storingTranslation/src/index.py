@@ -34,7 +34,7 @@ def lambda_handler(event, context):
     #pass the url to the lhs lambda to get back html
     try:
         if 'Item' not in response:
-            lhs_html, lhs_authors, lhs_title = get_html(URL, 'getBlogContent-newtrans')
+            lhs_html, lhs_authors, lhs_title = get_html(URL, 'getBlogContent-storagedev')
 
     except Exception as e:
         return {
@@ -90,6 +90,99 @@ def lambda_handler(event, context):
         'body':'great success',
         'url': URL,
     }
+
+#function to get html from url by calling a lambda
+def get_html(url, sourceLanguage, targetLanguage, translationModel, lambda_name):
+    try:
+        #sends the url to the lambda that will get the html
+        response = lambda_connection.invoke(
+            FunctionName=lambda_name,
+            InvocationType='RequestResponse',
+            Payload=json.dumps(
+                {
+                    "url" :  url,
+                    "targetLanguage": {
+                        "name": targetLanguage['name'],
+                        "code": targetLanguage['code']
+                    },
+                    "sourceLanguage": {
+                        "name": sourceLanguage['name'],
+                        "code": sourceLanguage['code']
+                    },
+                    "translationModel": {
+                        "type": translationModel['type']
+                    }
+                })
+        )
+        #get the html from the response
+        response_json = json.load(response['Payload'])
+        print(response_json)
+    except Exception as e:
+        raise e
+    return response_json['file'], response_json['title'], response_json['author']
+
+# {
+#     "arguments": {
+#         "input": {
+#             "url": "https://aws.amazon.com/blogs/machine-learning/deploy-falcon-40b-with-large-model-inference-dlcs-on-amazon-sagemaker/?trk=bade69cc-1806-412a-8d8a-fb17a77100e4&sc_channel=el",
+#             "targetLanguage": {
+#                 "name": "TURKISH",
+#                 "code": "tr"
+#             },
+#             "sourceLanguage": {
+#                 "name": "ENGLISH",
+#                 "code": "en"
+#             },
+#             "translationModel": {
+#                 "type": "amazonTranslate"
+#             }
+#         }
+#     }
+# }
+
+def get_translated(url, targetLanguage, sourceLanguage, translationModel):
+    try:
+        #sends the url to the lambda that will get the html
+        response = lambda_connection.invoke(
+            FunctionName= "UserConfigFunction-storagedev",
+            InvocationType='RequestResponse',
+            Payload=json.dumps(
+            {
+                "arguments": {
+                    "input": {
+                        "url": url,
+                        "targetLanguage": {
+                "name": targetLanguage['name'],
+                "code": targetLanguage['code']
+            },
+            "sourceLanguage": {
+                "name": sourceLanguage['name'],
+                "code": sourceLanguage['code']
+            },
+            "translationModel": {
+                "type": translationModel['type']
+            }
+        }
+    },
+}
+                )
+        )
+        #get the html from the response
+        response_json = json.load(response['Payload'])
+        print(response_json)
+    except Exception as e:
+        raise e
+    return response_json['author'], response_json['title'], response_json['content']
+    
+
+
+def translate_text(html):
+    soup = bs.BeautifulSoup(html, 'html.parser')
+    for t in soup.find_all(string=True):
+        if t.parent.name != "script":
+            t.replace_with(translate.translate_text(Text=t, SourceLanguageCode="en", TargetLanguageCode="tr")['TranslatedText'])
+    return soup
+
 
 lhs = {
   "statusCode": 200,
@@ -160,94 +253,3 @@ translated = {
   ]
 }
 
-#function to get html from url by calling a lambda
-def get_html(url, sourceLanguage, targetLanguage, translationModel, lambda_name):
-    try:
-        #sends the url to the lambda that will get the html
-        response = lambda_connection.invoke(
-            FunctionName=lambda_name,
-            InvocationType='RequestResponse',
-            Payload=json.dumps(
-                {
-                    "url" :  url,
-                    "targetLanguage": {
-                        "name": targetLanguage['name'],
-                        "code": targetLanguage['code']
-                    },
-                    "sourceLanguage": {
-                        "name": sourceLanguage['name'],
-                        "code": sourceLanguage['code']
-                    },
-                    "translationModel": {
-                        "type": translationModel['type']
-                    }
-                })
-        )
-        #get the html from the response
-        response_json = json.load(response['Payload'])
-        print(response_json)
-    except Exception as e:
-        raise e
-    return response_json['file'], response_json['title'], response_json['author']
-
-# {
-#     "arguments": {
-#         "input": {
-#             "url": "https://aws.amazon.com/blogs/machine-learning/deploy-falcon-40b-with-large-model-inference-dlcs-on-amazon-sagemaker/?trk=bade69cc-1806-412a-8d8a-fb17a77100e4&sc_channel=el",
-#             "targetLanguage": {
-#                 "name": "TURKISH",
-#                 "code": "tr"
-#             },
-#             "sourceLanguage": {
-#                 "name": "ENGLISH",
-#                 "code": "en"
-#             },
-#             "translationModel": {
-#                 "type": "amazonTranslate"
-#             }
-#         }
-#     }
-# }
-
-def get_translated(url, targetLanguage, sourceLanguage, translationModel):
-    try:
-        #sends the url to the lambda that will get the html
-        response = lambda_connection.invoke(
-            FunctionName= "UserConfigFunction-staging",
-            InvocationType='RequestResponse',
-            Payload=json.dumps(
-            {
-                "arguments": {
-                    "input": {
-                        "url": url,
-                        "targetLanguage": {
-                "name": targetLanguage['name'],
-                "code": targetLanguage['code']
-            },
-            "sourceLanguage": {
-                "name": sourceLanguage['name'],
-                "code": sourceLanguage['code']
-            },
-            "translationModel": {
-                "type": translationModel['type']
-            }
-        }
-    },
-}
-                )
-        )
-        #get the html from the response
-        response_json = json.load(response['Payload'])
-        print(response_json)
-    except Exception as e:
-        raise e
-    return response_json['author'], response_json['title'], response_json['content']
-    
-
-
-def translate_text(html):
-    soup = bs.BeautifulSoup(html, 'html.parser')
-    for t in soup.find_all(string=True):
-        if t.parent.name != "script":
-            t.replace_with(translate.translate_text(Text=t, SourceLanguageCode="en", TargetLanguageCode="tr")['TranslatedText'])
-    return soup

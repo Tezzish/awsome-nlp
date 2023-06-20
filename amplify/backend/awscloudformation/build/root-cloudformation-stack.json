@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "Root Stack for AWS Amplify Console",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -155,69 +155,69 @@
     "apiawsomenlp": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "awsomenlp",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
-          "S3DeploymentBucket": "amplify-awsomenlp-newtrans-151015-deployment",
+          "S3DeploymentBucket": "amplify-awsomenlp-storagedev-90634-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/f7fa29847878b3f2b742098ea3218f9892a6f89a",
-          "env": "newtrans"
+          "env": "storagedev"
         }
       }
     },
     "functionUserConfigFunction": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
+          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
           "s3Key": "amplify-builds/UserConfigFunction-77476168435233466978-build.zip",
-          "env": "newtrans"
+          "env": "storagedev"
         }
       }
     },
     "functioncheckingUrl": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/checkingUrl-72755034344265377875-build.zip",
-          "env": "newtrans"
+          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
+          "s3Key": "amplify-builds/checkingUrl-676a30716570564b6b4e-build.zip",
+          "env": "storagedev"
         }
       }
     },
     "functiongetBlogContent": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/getBlogContent-58473763533741337272-build.zip",
-          "env": "newtrans"
+          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
+          "s3Key": "amplify-builds/getBlogContent-387175413654352f466e-build.zip",
+          "env": "storagedev"
         }
       }
     },
     "functionstepFunctionInvoker": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-6e4c42544a5a674e5232-build.zip",
-          "env": "newtrans"
+          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
+          "s3Key": "amplify-builds/stepFunctionInvoker-73782f6e373067653345-build.zip",
+          "env": "storagedev"
         }
       }
     },
     "functionstoringTranslation": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-newtrans-151015-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-awsomenlp-newtrans-151015-deployment",
-          "s3Key": "amplify-builds/storingTranslation-7337466c646a79564945-build.zip",
-          "env": "newtrans"
+          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
+          "s3Key": "amplify-builds/storingTranslation-76736f68684459457143-build.zip",
+          "env": "storagedev"
         }
       }
     }
