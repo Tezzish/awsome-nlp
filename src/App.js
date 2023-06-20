@@ -5,10 +5,6 @@ import { Amplify } from "aws-amplify";
 import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
-<<<<<<< HEAD
-import StarRatings from 'react-star-ratings';
-
-=======
 import "@cloudscape-design/global-styles/index.css"
 import Button from "@cloudscape-design/components/button"
 import {Box, Form} from "@cloudscape-design/components";
@@ -20,7 +16,6 @@ import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from './TUpoweredAWS.png';
->>>>>>> origin/dev
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -38,18 +33,11 @@ function App() {
   const [backendFinished, setBackendFinished] = useState(false);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
-<<<<<<< HEAD
-  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
-  const [ratingId] = useState(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
-  const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
-
-=======
   //Rating State Declarations
   const [rating, setRating] = useState(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
   const [ratingId, setRatingId] = useState('');
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
->>>>>>> origin/dev
 
   //Alert State Declarations
   const [alertIsVisible, setAlertIsVisible] = useState(false)
@@ -84,16 +72,6 @@ function App() {
     const url = URLValue;
     const lang = selectedLanguage;
     const translator = selectedModel;
-<<<<<<< HEAD
-    try {
-      // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
-      if (isValidURL(url)) {
-        sendOriginalToBackend(url);
-        sendConfigToBackend(url, lang, translator)
-      }
-    } catch (error) {
-      console.log("Error:", error);
-=======
 
     setIsLoading(true);
     setAlertIsVisible(false)
@@ -129,7 +107,6 @@ function App() {
         setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
         setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
       }
->>>>>>> origin/dev
     }
   };
 
@@ -143,24 +120,7 @@ function App() {
     }
   };
 
-<<<<<<< HEAD
-  // sends the url of the original blog post to the backend to be parsed
-  async function sendOriginalToBackend(url1) {
-    console.log('sending original blog post url to backend: URL =' + url1);
-    try {
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
-      console.log('response from backend: ', response);
-      const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = response.data.getBlogPostParsed.file;
-      return response;
-    } catch (error) {
-      console.log('Error sending original blog post to backend:', error);
-    }
-  }
-
-=======
   //API communication
->>>>>>> origin/dev
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
       try {
