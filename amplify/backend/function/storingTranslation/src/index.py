@@ -1,6 +1,7 @@
 import boto3
 import json
 import bs4 as bs
+from copy import deepcopy
 
 # Get the service resource.
 lambda_connection = boto3.client('lambda')
@@ -12,8 +13,6 @@ dynamodb_connection = boto3.resource('dynamodb')
 table = dynamodb_connection.Table('translations-aws-blog-posts')
 
 translate = boto3.client('translate')
-
-
 
 def lambda_handler(event, context):
     # bucket that will be used to store the file
@@ -251,3 +250,57 @@ def translate_text(html):
         if t.parent.name != "script":
             t.replace_with(translate.translate_text(Text=t, SourceLanguageCode="en", TargetLanguageCode="tr")['TranslatedText'])
     return soup
+
+#Given the translations and lhs_html, reconstruct the rhs_html by replacing the lhs_html text elements with the translated text elements
+def replace_text_with_translation(lhs, translated):
+    # Create a copy of lhs to avoid modifying the original data
+    rhs = deepcopy(lhs)
+
+    # Parse the HTML content
+    soup = bs(rhs['file'], 'html.parser')
+
+    # Get the first content element and remove it from translated_content
+    translated_content = translated.get('content', [])  # provide a default value to prevent key errors
+    first_content = translated_content.pop(0) if translated_content else None
+
+    # Replace the blog title with the translated title, if it exists
+    blog_title = soup.find('h1', class_="lb-h2 blog-post-title")
+    if blog_title and translated.get('title'):
+        blog_title.string = translated['title']
+
+    # Replace the authors
+    authors = soup.find_all(property="name")
+    translated_authors = translated.get('author', [])  # provide a default value to prevent key errors
+    if authors and len(authors) == len(translated_authors):
+        for author, new_author in zip(authors, translated_authors):
+            author.string = new_author
+
+    # Replace the h2 blog-title with the first content element, if it exists
+    h2_blog_title = soup.find('h2', class_="lb-h5 blog-title")
+    if h2_blog_title and first_content:
+        h2_blog_title.string = first_content
+
+    # Get the content section
+    content_section = soup.find(class_="blog-post-content lb-rtxt", property="articleBody")
+    if content_section:
+        # Get all p and h2 tags from the content section, keeping the order they were found
+        content_elements = content_section.find_all(['p', 'h2'])
+
+        # Initialize a counter for translated content
+        translated_content_counter = 0
+
+        for element in content_elements:
+            # Skip 'p' tags that contain 'img' tags
+            if element.name == 'p' and element.find('img'):
+                continue
+            # Check if we have enough translated content to replace
+            if translated_content_counter < len(translated_content):
+                # Replace the content
+                element.string = translated_content[translated_content_counter]
+                # Increment the translated content counter
+                translated_content_counter += 1
+
+    # Update the file in rhs
+    rhs['file'] = str(soup)
+
+    return rhs
