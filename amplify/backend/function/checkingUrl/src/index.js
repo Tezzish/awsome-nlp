@@ -8,9 +8,13 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3();
 
 exports.handler = async (event, context) => {
-  var segments = event['url'].split('/');
-  console.log(event['url'])
-  var lastSegment = segments[segments.length - 1];
+  var url = event['url'];
+  if (url.endsWith('/')) {
+    url = url.slice(0, -1);
+  }
+  var segments = url.split('/');
+  console.log(event['url']);
+  var lastSegment = segments[segments.length - 1] + "[translated]-" + event['targetLanguage']['code'] + "-" + event['translationModel']['type'];
   const params = {
     TableName : 'translations-aws-blog-posts',
     /* Item properties will depend on your application concerns */
