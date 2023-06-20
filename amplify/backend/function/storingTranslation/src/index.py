@@ -283,8 +283,8 @@ def replace_text_with_translation(lhs, translated):
     # Get the content section
     content_section = soup.find(class_="blog-post-content lb-rtxt", property="articleBody")
     if content_section:
-        # Get all p and h2 tags from the content section, keeping the order they were found
-        content_elements = content_section.find_all(['p', 'h2'])
+        # Get all p, h2, and li tags from the content section, keeping the order they were found
+        content_elements = content_section.find_all(['p', 'h2', 'li'])
 
         # Initialize a counter for translated content
         translated_content_counter = 0
