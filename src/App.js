@@ -5,8 +5,22 @@ import { Amplify } from "aws-amplify";
 import awsExports from './aws-exports';
 import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
+<<<<<<< HEAD
 import StarRatings from 'react-star-ratings';
 
+=======
+import "@cloudscape-design/global-styles/index.css"
+import Button from "@cloudscape-design/components/button"
+import {Box, Form} from "@cloudscape-design/components";
+import Alert from "./components/Alert"
+import TextContent from "@cloudscape-design/components/text-content";
+import LanguageSelect from './components/LanguageSelect';
+import TranslationModelSelect from './components/TranslationModelSelect';
+import URLInput from "./components/URLInput";
+import RatingStars from "./components/RatingStars";
+import ClipLoader from "react-spinners/ClipLoader";
+import logo from './TUpoweredAWS.png';
+>>>>>>> origin/dev
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -15,6 +29,7 @@ You can add these manually in AppSync and under the Queries Menu.
 Amplify.configure(awsExports);
 
 function App() {
+  //Form State Declarations
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("");
@@ -23,32 +38,53 @@ function App() {
   const [backendFinished, setBackendFinished] = useState(false);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
+<<<<<<< HEAD
   const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
   const [ratingId] = useState(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
+=======
+  //Rating State Declarations
+  const [rating, setRating] = useState(0);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [ratingId, setRatingId] = useState('');
+  const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
+>>>>>>> origin/dev
 
+  //Alert State Declarations
+  const [alertIsVisible, setAlertIsVisible] = useState(false)
+  const [alertHeader, setAlertHeader] = useState("");
+  const [alertContent, setAlertContent] = useState("");
 
+  //Content State Declarations
+  const [backendFinished, setBackendFinished] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
 
-  const handleInputChangeURL = (e) => {
-    setURLValue(e.target.value);
+  //Handlers
+  const handleInputChangeURL = (newValue) => {
+    setURLValue(newValue);
   };
 
-  const handleInputChangeLanguage = (e) => {
-    setSelectedLanguage(e.target.value);
+  const handleInputChangeLanguage = (selectedOption) => {
+    setSelectedLanguage(selectedOption.value);
   };
 
-  const handleInputChangeModel = (e) => {
-    setSelectedModel(e.target.value);
+  const handleInputChangeModel = (selectedOption) => {
+    setSelectedModel(selectedOption.value);
   };
 
-  //TODO: Currently we are displaying the same values for the left and right iframes
+  const handleDismiss = () => {
+    setAlertIsVisible(false);
+  };
+
   const handleButtonClick = (e) => {
     e.preventDefault();
     console.log("Button Clicked");
     const url = URLValue;
     const lang = selectedLanguage;
     const translator = selectedModel;
+<<<<<<< HEAD
     try {
       // check if url starts with https://aws.amazon.com/blogs/aws/ then send to backend
       if (isValidURL(url)) {
@@ -57,23 +93,57 @@ function App() {
       }
     } catch (error) {
       console.log("Error:", error);
+=======
+
+    setIsLoading(true);
+    setAlertIsVisible(false)
+
+    if (!isValidURL(url)) {
+      console.log("invalid url")
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Incorrect Link</React.Fragment>);
+      setAlertContent("The link you placed appears to be incorrect. Please make sure that this URL is reachable and directs to an AWS Blogpost (https://aws.amazon.com/blogs/...).");
+      setIsLoading(false);
+    }
+    else if (lang === "") {
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Language Not Selected</React.Fragment>);
+      setAlertContent("Please select a language for the translation.");
+      setIsLoading(false);
+    }
+    else if (translator === "") {
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Translation Model Not Selected</React.Fragment>);
+      setAlertContent("Please select a translation model.");
+      setIsLoading(false);
+    }
+    else {
+      try {
+        // send to backend
+        sendOriginalToBackend(url);
+        sendConfigToBackend(url, lang, translator)
+      } catch (error) {
+        console.log("Error:", error);
+        setIsLoading(false);
+        setAlertIsVisible(true);
+        setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
+        setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
+      }
+>>>>>>> origin/dev
     }
   };
 
-
-  //TODO: Check if URL is a valid AWS URL.
-  // Current implementation only check if it is a URL
+  //Booleans
   const isValidURL = (str) => {
     try {
       new URL(str);
-      if (str.includes("https://aws.amazon.com/blogs/")) {
-        return true;
-      }
+      return str.includes("https://aws.amazon.com/blogs/");
     } catch {
       return false;
     }
   };
 
+<<<<<<< HEAD
   // sends the url of the original blog post to the backend to be parsed
   async function sendOriginalToBackend(url1) {
     console.log('sending original blog post url to backend: URL =' + url1);
@@ -88,6 +158,9 @@ function App() {
     }
   }
 
+=======
+  //API communication
+>>>>>>> origin/dev
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
       try {
@@ -106,6 +179,43 @@ function App() {
 
     fetchLanguagesAndModels();
   }, []);
+
+  // sends the url of the original blog post to the backend to be parsed
+  async function sendOriginalToBackend(url1) {
+    console.log('sending original blog post url to backend: URL =' + url1);
+    try {
+      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
+      console.log('response from backend: ', response);
+
+      // Parse HTML string into document
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
+
+      // Iterate over all elements and remove 'style' attribute
+      const elements = doc.getElementsByTagName('*');
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].removeAttribute('style');
+      }
+
+      // Remove all elements with class 'blog-share-dialog'
+      const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
+      for (let i = 0; i < shareDialogs.length; i++) {
+        shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
+      }
+
+      // Serialize document back into HTML string
+      const serializer = new XMLSerializer();
+      const strippedHTML = serializer.serializeToString(doc);
+
+      const leftWindow = document.getElementById('leftWindow');
+      leftWindow.innerHTML = strippedHTML;
+
+      return response;
+    } catch (error) {
+      console.log('Error sending original blog post to backend:', error);
+    }
+  }
+
 
   const sendConfigToBackend = async (url, language, translationModel) => {
     try {
@@ -128,14 +238,14 @@ function App() {
 
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
+      setIsLoading(false);
     } catch (error) {
       console.log('Error sending config to backend:', error);
+      setIsLoading(false);
     }
   };
 
-  const [rating, setRating] = useState(0);
-
-
+  //Rating Functions
   const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
@@ -146,6 +256,34 @@ function App() {
     }
   };
 
+  async function createRatingFunc(star, ratingBlogPostId) {
+    try {
+      const output = await API.graphql(graphqlOperation(createRating, {
+        input: {
+          ratingBlogPostId: ratingBlogPostId,
+          stars: star
+        }
+      }));
+      setRatingId(output.data.createRating.id)
+      console.log(output.data.createRating);
+    } catch (error) {
+      console.log("Rating not created:", error)
+    }
+  }
+
+  async function mutateRatingFunc(star) {
+    try {
+      const output = await API.graphql(graphqlOperation(updateRating, {
+        input: {
+          id: ratingId,
+          stars: star
+        }
+      }));
+      console.log(output);
+    } catch (error) {
+      console.log("Rating not updated:", error)
+    }
+  }
 
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
