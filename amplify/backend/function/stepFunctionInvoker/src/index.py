@@ -33,6 +33,7 @@ def handler(event, context):
                 # Execution completed
                 execution_output = json.loads(execution_details.get('output', '{}'))
                 return {
+                    'id':  execution_output['body']['id'],
                     'lhs': execution_output['body']['lhs'],
                     'rhs': execution_output['body']['rhs']
                 }

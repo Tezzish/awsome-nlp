@@ -31,7 +31,7 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync",
-      "lastPushTimeStamp": "2023-06-21T10:31:13.756Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:03.771Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiawsomenlp"
@@ -51,7 +51,7 @@
         "Name": "UserConfigFunction-storagedev",
         "LambdaExecutionRole": "awsomenlpLambdaRolee754d004-storagedev"
       },
-      "lastPushTimeStamp": "2023-06-21T10:31:14.119Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:03.776Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "logicalId": "functionUserConfigFunction"
@@ -60,9 +60,9 @@
         "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
         "s3Key": "amplify-builds/UserConfigFunction-4c554c4c50695636497a-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-21T10:30:09.714Z",
+      "lastBuildTimeStamp": "2023-06-21T13:10:33.210Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-21T10:30:10.004Z",
+      "lastPackageTimeStamp": "2023-06-21T13:10:34.074Z",
       "distZipFilename": "UserConfigFunction-4c554c4c50695636497a-build.zip",
       "lastPushDirHash": "e0hThTCNPo+fw+wOOhCwdwGVl7U="
     },
@@ -77,7 +77,7 @@
         "Name": "checkingUrl-storagedev",
         "LambdaExecutionRole": "awsomenlpLambdaRole19b815c5-storagedev"
       },
-      "lastPushTimeStamp": "2023-06-21T10:31:13.777Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:03.789Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "logicalId": "functioncheckingUrl"
@@ -86,9 +86,9 @@
         "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
         "s3Key": "amplify-builds/checkingUrl-78426845416d71544d51-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-21T10:00:19.227Z",
+      "lastBuildTimeStamp": "2023-06-21T13:10:33.221Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-21T10:00:19.772Z",
+      "lastPackageTimeStamp": "2023-06-21T13:10:33.531Z",
       "distZipFilename": "checkingUrl-78426845416d71544d51-build.zip",
       "lastPushDirHash": "305Gme6VzGEkT4/dvH3FACFVuN8="
     },
@@ -103,19 +103,19 @@
         "Name": "getBlogContent-storagedev",
         "LambdaExecutionRole": "awsomenlpLambdaRole4c31b8f7-storagedev"
       },
-      "lastPushTimeStamp": "2023-06-21T10:31:13.791Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:03.801Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "logicalId": "functiongetBlogContent"
       },
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-        "s3Key": "amplify-builds/getBlogContent-544b6f444669597a6b72-build.zip"
+        "s3Key": "amplify-builds/getBlogContent-4c53326b70324b62506e-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-21T10:00:27.903Z",
+      "lastBuildTimeStamp": "2023-06-21T13:10:39.136Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-21T10:00:45.087Z",
-      "distZipFilename": "getBlogContent-544b6f444669597a6b72-build.zip",
+      "lastPackageTimeStamp": "2023-06-21T13:10:52.750Z",
+      "distZipFilename": "getBlogContent-4c53326b70324b62506e-build.zip",
       "lastPushDirHash": "JA5QcrpjEjH4Ic1miEj/hPLsw9c="
     },
     "stepFunctionInvoker": {
@@ -129,20 +129,20 @@
         "Name": "stepFunctionInvoker-storagedev",
         "LambdaExecutionRole": "awsomenlpLambdaRole42be966f-storagedev"
       },
-      "lastPushTimeStamp": "2023-06-21T10:31:13.806Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:04.242Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "logicalId": "functionstepFunctionInvoker"
       },
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-        "s3Key": "amplify-builds/stepFunctionInvoker-76666f37682b786f746d-build.zip"
+        "s3Key": "amplify-builds/stepFunctionInvoker-55655441705a59654153-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-21T10:00:27.646Z",
+      "lastBuildTimeStamp": "2023-06-21T13:29:55.254Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-21T10:00:44.834Z",
-      "distZipFilename": "stepFunctionInvoker-76666f37682b786f746d-build.zip",
-      "lastPushDirHash": "MCvcqYfxjAqgXb9OhCYFSP0k/f0="
+      "lastPackageTimeStamp": "2023-06-21T13:29:58.202Z",
+      "distZipFilename": "stepFunctionInvoker-55655441705a59654153-build.zip",
+      "lastPushDirHash": "UeTApZYeAS7cgkIi4obqkaZsfPM="
     },
     "storingTranslation": {
       "build": true,
@@ -155,19 +155,19 @@
         "Name": "storingTranslation-storagedev",
         "LambdaExecutionRole": "awsomenlpLambdaRole36b86eed-storagedev"
       },
-      "lastPushTimeStamp": "2023-06-21T10:31:13.822Z",
+      "lastPushTimeStamp": "2023-06-21T13:31:03.852Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
         "logicalId": "functionstoringTranslation"
       },
       "s3Bucket": {
         "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-        "s3Key": "amplify-builds/storingTranslation-6e795849745961716265-build.zip"
+        "s3Key": "amplify-builds/storingTranslation-6c6976526f5a7a427a4b-build.zip"
       },
-      "lastBuildTimeStamp": "2023-06-21T10:00:27.313Z",
+      "lastBuildTimeStamp": "2023-06-21T13:10:39.160Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2023-06-21T10:00:45.198Z",
-      "distZipFilename": "storingTranslation-6e795849745961716265-build.zip",
+      "lastPackageTimeStamp": "2023-06-21T13:10:52.711Z",
+      "distZipFilename": "storingTranslation-6c6976526f5a7a427a4b-build.zip",
       "lastPushDirHash": "livRoZzBzKZ+Hc6DpTYDWT4mC/4="
     }
   },
