@@ -185,7 +185,7 @@ export const getLanguage = /* GraphQL */ `
   }
 `;
 export const listLanguages = /* GraphQL */ `
-query ListLanguages {
+query MyQuery {
   listLanguages {
     items {
       code
@@ -195,6 +195,16 @@ query ListLanguages {
 }
 `;
 export const getTranslationModel = /* GraphQL */ `
+  query GetTranslationModel($id: ID!) {
+    getTranslationModel(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTranslationModels = /* GraphQL */ `
 query ListTranslationModels {
   listTranslationModels {
     items {
@@ -203,25 +213,4 @@ query ListTranslationModels {
     }
   }
 }
-`;
-export const listTranslationModels = /* GraphQL */ `
-  query ListTranslationModels(
-    $filter: ModelTranslationModelFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTranslationModels(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
 `;
