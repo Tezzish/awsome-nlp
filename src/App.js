@@ -24,6 +24,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 // Importing logo image
 import logo from './TUpoweredAWS.png';
 
+
 Amplify.configure(awsExports);
 
 // Application component
@@ -38,7 +39,7 @@ function App() {
   //Rating State Declarations
   const [rating, setRating] = useState(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
-  const [ratingId, setRatingId] = useState('');
+  const [ratingId, setRatingId] = useState("");
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
   //Alert State Declarations
@@ -223,7 +224,8 @@ function App() {
       const content = translatedPost.content.join('\n');
       setRatingBlogPostId(translatedPost.id);
 
-      // set translated content in state
+      //set translated content in state
+      setRatingSubmitted(false);
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
       setIsLoading(false);
@@ -275,7 +277,8 @@ function App() {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingId,
-          stars: star
+          stars: star,
+          ratingBlogPostId: ratingBlogPostId,
         }
       }));
       console.log(output);

@@ -77,7 +77,7 @@ task buildZip(type: Zip) {
     into('lib') {
         from configurations.runtimeClasspath
     }
-    archiveFileName = 'latest_build.zip'
+    archiveFileName = 'user_config_latest.zip'
 }
 
 test {
