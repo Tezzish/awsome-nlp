@@ -1,68 +1,534 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+type BlogPost {
+	id: ID!
+	originalPost: BlogPost
+	language: Language!
+	title: String!
+	authors: [String]!
+	content: [String]
+	translationModel: TranslationModel
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+    s3_loc: String
+    url: String
+	blogPostOriginalPostId: ID
+	blogPostLanguageCode: String!
+	blogPostTranslationModelId: ID
+}
 
 input ConfigInput {
-    url: String
-    targetLanguage: CreateLanguageInput
-    sourceLanguage: CreateLanguageInput
-    translationModel: TranslationModelInput
+	url: String
+	targetLanguage: CreateLanguageInput
+	sourceLanguage: CreateLanguageInput
+	translationModel: TranslationModelInput
+}
+
+input CreateBlogPostInput {
+	id: ID
+	title: String!
+	authors: [String]!
+	content: [String]
+	blogPostOriginalPostId: ID
+	blogPostLanguageCode: String!
+	blogPostTranslationModelId: ID
+}
+
+input CreateLanguageInput {
+	name: String!
+	code: String!
+}
+
+input CreateRatingInput {
+	id: ID
+	stars: Int
+	ratingBlogPostId: ID!
+}
+
+input CreateTranslationConfigInput {
+	id: ID
+	url: String!
+	translationConfigTargetLanguageCode: String
+	translationConfigSourceLanguageCode: String
+}
+
+input CreateTranslationModelInput {
+	id: ID
+	name: String!
+}
+
+input DeleteBlogPostInput {
+	id: ID!
+}
+
+input DeleteLanguageInput {
+	code: String!
+}
+
+input DeleteRatingInput {
+	id: ID!
+}
+
+input DeleteTranslationConfigInput {
+	id: ID!
+}
+
+input DeleteTranslationModelInput {
+	id: ID!
+}
+
+type Language {
+	name: String!
+	code: String!
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+}
+
+enum ModelAttributeTypes {
+	binary
+	binarySet
+	bool
+	list
+	map
+	number
+	numberSet
+	string
+	stringSet
+	_null
+}
+
+input ModelBlogPostConditionInput {
+	title: ModelStringInput
+	authors: ModelStringInput
+	content: ModelStringInput
+	and: [ModelBlogPostConditionInput]
+	or: [ModelBlogPostConditionInput]
+	not: ModelBlogPostConditionInput
+	blogPostOriginalPostId: ModelIDInput
+	blogPostLanguageCode: ModelStringInput
+	blogPostTranslationModelId: ModelIDInput
+}
+
+type ModelBlogPostConnection {
+	items: [BlogPost]!
+	nextToken: String
+}
+
+input ModelBlogPostFilterInput {
+	id: ModelIDInput
+	title: ModelStringInput
+	authors: ModelStringInput
+	content: ModelStringInput
+	and: [ModelBlogPostFilterInput]
+	or: [ModelBlogPostFilterInput]
+	not: ModelBlogPostFilterInput
+	blogPostOriginalPostId: ModelIDInput
+	blogPostLanguageCode: ModelStringInput
+	blogPostTranslationModelId: ModelIDInput
+}
+
+input ModelBooleanInput {
+	ne: Boolean
+	eq: Boolean
+	attributeExists: Boolean
+	attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	between: [Float]
+	attributeExists: Boolean
+	attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notContains: ID
+	between: [ID]
+	beginsWith: ID
+	attributeExists: Boolean
+	attributeType: ModelAttributeTypes
+	size: ModelSizeInput
+}
+
+input ModelIntInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	between: [Int]
+	attributeExists: Boolean
+	attributeType: ModelAttributeTypes
+}
+
+input ModelLanguageConditionInput {
+	name: ModelStringInput
+	and: [ModelLanguageConditionInput]
+	or: [ModelLanguageConditionInput]
+	not: ModelLanguageConditionInput
+}
+
+type ModelLanguageConnection {
+	items: [Language]!
+	nextToken: String
+}
+
+input ModelLanguageFilterInput {
+	name: ModelStringInput
+	code: ModelStringInput
+	and: [ModelLanguageFilterInput]
+	or: [ModelLanguageFilterInput]
+	not: ModelLanguageFilterInput
+}
+
+input ModelRatingConditionInput {
+	stars: ModelIntInput
+	and: [ModelRatingConditionInput]
+	or: [ModelRatingConditionInput]
+	not: ModelRatingConditionInput
+	ratingBlogPostId: ModelIDInput
+}
+
+type ModelRatingConnection {
+	items: [Rating]!
+	nextToken: String
+}
+
+input ModelRatingFilterInput {
+	id: ModelIDInput
+	stars: ModelIntInput
+	and: [ModelRatingFilterInput]
+	or: [ModelRatingFilterInput]
+	not: ModelRatingFilterInput
+	ratingBlogPostId: ModelIDInput
+}
+
+input ModelSizeInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	between: [Int]
+}
+
+enum ModelSortDirection {
+	ASC
+	DESC
+}
+
+input ModelStringInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+	attributeExists: Boolean
+	attributeType: ModelAttributeTypes
+	size: ModelSizeInput
+}
+
+input ModelSubscriptionBlogPostFilterInput {
+	id: ModelSubscriptionIDInput
+	title: ModelSubscriptionStringInput
+	authors: ModelSubscriptionStringInput
+	content: ModelSubscriptionStringInput
+	and: [ModelSubscriptionBlogPostFilterInput]
+	or: [ModelSubscriptionBlogPostFilterInput]
+}
+
+input ModelSubscriptionBooleanInput {
+	ne: Boolean
+	eq: Boolean
+}
+
+input ModelSubscriptionFloatInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	between: [Float]
+	in: [Float]
+	notIn: [Float]
+}
+
+input ModelSubscriptionIDInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notContains: ID
+	between: [ID]
+	beginsWith: ID
+	in: [ID]
+	notIn: [ID]
+}
+
+input ModelSubscriptionIntInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	between: [Int]
+	in: [Int]
+	notIn: [Int]
+}
+
+input ModelSubscriptionLanguageFilterInput {
+	name: ModelSubscriptionStringInput
+	code: ModelSubscriptionStringInput
+	and: [ModelSubscriptionLanguageFilterInput]
+	or: [ModelSubscriptionLanguageFilterInput]
+}
+
+input ModelSubscriptionRatingFilterInput {
+	id: ModelSubscriptionIDInput
+	stars: ModelSubscriptionIntInput
+	and: [ModelSubscriptionRatingFilterInput]
+	or: [ModelSubscriptionRatingFilterInput]
+}
+
+input ModelSubscriptionStringInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+	in: [String]
+	notIn: [String]
+}
+
+input ModelSubscriptionTranslationConfigFilterInput {
+	id: ModelSubscriptionIDInput
+	url: ModelSubscriptionStringInput
+	and: [ModelSubscriptionTranslationConfigFilterInput]
+	or: [ModelSubscriptionTranslationConfigFilterInput]
+}
+
+input ModelSubscriptionTranslationModelFilterInput {
+	id: ModelSubscriptionIDInput
+	name: ModelSubscriptionStringInput
+	and: [ModelSubscriptionTranslationModelFilterInput]
+	or: [ModelSubscriptionTranslationModelFilterInput]
+}
+
+input ModelTranslationConfigConditionInput {
+	url: ModelStringInput
+	and: [ModelTranslationConfigConditionInput]
+	or: [ModelTranslationConfigConditionInput]
+	not: ModelTranslationConfigConditionInput
+	translationConfigTargetLanguageCode: ModelStringInput
+	translationConfigSourceLanguageCode: ModelStringInput
+}
+
+type ModelTranslationConfigConnection {
+	items: [TranslationConfig]!
+	nextToken: String
+}
+
+input ModelTranslationConfigFilterInput {
+	id: ModelIDInput
+	url: ModelStringInput
+	and: [ModelTranslationConfigFilterInput]
+	or: [ModelTranslationConfigFilterInput]
+	not: ModelTranslationConfigFilterInput
+	translationConfigTargetLanguageCode: ModelStringInput
+	translationConfigSourceLanguageCode: ModelStringInput
+}
+
+input ModelTranslationModelConditionInput {
+	name: ModelStringInput
+	and: [ModelTranslationModelConditionInput]
+	or: [ModelTranslationModelConditionInput]
+	not: ModelTranslationModelConditionInput
+}
+
+type ModelTranslationModelConnection {
+	items: [TranslationModel]!
+	nextToken: String
+}
+
+input ModelTranslationModelFilterInput {
+	id: ModelIDInput
+	name: ModelStringInput
+	and: [ModelTranslationModelFilterInput]
+	or: [ModelTranslationModelFilterInput]
+	not: ModelTranslationModelFilterInput
+}
+
+type Rating {
+	id: ID!
+	stars: Int
+	blogPost: BlogPost!
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+	ratingBlogPostId: ID!
+}
+
+type TranslationConfig {
+	id: ID!
+	url: String!
+	targetLanguage: Language
+	sourceLanguage: Language
+	translationModel: TranslationModel
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
+	translationConfigTargetLanguageCode: String
+	translationConfigSourceLanguageCode: String
+}
+
+type TranslationModel {
+	id: ID!
+	name: String!
+	createdAt: AWSDateTime!
+	updatedAt: AWSDateTime!
 }
 
 input TranslationModelInput {
-    type: String
-}
-input CreateLanguageInput {
-    name: String!
-    code: String!
+	type: String
 }
 
-type TranslationConfig @model {
-    id: ID!
-    url: String!
-    targetLanguage: Language @hasOne  #you dont always need a target language, for simplicity sake we'll keep it
-    sourceLanguage: Language @hasOne
-    translationModel: TranslationModel
+input UpdateBlogPostInput {
+	id: ID!
+	title: String
+	authors: [String]
+	content: [String]
+	blogPostOriginalPostId: ID
+	blogPostLanguageCode: String
+	blogPostTranslationModelId: ID
 }
 
-type BlogPost @model{
-    id: ID!
-    originalPost: BlogPost @hasOne
-    language: Language! @hasOne
-    title: String!
-    authors: [String]!
-    content: [String]
-    translationModel: TranslationModel @hasOne
+input UpdateLanguageInput {
+	name: String
+	code: String!
 }
 
-type Rating @model {
-    id: ID!
-    stars: Int
-    blogPost: BlogPost! @hasOne
+input UpdateRatingInput {
+	id: ID!
+	stars: Int
+	ratingBlogPostId: ID
 }
 
-type Language @model {
-    name: String!
-    code: String! @primaryKey  #Language code: ie. "en" for English, "tr" for Turkish
+input UpdateTranslationConfigInput {
+	id: ID!
+	url: String
+	translationConfigTargetLanguageCode: String
+	translationConfigSourceLanguageCode: String
 }
 
-type TranslationModel @model {
-    id: ID!
-    name: String!
+input UpdateTranslationModelInput {
+	id: ID!
+	name: String
 }
 
 type html {
     file: String
 }
 
+type lhsAndRhs {
+    lhs: String
+    rhs: String
+    id: String
+}
+
+type Mutation {
+	createTranslationConfig(input: CreateTranslationConfigInput!, condition: ModelTranslationConfigConditionInput): TranslationConfig
+	updateTranslationConfig(input: UpdateTranslationConfigInput!, condition: ModelTranslationConfigConditionInput): TranslationConfig
+	deleteTranslationConfig(input: DeleteTranslationConfigInput!, condition: ModelTranslationConfigConditionInput): TranslationConfig
+	createBlogPost(input: CreateBlogPostInput!, condition: ModelBlogPostConditionInput): BlogPost
+	updateBlogPost(input: UpdateBlogPostInput!, condition: ModelBlogPostConditionInput): BlogPost
+	deleteBlogPost(input: DeleteBlogPostInput!, condition: ModelBlogPostConditionInput): BlogPost
+	createRating(input: CreateRatingInput!, condition: ModelRatingConditionInput): Rating
+	updateRating(input: UpdateRatingInput!, condition: ModelRatingConditionInput): Rating
+	deleteRating(input: DeleteRatingInput!, condition: ModelRatingConditionInput): Rating
+	createLanguage(input: CreateLanguageInput!, condition: ModelLanguageConditionInput): Language
+	updateLanguage(input: UpdateLanguageInput!, condition: ModelLanguageConditionInput): Language
+	deleteLanguage(input: DeleteLanguageInput!, condition: ModelLanguageConditionInput): Language
+	createTranslationModel(input: CreateTranslationModelInput!, condition: ModelTranslationModelConditionInput): TranslationModel
+	updateTranslationModel(input: UpdateTranslationModelInput!, condition: ModelTranslationModelConditionInput): TranslationModel
+	deleteTranslationModel(input: DeleteTranslationModelInput!, condition: ModelTranslationModelConditionInput): TranslationModel
+}
+
 type Query {
     getStepFunctionInvoker(input: ConfigInput): lhsAndRhs
     translate(input: ConfigInput): BlogPost
-    getBlogPostParsed(url: String): html
+	getBlogPostParsed(url: String): html
+	getTranslationConfig(id: ID!): TranslationConfig
+	listTranslationConfigs(filter: ModelTranslationConfigFilterInput, limit: Int, nextToken: String): ModelTranslationConfigConnection
+	getBlogPost(id: ID!): BlogPost
+	listBlogPosts(filter: ModelBlogPostFilterInput, limit: Int, nextToken: String): ModelBlogPostConnection
+	getRating(id: ID!): Rating
+	listRatings(filter: ModelRatingFilterInput, limit: Int, nextToken: String): ModelRatingConnection
+	getLanguage(code: String!): Language
+	listLanguages(
+		code: String,
+		filter: ModelLanguageFilterInput,
+		limit: Int,
+		nextToken: String,
+		sortDirection: ModelSortDirection
+	): ModelLanguageConnection
+	getTranslationModel(id: ID!): TranslationModel
+	listTranslationModels(filter: ModelTranslationModelFilterInput, limit: Int, nextToken: String): ModelTranslationModelConnection
 }
 
-type lhsAndRhs {
-	lhs: String
-	rhs: String
-    id: String
+type Subscription {
+	onCreateTranslationConfig(filter: ModelSubscriptionTranslationConfigFilterInput): TranslationConfig
+		@aws_subscribe(mutations: ["createTranslationConfig"])
+	onUpdateTranslationConfig(filter: ModelSubscriptionTranslationConfigFilterInput): TranslationConfig
+		@aws_subscribe(mutations: ["updateTranslationConfig"])
+	onDeleteTranslationConfig(filter: ModelSubscriptionTranslationConfigFilterInput): TranslationConfig
+		@aws_subscribe(mutations: ["deleteTranslationConfig"])
+	onCreateBlogPost(filter: ModelSubscriptionBlogPostFilterInput): BlogPost
+		@aws_subscribe(mutations: ["createBlogPost"])
+	onUpdateBlogPost(filter: ModelSubscriptionBlogPostFilterInput): BlogPost
+		@aws_subscribe(mutations: ["updateBlogPost"])
+	onDeleteBlogPost(filter: ModelSubscriptionBlogPostFilterInput): BlogPost
+		@aws_subscribe(mutations: ["deleteBlogPost"])
+	onCreateRating(filter: ModelSubscriptionRatingFilterInput): Rating
+		@aws_subscribe(mutations: ["createRating"])
+	onUpdateRating(filter: ModelSubscriptionRatingFilterInput): Rating
+		@aws_subscribe(mutations: ["updateRating"])
+	onDeleteRating(filter: ModelSubscriptionRatingFilterInput): Rating
+		@aws_subscribe(mutations: ["deleteRating"])
+	onCreateLanguage(filter: ModelSubscriptionLanguageFilterInput): Language
+		@aws_subscribe(mutations: ["createLanguage"])
+	onUpdateLanguage(filter: ModelSubscriptionLanguageFilterInput): Language
+		@aws_subscribe(mutations: ["updateLanguage"])
+	onDeleteLanguage(filter: ModelSubscriptionLanguageFilterInput): Language
+		@aws_subscribe(mutations: ["deleteLanguage"])
+	onCreateTranslationModel(filter: ModelSubscriptionTranslationModelFilterInput): TranslationModel
+		@aws_subscribe(mutations: ["createTranslationModel"])
+	onUpdateTranslationModel(filter: ModelSubscriptionTranslationModelFilterInput): TranslationModel
+		@aws_subscribe(mutations: ["updateTranslationModel"])
+	onDeleteTranslationModel(filter: ModelSubscriptionTranslationModelFilterInput): TranslationModel
+		@aws_subscribe(mutations: ["deleteTranslationModel"])
 }

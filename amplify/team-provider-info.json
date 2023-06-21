@@ -1,42 +1,4 @@
 {
-  "storagedev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-awsomenlp-storagedev-90634-authRole",
-      "UnauthRoleArn": "arn:aws:iam::184473660456:role/amplify-awsomenlp-storagedev-90634-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::184473660456:role/amplify-awsomenlp-storagedev-90634-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-      "UnauthRoleName": "amplify-awsomenlp-storagedev-90634-unauthRole",
-      "StackName": "amplify-awsomenlp-storagedev-90634",
-      "StackId": "arn:aws:cloudformation:eu-west-1:184473660456:stack/amplify-awsomenlp-storagedev-90634/c1b5f220-0f49-11ee-8eeb-06a52b2c84e3",
-      "AmplifyAppId": "d13vm8wqhw9ldv"
-    },
-    "categories": {
-      "function": {
-        "UserConfigFunction": {
-          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-4c554c4c50695636497a-build.zip"
-        },
-        "checkingUrl": {
-          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/checkingUrl-57706546425168345844-build.zip"
-        },
-        "getBlogContent": {
-          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/getBlogContent-4c53326b70324b62506e-build.zip"
-        },
-        "stepFunctionInvoker": {
-          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-55655441705a59654153-build.zip"
-        },
-        "storingTranslation": {
-          "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/storingTranslation-6c6976526f5a7a427a4b-build.zip"
-        }
-      },
-      "api": {
-        "awsomenlp": {}
-      }
-    }
+  "cdk_init": {
   }
 }

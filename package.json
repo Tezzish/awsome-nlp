@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.1",
+    "@aws-cdk/aws-amplify": "^1.204.0",
+    "@aws-cdk/aws-codecommit": "^1.204.0",
     "@cloudscape-design/components": "^3.0.307",
     "@cloudscape-design/global-styles": "^1.0.10",
     "@testing-library/react": "^13.4.0",
@@ -52,7 +54,7 @@
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
-    "jest-watch-typeahead": "^0.6.5"
+    "jest-watch-typeahead": "^2.2.2"
   },
   "jest": {
     "transformIgnorePatterns": [

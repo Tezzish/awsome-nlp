@@ -35,7 +35,7 @@ function App() {
   //Rating State Declarations
   const [rating, setRating] = useState(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
-  const [ratingId, setRatingId] = useState('');
+  const [ratingId, setRatingId] = useState("");
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
   //Alert State Declarations
@@ -135,7 +135,7 @@ function App() {
         // send to backend
         // sendOriginalToBackend(url);
         // sendConfigToBackend(url, lang, translator)
-        // calls the function to trigger step function 
+        // calls the function to trigger step function
         sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
       } catch (error) {
         console.log("Error:", error);
@@ -272,7 +272,8 @@ function App() {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingId,
-          stars: star
+          stars: star,
+          ratingBlogPostId: ratingBlogPostId,
         }
       }));
       console.log(output);
@@ -323,3 +324,4 @@ function App() {
     </div>
   );
 }
+export default App;
