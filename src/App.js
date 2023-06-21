@@ -84,6 +84,7 @@ function App() {
 
       const originalPost = output.data.getStepFunctionInvoker.lhs;
       const translatedPost = output.data.getStepFunctionInvoker.rhs;
+      const id = output.data.getStepFunctionInvoker.rhs;
 
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = originalPost;
@@ -92,7 +93,7 @@ function App() {
       rightWindow.innerHTML = translatedPost;
 
       setBackendFinished(true)
-      setRatingBlogPostId(translatedPost.id)
+      setRatingBlogPostId(id)
       setIsLoading(false);
 
   //     setTranslatedContent({ translatedPost});
