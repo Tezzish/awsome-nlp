@@ -70,7 +70,22 @@ button {
   height: 100%;
 }
 
+
 .left-side {
+  width: 45%;
+  height: 90vh;  /* change to 90vh to make them equal */
+  padding: 10px;
+  box-sizing: border-box;  /* include padding in element's total width and height */
+  overflow-y: auto;  /* make it scrollable when the content overflows */
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.right-side {
+  width: 45%;
+  height: 90vh;
   padding: 10px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -78,21 +93,9 @@ button {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start; /* Added align-items property */
+  justify-content: space-between;
+  /*justifyContent: 'center', alignItems: 'center'*/
 }
-
-.right-side {
-  padding: 10px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-
 
 .rating-section {
   align-self: flex-end;
