@@ -3,6 +3,11 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
+}
+
+.highlight {
+  color: #FF9900;
 }
 
 .App-header {
@@ -16,26 +21,47 @@
   color: white;
 }
 
-
 .App-link {
   color: #61dafb;
+}
+
+.icon {
+  position: absolute;
+  top: -25px;
+  left: 40px;
+  z-index: 1;
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
+}
+
+.icon-alert {
+  position: absolute;
+  top: 50px;
+  left: 40px;
+  z-index: 1;
+  width: 125px;
+  height: 125px;
+  object-fit: contain;
 }
 
 .dropdown-container {
   display: flex;
   justify-content: space-evenly;
-  width: 95%;
+  width: 100%;
   padding: 1rem;
-  border-radius: 4px;
+  background: #232f3e;
 }
 
 input,
 select,
 button {
+  background-color: #00A6D6;
+  color: white;
   padding: 0.5rem;
   border-radius: 4px;
-  background-color: #f1f1f1;
 }
+
 .content-container {
   display: flex;
   justify-content: center;
@@ -45,28 +71,28 @@ button {
 }
 
 .left-side {
-  width: 45%;
-  height: 90vh;  /* change to 90vh to make them equal */
-  padding: 10px;
-  box-sizing: border-box;  /* include padding in element's total width and height */
-  border: solid darkorange;
-  border-width: 2px 2px;
-  border-radius: 4px;
-  overflow-y: auto;  /* make it scrollable when the content overflows */
-}
-.right-side {
-  width: 45%;
-  height: 90vh;
   padding: 10px;
   box-sizing: border-box;
-  border: solid darkorange;
-  border-width: 2px 2px;
-  border-radius: 4px;
+  overflow-y: auto;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Added align-items property */
+}
+
+.right-side {
+  padding: 10px;
+  box-sizing: border-box;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
 }
+
+
 
 .rating-section {
   align-self: flex-end;
@@ -74,4 +100,17 @@ button {
 }
 .rating-section h4 {
   font-size: 0.7rem;
+}
+
+hr {
+  border: 1px solid ;
+  height: 1px;
+  background: black; /* or any color you prefer */
+  width: 80%;
+}
+
+.vertical-divider {
+  border-left: 1px solid #000;
+  height: 90%;
+  margin: 20px 10px 0 10px; /* Add a top margin */
 }

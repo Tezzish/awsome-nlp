@@ -161,7 +161,7 @@
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
           "DynamoDBEnableServerSideEncryption": false,
           "S3DeploymentBucket": "amplify-awsomenlp-storagedev-90634-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/f7fa29847878b3f2b742098ea3218f9892a6f89a",
+          "S3DeploymentRootKey": "amplify-appsync-files/487d98dabff5fc2fa58917c6d237347da4c79a9b",
           "env": "storagedev"
         }
       }
@@ -172,7 +172,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/UserConfigFunction-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-77476168435233466978-build.zip",
+          "s3Key": "amplify-builds/UserConfigFunction-797741496b623978446c-build.zip",
           "env": "storagedev"
         }
       }
@@ -183,7 +183,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/checkingUrl-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/checkingUrl-676a30716570564b6b4e-build.zip",
+          "s3Key": "amplify-builds/checkingUrl-78426845416d71544d51-build.zip",
           "env": "storagedev"
         }
       }
@@ -194,7 +194,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/getBlogContent-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/getBlogContent-3976727539313842764c-build.zip",
+          "s3Key": "amplify-builds/getBlogContent-544b6f444669597a6b72-build.zip",
           "env": "storagedev"
         }
       }
@@ -205,7 +205,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/stepFunctionInvoker-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/stepFunctionInvoker-73782f6e373067653345-build.zip",
+          "s3Key": "amplify-builds/stepFunctionInvoker-76666f37682b786f746d-build.zip",
           "env": "storagedev"
         }
       }
@@ -216,7 +216,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-awsomenlp-storagedev-90634-deployment/amplify-cfn-templates/function/storingTranslation-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/storingTranslation-636c6e4b66675732684e-build.zip",
+          "s3Key": "amplify-builds/storingTranslation-6e795849745961716265-build.zip",
           "env": "storagedev"
         }
       }

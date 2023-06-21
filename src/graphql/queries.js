@@ -47,7 +47,13 @@ export const translate = /* GraphQL */ `
     }
   }
 `;
-
+export const getBlogPostParsed = /* GraphQL */ `
+  query GetBlogPostParsed($url: String) {
+    getBlogPostParsed(url: $url) {
+      file
+    }
+  }
+`;
 export const getTranslationConfig = /* GraphQL */ `
   query GetTranslationConfig($id: ID!) {
     getTranslationConfig(id: $id) {
@@ -161,7 +167,6 @@ export const listBlogPosts = /* GraphQL */ `
     }
   }
 `;
-
 export const getRating = /* GraphQL */ `
   query GetRating($id: ID!) {
     getRating(id: $id) {
@@ -184,7 +189,6 @@ export const getRating = /* GraphQL */ `
     }
   }
 `;
-
 export const listRatings = /* GraphQL */ `
   query ListRatings(
     $filter: ModelRatingFilterInput
