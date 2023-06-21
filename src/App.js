@@ -26,10 +26,10 @@ Amplify.configure(awsExports);
 
 function App() {
   //Form State Declarations
-  const [languages, setLanguages] = useState([{ name: 'English', code: 'en' },{ name: 'Turkish', code: 'tr' }]);
-  const [translationModels, setTranslationModels] = useState([{ type: 'amazonTranslate'}]);
-  const [selectedLanguage, setSelectedLanguage] = useState({ name: 'Turkish', code: 'tr' });
-  const [selectedModel, setSelectedModel] = useState([{ type: 'amazonTranslate'}]);
+  const [languages, setLanguages] = useState([]);
+  const [translationModels, setTranslationModels] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState([]);
+  const [selectedModel, setSelectedModel] = useState([]);
   const [URLValue, setURLValue] = useState();
 
   //Rating State Declarations
@@ -84,13 +84,18 @@ function App() {
 
       const originalPost = output.data.getStepFunctionInvoker.lhs;
       const translatedPost = output.data.getStepFunctionInvoker.rhs;
+      const id = output.data.getStepFunctionInvoker.rhs;
 
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = originalPost;
 
       const rightWindow = document.getElementById('rightWindow');
-      rightWindow.innerHTML = translatedPost;      
+      rightWindow.innerHTML = translatedPost;
+
       setBackendFinished(true)
+      setRatingBlogPostId(id)
+      setIsLoading(false);
+
   //     setTranslatedContent({ translatedPost});
      } catch (error) {
        console.error('Error sending config to backend:', error);
@@ -298,39 +303,27 @@ function App() {
           </div>
         </div>
       </Form>
-        {/* <div className="content-container">
-          <div
-              className="left-side"
-              id="leftWindow"
-          ></div>
-          <div className="right-side"
-               id="rightWindow" 
-          ></div>
-        </div>
-      </div>
-      </form> */}
-      
       <Box className="content-container">
-        <Box variant="div" className="left-side" id="leftWindow">
+        <Box variant="div" className="left-box" id="leftBox">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent>
-                {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-            
-              </TextContent>
+              <TextContent variant="div" className="left-side" id="leftWindow"></TextContent>
           )}
         </Box>
+
         <div className="vertical-divider"></div>
-        <Box variant="div" className="right-side" id ="rightWindow">
+
+        <Box variant="div" className="right-box" id ="rightBox">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent>
+              <TextContent variant="div" className="right-side" id="rightWindow">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
               </TextContent>
           )}
         </Box>
+
       </Box> 
     </div>
   );
