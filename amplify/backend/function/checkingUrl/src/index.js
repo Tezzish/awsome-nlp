@@ -35,9 +35,10 @@ exports.handler = async (event, context) => {
   }
   else {
           // Specify the URLs of the LHS and RHS files
+    const id = data['Item']['URL'];
     const lhsUrl = data['Item']['LHS_s3_loc'];
     const rhsUrl = data['Item']['RHS_s3_loc'];
-    const id = data['Item']['id'];
+    
   
     try {
       // Extract the bucket name and object key from the URLs

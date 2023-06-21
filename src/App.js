@@ -46,7 +46,8 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+  const [originalContent, setOriginalContent] = useState("");
+  const [translatedContent, setTranslatedContent] = useState("");
 
   //Handlers
   const handleInputChangeURL = (newValue) => {
@@ -80,21 +81,26 @@ function App() {
       }));
 
       console.log('send successful');
-      console.log(JSON.stringify(output))
+      // console.log(JSON.stringify(output))
 
       const originalPost = output.data.getStepFunctionInvoker.lhs;
       const translatedPost = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.rhs;
-
+      const id = output.data.getStepFunctionInvoker.id;
+      console.log(originalPost)
+      setIsLoading(false);
+      setBackendFinished(true)
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = originalPost;
-
+      // setOriginalContent(originalPost)
+      // setTranslatedContent(translatedPost)
+      // translatedContent.innerHTML = translatedPost
+      // originalContent.innerHTML = originalPost
       const rightWindow = document.getElementById('rightWindow');
       rightWindow.innerHTML = translatedPost;
 
-      setBackendFinished(true)
+      
       setRatingBlogPostId(id)
-      setIsLoading(false);
+      
 
   //     setTranslatedContent({ translatedPost});
      } catch (error) {
@@ -308,7 +314,9 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="left-side" id="leftWindow"></TextContent>
+              <TextContent variant="div" className="left-side" id="leftWindow">
+                <div className="left-side" id="leftWindow"></div>
+              </TextContent>
           )}
         </Box>
 
@@ -320,6 +328,7 @@ function App() {
           ) : (
               <TextContent variant="div" className="right-side" id="rightWindow">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
+                <div className="right-side" id="rightWindow"></div>
               </TextContent>
           )}
         </Box>

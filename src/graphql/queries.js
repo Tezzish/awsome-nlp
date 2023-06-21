@@ -6,6 +6,7 @@ export const getStepFunctionInvoker = /* GraphQL */ `
     getStepFunctionInvoker(input: $input) {
       lhs
       rhs
+      id
     }
   }
 `;

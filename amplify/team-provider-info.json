@@ -19,7 +19,7 @@
         },
         "checkingUrl": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/checkingUrl-78426845416d71544d51-build.zip"
+          "s3Key": "amplify-builds/checkingUrl-57706546425168345844-build.zip"
         },
         "getBlogContent": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",

@@ -87,7 +87,6 @@ def handler(event, context):
     table.put_item (
         Item= {
             'URL': FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' + event['translationModel']['type'],
-            'id' : rhs_content['id'],
             'originalBlog' : FILE_NAME,
             'average_rating': 0,
             'number_of_ratings': 0,

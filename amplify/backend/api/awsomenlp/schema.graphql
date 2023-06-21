@@ -64,4 +64,5 @@ type Query {
 type lhsAndRhs {
 	lhs: String
 	rhs: String
+    id: String
 }
