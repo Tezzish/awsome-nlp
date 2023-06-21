@@ -41,7 +41,7 @@ type BlogPost @model{
 type Rating @model {
     id: ID!
     stars: Int
-    blogPost: BlogPost!
+    blogPost: BlogPost! @hasOne
 }
 
 
