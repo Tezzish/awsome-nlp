@@ -46,6 +46,8 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [originalPost, setOriginalPost] = useState(null);
+  const [translatedPost, setTranslatedPost] = useState(null);
 
   //Handlers
   const handleInputChangeURL = (newValue) => {
@@ -64,11 +66,10 @@ function App() {
     setAlertIsVisible(false);
   };
 
-
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
-      console.log('sending config to backend')
-      console.log(selectedLanguage)
+      console.log('sending config to backend');
+      console.log(selectedLanguage);
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
@@ -79,29 +80,23 @@ function App() {
       }));
 
       console.log('send successful');
-      console.log(JSON.stringify(output))
+      console.log(JSON.stringify(output));
 
-      const originalPost = output.data.getStepFunctionInvoker.lhs;
-      const translatedPost = output.data.getStepFunctionInvoker.rhs;
+      const original = output.data.getStepFunctionInvoker.lhs;
+      const translated = output.data.getStepFunctionInvoker.rhs;
       const id = output.data.getStepFunctionInvoker.id;
-      console.log(originalPost)
+      console.log(original);
 
-      const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = originalPost;
-      const rightWindow = document.getElementById('rightWindow');
-      rightWindow.innerHTML = translatedPost;
+      setOriginalPost(original);
+      setTranslatedPost(translated);
 
-      // setIsLoading(false);
-      setBackendFinished(true)
-      setRatingBlogPostId(id)
-      
-
-      // setTranslatedContent({ translatedPost});
-     } catch (error) {
-       console.error('Error sending config to backend:', error);
-       setIsLoading(false);
-     }
-  // }}
+      setIsLoading(false);
+      setBackendFinished(true);
+      setRatingBlogPostId(id);
+    } catch (error) {
+      console.error('Error sending config to backend:', error);
+      setIsLoading(false);
+    }
   }
 
   //TODO: Currently we are displaying the same values for the left and right iframes
@@ -304,30 +299,27 @@ function App() {
         </div>
       </Form>
       <Box className="content-container">
-        <Box variant="div" className="left-side" id="leftWindow">
+        <Box variant="div" className="left-side">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="left-side" id="leftWindow">
-                <div className="left-side" id="leftWindow"></div>
+              <TextContent variant="div" className="left-side-content">
+                <div dangerouslySetInnerHTML={{ __html: originalPost }} />
               </TextContent>
           )}
         </Box>
-
         <div className="vertical-divider"></div>
-
-        <Box variant="div" className="right-side" id ="rightWindow">
+        <Box variant="div" className="right-side">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="right-side" id="rightWindow">
+              <Box variant="div" className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-                <div className="right-side" id="rightWindow"></div>
-              </TextContent>
+                <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
+              </Box>
           )}
         </Box>
-
-      </Box> 
+      </Box>
     </div>
   );
 }
