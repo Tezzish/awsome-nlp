@@ -6,6 +6,8 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 import { Function, Runtime, Code } from 'aws-cdk-lib/aws-lambda';
 import { GraphqlApi, SchemaFile } from 'aws-cdk-lib/aws-appsync';
 import { AuthorizationType} from 'aws-cdk-lib/aws-appsync';
+import * as appsync from 'aws-cdk-lib/aws-appsync'
+import * as ddb from 'aws-cdk-lib/aws-dynamodb'
 import * as amplify from '@aws-cdk/aws-amplify-alpha'
 
 
@@ -14,9 +16,6 @@ import * as amplify from '@aws-cdk/aws-amplify-alpha'
 export class CdkInitTsStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    /**
-     * create code commit report from local
-     */
 
     //  // Define an S3 bucket
     //  const bucket = new cdk.aws_s3.Bucket(this, 'tscodebucket', {
@@ -90,15 +89,240 @@ export class CdkInitTsStack extends cdk.Stack {
       fieldName: 'getBlogPostParsed'
     });
 
+
+    const blogPostTable = new ddb.Table(this, 'BlogPostTable', {
+      partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
+    });
+
+    const ratingTable = new ddb.Table(this, 'RatingTable', {
+      partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
+    });
+
+    const languageTable = new ddb.Table(this, 'LanguageTable', {
+      partitionKey: { name: 'code', type: ddb.AttributeType.STRING },
+    });
+
+    const translationModelTable = new ddb.Table(this, 'TranslationModelTable', {
+      partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
+    });
+
+    const translationConfigTable = new ddb.Table(this, 'TranslationConfigTable', {
+      partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
+    });
+
+    const blogPostDS = api.addDynamoDbDataSource('BlogPost', blogPostTable);
+    const ratingDS = api.addDynamoDbDataSource('Rating', ratingTable);
+    const languageDS = api.addDynamoDbDataSource('Language', languageTable);
+    const translationModelDS = api.addDynamoDbDataSource('TranslationModel', translationModelTable);
+    const translationConfigDS = api.addDynamoDbDataSource('TranslationConfig', translationConfigTable);
+
+    blogPostDS.createResolver("getBlogPost", {
+      typeName: 'Query',
+      fieldName: 'getBlogPost',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbGetItem('id', 'id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    ratingDS.createResolver("getRating", {
+      typeName: 'Query',
+      fieldName: 'getRating',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbGetItem('id', 'id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    languageDS.createResolver("getLanguage", {
+      typeName: 'Query',
+      fieldName: 'getLanguage',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbGetItem('code', 'code'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationModelDS.createResolver("getTranslationModel", {
+      typeName: 'Query',
+      fieldName: 'getTranslationModel',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbGetItem('id', 'id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    blogPostDS.createResolver("createBlogPost", {
+      typeName: 'Mutation',
+      fieldName: 'createBlogPost',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    ratingDS.createResolver("createRating", {
+      typeName: 'Mutation',
+      fieldName: 'createRating',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    languageDS.createResolver("createLanguage", {
+      typeName: 'Mutation',
+      fieldName: 'createLanguage',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('code').is('input.code'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationModelDS.createResolver("createTranslationModel", {
+      typeName: 'Mutation',
+      fieldName: 'createTranslationModel',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationConfigDS.createResolver("createTranslationConfig", {
+      typeName: 'Mutation',
+      fieldName: 'createTranslationConfig',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    //Update resolvers
+    
+    blogPostDS.createResolver("updateBlogPost",{
+      typeName: 'Mutation',
+      fieldName: 'updateBlogPost',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').is('input.id'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    ratingDS.createResolver("updateRating",{
+      typeName: 'Mutation',
+      fieldName: 'updateRating',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('code').is('input.code'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    languageDS.createResolver("updateLanguage", {
+      typeName: 'Mutation',
+      fieldName: 'updateLanguage',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').is('input.id'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationModelDS.createResolver("updateTranslationModel", {
+      typeName: 'Mutation',
+      fieldName: 'updateTranslationModel',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').is('input.id'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationConfigDS.createResolver("updateTranslationConfig", {
+      typeName: 'Mutation',
+      fieldName: 'updateTranslationConfig',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').is('input.id'), appsync.Values.projecting('input')),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    // Delete resolvers
+
+    blogPostDS.createResolver("deleteBlogPost", {
+      typeName: 'Mutation',
+      fieldName: 'deleteBlogPost',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id', 'input.id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    ratingDS.createResolver("deleteRating", {
+      typeName: 'Mutation',
+      fieldName: 'deleteRating',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id',  'input.id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    languageDS.createResolver("deleteLanguage", {
+      typeName: 'Mutation',
+      fieldName: 'deleteLanguage',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('code', 'input.code'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationModelDS.createResolver("deleteTranslationModel", {
+      typeName: 'Mutation',
+      fieldName: 'deleteTranslationModel',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id',  'input.id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    translationConfigDS.createResolver("deleteTranslationConfig", {
+      typeName: 'Mutation',
+      fieldName: 'deleteTranslationConfig',
+      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id',  'input.id'),
+      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    });
+
+    // List resolvers
+
+    //from https://repost.aws/questions/QU2yBP6p5SQwuEV_3t4huw_w/appsync-created-with-cdk-query-not-showing-results
+    blogPostDS.createResolver("listBlogPosts", {
+      typeName: 'Query',
+      fieldName: 'listBlogPosts',
+      requestMappingTemplate: appsync.MappingTemplate.fromString(`
+      {
+        "version" : "2017-02-28",
+        "operation" : "Scan",
+      }
+    `),
+      responseMappingTemplate: appsync.MappingTemplate.fromString(`
+        $util.toJson($ctx.result)
+      `),
+    });
+
+    ratingDS.createResolver("listRatings", {
+      typeName: 'Query',
+      fieldName: 'listRatings',
+      requestMappingTemplate: appsync.MappingTemplate.fromString(`
+      {
+        "version" : "2017-02-28",
+        "operation" : "Scan",
+      }
+    `),
+      responseMappingTemplate: appsync.MappingTemplate.fromString(`
+        $util.toJson($ctx.result)
+      `),
+    });
+
+    languageDS.createResolver("listLanguages", {
+      typeName: 'Query',
+      fieldName: 'listLanguages',
+      requestMappingTemplate: appsync.MappingTemplate.fromString(`
+      {
+        "version" : "2017-02-28",
+        "operation" : "Scan",
+      }
+    `),
+      responseMappingTemplate: appsync.MappingTemplate.fromString(`
+        $util.toJson($ctx.result)
+      `),
+    });
+
+    translationModelDS.createResolver("listTranslationModels", {
+      typeName: 'Query',
+      fieldName: 'listTranslationModels',
+      requestMappingTemplate: appsync.MappingTemplate.fromString(`
+      {
+        "version" : "2017-02-28",
+        "operation" : "Scan",
+      }
+    `),
+      responseMappingTemplate: appsync.MappingTemplate.fromString(`
+        $util.toJson($ctx.result)
+      `),
+    });
+
+
+
     /**
      * This is missing the creation of DynamoDB tables for everything. This can be justified with the fact that we'd have to manually
-     * add everything in CDK, after which, modification would be near impossible.
+     * add everything in CDK, after which, modification would be near impossible. However, this generation simply doesnt work.
      */
     const amplifyApp = new amplify.App(this, 'app', {
       sourceCodeProvider:  new amplify.GitHubSourceCodeProvider({
-        owner: 'Tezzish',
+        owner: 'kyonc2022',
         repository: 'awsome-nlp',
-        oauthToken: cdk.SecretValue.secretsManager('ishankey'),
+        oauthToken: cdk.SecretValue.secretsManager('kyonkey'),
       }),
       environmentVariables: {
         'ENDPOINT': api.graphqlUrl,

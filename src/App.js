@@ -34,7 +34,7 @@ function App() {
   //Rating State Declarations
   const [rating, setRating] = useState(0);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
-  const [ratingId, setRatingId] = useState('');
+  const [ratingId, setRatingId] = useState("");
   const [ratingBlogPostId, setRatingBlogPostId] = useState(null);
 
   //Alert State Declarations
@@ -193,7 +193,9 @@ function App() {
       const authors = translatedPost.authors.join(', ');
       const content = translatedPost.content.join('\n');
       setRatingBlogPostId(translatedPost.id);
+    
 
+      setRatingSubmitted(false);
       setTranslatedContent({ title, authors, content });
       setBackendFinished(true)
       setIsLoading(false);
@@ -234,7 +236,8 @@ function App() {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingId,
-          stars: star
+          stars: star,
+          ratingBlogPostId: ratingBlogPostId,
         }
       }));
       console.log(output);
