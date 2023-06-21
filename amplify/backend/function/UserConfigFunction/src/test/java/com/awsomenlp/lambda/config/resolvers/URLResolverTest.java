@@ -60,7 +60,11 @@ class URLResolverTest {
     when(mockDocument.select("[property=author] [property=name]"))
         .thenReturn(elements);
 
+<<<<<<< HEAD
     when(mockDocument.select("p, h2, li")).thenReturn(paraElements);
+=======
+    when(mockDocument.select("p, h2")).thenReturn(paraElements);
+>>>>>>> dev
     urlResolver = new URLResolver();
 
     // Perform test

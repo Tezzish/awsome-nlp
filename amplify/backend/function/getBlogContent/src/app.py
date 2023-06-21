@@ -1,6 +1,7 @@
 import json
 import bs4 as bs
 import urllib.request
+import urllib.request
 from urllib.request import urlopen
 
 def handler(event, context):
@@ -45,6 +46,7 @@ def handler(event, context):
 def getTitle(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
+    # check if there is a title
     title_element = soup.find('h1', class_='lb-h2 blog-post-title')
     if title_element:
         title = title_element.text.strip()
@@ -56,6 +58,7 @@ def getTitle(url):
 def getAuthorNames(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
+    # check if there are multiple authors
     author_elements = soup.find_all('span', attrs={'property': 'author'})
     author_names = []
     for author_element in author_elements:
@@ -64,22 +67,10 @@ def getAuthorNames(url):
             author_names.append(name_element.text.strip())
     return author_names
 
-print(getAuthorNames("https://aws.amazon.com/blogs/aws/simplify-how-you-manage-authorization-in-your-applications-with-amazon-verified-permissions-now-generally-available/?trk=da17f24c-7c0d-4554-be7d-a898693dca8f&sc_channel=el"))
 
-
-
+# this function retrieves the content of the blog post
 def parser(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
     blog_content = soup.find('div', class_='aws-blog-content').prettify()
     return blog_content
-
-# handler("https://aws.amazon.com/blogs/aws/simplify-how-you-manage-authorization-in-your-applications-with-amazon-verified-permissions-now-generally-available/?trk=da17f24c-7c0d-4554-be7d-a898693dca8f&sc_channel=el", None)
-
-# event = {
-#     'arguments': {
-#         'url': 'https://aws.amazon.com/blogs/big-data/aws-glue-data-quality-is-generally-available/?trk=f638223f-ce01-4bcd-8cf1-3d940b44343a&sc_channel=el'
-#     }
-# }
-
-# print(handler(event, None))
