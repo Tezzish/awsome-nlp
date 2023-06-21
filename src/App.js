@@ -19,7 +19,7 @@ import logo from './TUpoweredAWS.png';
 export default App;
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
-You can add these zmanually in AppSync and under the Queries Menu.
+You can add these manually in AppSync and under the Queries Menu.
  */
 
 Amplify.configure(awsExports);
@@ -46,8 +46,6 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [originalContent, setOriginalContent] = useState("");
-  const [translatedContent, setTranslatedContent] = useState("");
 
   //Handlers
   const handleInputChangeURL = (newValue) => {
@@ -81,28 +79,24 @@ function App() {
       }));
 
       console.log('send successful');
-      // console.log(JSON.stringify(output))
+      console.log(JSON.stringify(output))
 
       const originalPost = output.data.getStepFunctionInvoker.lhs;
       const translatedPost = output.data.getStepFunctionInvoker.rhs;
       const id = output.data.getStepFunctionInvoker.id;
       console.log(originalPost)
-      setIsLoading(false);
-      setBackendFinished(true)
+
       const leftWindow = document.getElementById('leftWindow');
       leftWindow.innerHTML = originalPost;
-      // setOriginalContent(originalPost)
-      // setTranslatedContent(translatedPost)
-      // translatedContent.innerHTML = translatedPost
-      // originalContent.innerHTML = originalPost
       const rightWindow = document.getElementById('rightWindow');
       rightWindow.innerHTML = translatedPost;
 
-      
+      // setIsLoading(false);
+      setBackendFinished(true)
       setRatingBlogPostId(id)
       
 
-  //     setTranslatedContent({ translatedPost});
+      // setTranslatedContent({ translatedPost});
      } catch (error) {
        console.error('Error sending config to backend:', error);
        setIsLoading(false);
@@ -310,7 +304,7 @@ function App() {
         </div>
       </Form>
       <Box className="content-container">
-        <Box variant="div" className="left-box" id="leftBox">
+        <Box variant="div" className="left-side" id="leftWindow">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
@@ -322,7 +316,7 @@ function App() {
 
         <div className="vertical-divider"></div>
 
-        <Box variant="div" className="right-box" id ="rightBox">
+        <Box variant="div" className="right-side" id ="rightWindow">
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
