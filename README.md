@@ -35,7 +35,6 @@ Below is a diagram of the project architecture:
 This Project has many moving parts and therefore has READMEs in each subdirectory.
 Below is a brief description of each subdirectory:
 
-- [Documents](Documents): This is the folder that contains the documents for the project.
 - [Frontend](src/README.md): This is the React frontend for the application.
 - [Checking URL](amplify/backend/function/checkingUrl): This is the AWS Lambda function that checks if the URL is valid.
 - [Get Blog Content](amplify/backend/function/getBlogContent): This is the AWS Lambda function that scrapes the blog content from the AWS blog.
