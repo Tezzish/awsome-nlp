@@ -15,7 +15,7 @@
       "function": {
         "UserConfigFunction": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
-          "s3Key": "amplify-builds/UserConfigFunction-797741496b623978446c-build.zip"
+          "s3Key": "amplify-builds/UserConfigFunction-4c554c4c50695636497a-build.zip"
         },
         "checkingUrl": {
           "deploymentBucketName": "amplify-awsomenlp-storagedev-90634-deployment",
