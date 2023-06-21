@@ -44,21 +44,12 @@ type Rating @model {
     blogPost: BlogPost! @hasOne
 }
 
-type Rating @model {
-    id: ID!
-    stars: Int
-    blogPost: BlogPost! @hasOne
-}
 
 type Language @model {
     name: String!
     code: String! @primaryKey  #Language code: ie. "en" for English, "tr" for Turkish
 }
 
-type TranslationModel @model {
-    id: ID!
-    name: String!
-}
 
 type html {
 	file: String
