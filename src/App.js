@@ -46,7 +46,7 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+  // const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
 
   //Handlers
   const handleInputChangeURL = (newValue) => {
@@ -90,10 +90,11 @@ function App() {
 
       const rightWindow = document.getElementById('rightWindow');
       rightWindow.innerHTML = translatedPost;      
-
+      setBackendFinished(true)
   //     setTranslatedContent({ translatedPost});
      } catch (error) {
        console.error('Error sending config to backend:', error);
+       setIsLoading(false);
      }
   // }}
   }
