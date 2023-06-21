@@ -16,7 +16,7 @@ import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from './TUpoweredAWS.png';
-export default App;
+
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
