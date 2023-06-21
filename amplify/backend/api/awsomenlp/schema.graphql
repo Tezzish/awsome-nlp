@@ -50,6 +50,10 @@ type Language @model {
     code: String! @primaryKey  #Language code: ie. "en" for English, "tr" for Turkish
 }
 
+type TranslationModel @model {
+    id: ID!
+    name: String!
+}
 
 type html {
 	file: String
