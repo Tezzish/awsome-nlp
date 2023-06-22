@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        directory: ['./amplify/backend/function/getBlogContent/', './amplify/backend/function/checkUrl/', './amplify/backend/function/stepFunctionInvoker/', './amplify/backend/function/storingTranslation/']
+        directory: ['./amplify/backend/function/getBlogContent/', './amplify/backend/function/checkingUrl/', './amplify/backend/function/stepFunctionInvoker/', './amplify/backend/function/storingTranslation/']
 
     steps:
       - uses: actions/checkout@v3
