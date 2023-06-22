@@ -4,6 +4,7 @@ import time
 
 client = boto3.client('stepfunctions')
 
+
 # Function to invoke Step Function state machine with URL as input
 def handler(event, context):
     try:
@@ -26,7 +27,7 @@ def handler(event, context):
             execution_details = client.describe_execution(
                 executionArn=execution_arn
             )
-            
+
             status = execution_details['status']
 
             if status in ['SUCCEEDED', 'FAILED', 'TIMED_OUT', 'ABORTED']:
@@ -46,5 +47,3 @@ def handler(event, context):
             'statusCode': 500,
             'body': str(e)
         }
-    
-    

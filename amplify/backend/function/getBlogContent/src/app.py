@@ -1,46 +1,39 @@
-import json
 import bs4 as bs
-import urllib.request
 import urllib.request
 from urllib.request import urlopen
 
-def handler(event, context):
-  
-  blogUrl = event['url']
 
-  try:
+def handler(event, context):
+
+    blogUrl = event['url']
+
     response = urllib.request.urlopen(blogUrl)
     if response.status != 404:
-      # if page exists, and has correct response continue
-      print("Page exists")
+        # if page exists, and has correct response continue
+        print("Page exists")
     else:
-      # if page doesn't exist
+        # if page doesn't exist
         return False
-  except:
-      # if an error occurs
-      print("Error checking if URL exists:")
-      return False
 
-  
-  # html content of the blog post 
-  postReturned = parser(blogUrl)
-  # title of the blog post
-  postTitle = getTitle(blogUrl)
-  # author(s) of the blog post
-  postAuthors = getAuthorNames(blogUrl)
+    # html content of the blog post
+    postReturned = parser(blogUrl)
+    # title of the blog post
+    postTitle = getTitle(blogUrl)
+    # author(s) of the blog post
+    postAuthors = getAuthorNames(blogUrl)
 
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'file': postReturned,
+        'title': postTitle,
+        'author': postAuthors
+    }
 
-  return {
-      'statusCode': 200,
-      'headers': {
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-      },
-      'file' : postReturned,
-      'title' : postTitle,
-      'author' : postAuthors
-  }
 
 # this function retrieves the title of the blog post
 def getTitle(url):
@@ -53,6 +46,7 @@ def getTitle(url):
     else:
         title = None
     return title
+
 
 # this function retrieves the authors of the blog post
 def getAuthorNames(url):
