@@ -79,32 +79,36 @@ button {
   height: 100%; /* Full height */
 }
 
-/* Style for the left content area */
+ /*Style for the left content area*/
+
 .left-side {
   width: 45%; /* Width is 45% of container */
   height: 90vh; /* Height is 90% of viewport height */
-  padding: 10px; /* Padding all around */
+  padding: 5px; /* Padding all around */
   box-sizing: border-box; /* Padding is included in the total width/height */
   overflow-y: auto; /* Vertical scroll bar if content overflows */
-  overflow-x: hidden; /* Horizontal scroll bar is always hidden */
+  max-width: 100%;
+  overflow-x: auto; /* Horizontal scroll bar is always hidden */
   display: flex; /* Using Flexbox for layout */
   flex-direction: column; /* Main axis direction is from top to bottom */
-  justify-content: space-between; /* Space distributed evenly along main axis */
+   justify-content: flex-start;
+   align-items: flex-start;
 }
 
 /* Style for the right content area */
 .right-side {
   width: 45%;
   height: 90vh;
-  padding: 10px;
+  padding: 5px;
   box-sizing: border-box;
   overflow-y: auto; /* Vertical scroll bar if content overflows */
-  overflow-x: hidden; /* Horizontal scroll bar is always hidden */
+  max-width: 100%;
+  overflow-x: auto; /* Horizontal scroll bar is always hidden */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  /*align-items: center; /* Items are centered along the cross axis */
-}
+  justify-content: flex-start;
+  align-items: flex-start;
+ }
 
 /* Style for the rating section */
 .rating-section {

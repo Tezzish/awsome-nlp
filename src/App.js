@@ -87,6 +87,8 @@ function App() {
       const id = output.data.getStepFunctionInvoker.id;
       console.log(original);
 
+      setRating(0);
+      setRatingSubmitted(false);
       setOriginalPost(original);
       setTranslatedPost(translated);
 
