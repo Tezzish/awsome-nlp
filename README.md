@@ -26,3 +26,20 @@ The tools that we use in order to build this application are:
 - React for the frontend (which can be started by running ```$ npm install & npm start```)
 - AWS Lambda for logic (which can be found on the AWS Console and run using the provided test templates)
 
+## Project Architecture
+Below is a diagram of the project architecture:
+![Project Architecture](ProjectArchitecture.png)
+
+## Subdirectories
+
+This Project has many moving parts and therefore has READMEs in each subdirectory.
+Below is a brief description of each subdirectory:
+
+- [Frontend](src/README.md): This is the React frontend for the application.
+- [Checking URL](amplify/backend/function/checkingUrl): This is the AWS Lambda function that checks if the URL is valid.
+- [Get Blog Content](amplify/backend/function/getBlogContent): This is the AWS Lambda function that scrapes the blog content from the AWS blog.
+- [Step Function Invoker](amplify/backend/function/stepFunctionInvoker): This is the AWS Lambda function that invokes the AWS Step Function.
+- [Storing Translation](amplify/backend/function/storingTranslation): This is the AWS Lambda function that stores the translation in DynamoDB.
+- [User Config Function](amplify/backend/function/UserConfigFunction): This is the AWS Lambda function processes the user's configuration and queries the Translation.
+- [CDK Infrastructure as Code](cdk-init-ts/): This is code that creates all of the infrastucture for the application.
+ 
