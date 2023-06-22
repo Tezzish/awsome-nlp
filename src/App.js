@@ -17,15 +17,17 @@ import LanguageSelect from './components/LanguageSelect';
 import TranslationModelSelect from './components/TranslationModelSelect';
 import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
+import OriginalPost from "./components/OriginalPost";
+import TranslatedPost from "./components/TranslatedPost";
 import {defaultOriginalHTML} from "./components/defaultOriginalHTML";
 import {defaultTranslatedHTML} from "./components/defaultTranslatedHTML";
-
 
 // Import loader from react-spinners
 import ClipLoader from "react-spinners/ClipLoader";
 
 // Importing logo image
 import logo from './TUpoweredAWS.png';
+
 
 
 Amplify.configure(awsExports);
@@ -251,44 +253,27 @@ function App() {
 
   //APP
   return (
-    <div className="App">
-      <div className="icon-container">
-        <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
-      </div>
-      <Form>
-        <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
-        <div className="dropdown-container">
-          <URLInput onChange={handleInputChangeURL} />
-          <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
-          <div>
-            <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
-          </div>
+      <div className="App">
+        <div className="icon-container">
+          <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
         </div>
-      </Form>
-      <Box className="content-container">
-        <Box variant="div" className={`left-side ${isLoading ? 'loading' : ''}`}>
-          {isLoading ? (
-              <ClipLoader color="#000000" loading={isLoading} size={50} />
-          ) : (
-              <TextContent variant="div" className="left-side-content">
-                <div dangerouslySetInnerHTML={{ __html: originalPost }} />
-              </TextContent>
-          )}
+        <Form>
+          <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
+          <div className="dropdown-container">
+            <URLInput onChange={handleInputChangeURL} />
+            <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
+            <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
+            <div>
+              <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
+            </div>
+          </div>
+        </Form>
+        <Box className="content-container">
+          <OriginalPost isLoading={isLoading} originalPost={originalPost} />
+          <div className="vertical-divider"></div>
+          <TranslatedPost isLoading={isLoading} translatedPost={translatedPost} backendFinished={backendFinished} rating={rating} changeRating={changeRating} />
         </Box>
-        <div className="vertical-divider"></div>
-        <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>
-          {isLoading ? (
-              <ClipLoader color="#000000" loading={isLoading} size={50} />
-          ) : (
-              <TextContent variant="div" className="right-content">
-                {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-                <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
-              </TextContent>
-          )}
-        </Box>
-      </Box>
-    </div>
+      </div>
   );
 }
 export default App;
