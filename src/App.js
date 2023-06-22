@@ -124,13 +124,13 @@ function App() {
       setAlertContent("The link you placed appears to be incorrect. Please make sure that this URL is reachable and directs to an AWS Blogpost (https://aws.amazon.com/blogs/...).");
       setIsLoading(false);
     }
-    else if (targetLanguage === "") {
+    else if (targetLanguage === null) {
       setAlertIsVisible(true);
       setAlertHeader(<React.Fragment>Language Not Selected</React.Fragment>);
       setAlertContent("Please select a language for the translation.");
       setIsLoading(false);
     }
-    else if (translator === "") {
+    else if (translator === null) {
       setAlertIsVisible(true);
       setAlertHeader(<React.Fragment>Translation Model Not Selected</React.Fragment>);
       setAlertContent("Please select a translation model.");
