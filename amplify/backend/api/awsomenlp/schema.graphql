@@ -451,7 +451,13 @@ input UpdateTranslationModelInput {
 }
 
 type html {
-	file: String
+    file: String
+}
+
+type LhsAndRhs {
+    lhs: String
+    rhs: String
+    id: String
 }
 
 type Mutation {
@@ -473,7 +479,8 @@ type Mutation {
 }
 
 type Query {
-	translate(input: ConfigInput): BlogPost
+    getStepFunctionInvoker(input: ConfigInput): LhsAndRhs
+    translate(input: ConfigInput): BlogPost
 	getBlogPostParsed(url: String): html
 	getTranslationConfig(id: ID!): TranslationConfig
 	listTranslationConfigs(filter: ModelTranslationConfigFilterInput, limit: Int, nextToken: String): ModelTranslationConfigConnection

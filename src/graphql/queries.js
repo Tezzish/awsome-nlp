@@ -1,13 +1,47 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getStepFunctionInvoker = /* GraphQL */ `
+  query GetStepFunctionInvoker($input: ConfigInput) {
+    getStepFunctionInvoker(input: $input) {
+      lhs
+      rhs
+      id
+    }
+  }
+`;
 export const translate = /* GraphQL */ `
   query Translate($input: ConfigInput) {
     translate(input: $input) {
       id
+      originalPost {
+        id
+        title
+        authors
+        content
+        createdAt
+        updatedAt
+        blogPostOriginalPostId
+        blogPostLanguageCode
+        blogPostTranslationModelId
+      }
+      language {
+        name
+        code
+        createdAt
+        updatedAt
+      }
       title
       authors
       content
+      translationModel {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       blogPostOriginalPostId
       blogPostLanguageCode
       blogPostTranslationModelId
