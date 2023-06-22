@@ -17,7 +17,7 @@ translate = boto3.client('translate')
 
 def handler(event, context):
     # bucket that will be used to store the file
-    BUCKET = 'english-turkish-translations-2'
+    BUCKET = 'translations-aws-blog-posts-bucket'
     # get url from event
     URL = event['url']
     # create file name from url (this is our key)
