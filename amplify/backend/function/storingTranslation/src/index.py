@@ -52,15 +52,11 @@ def handler(event, context):
             FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' +
             event['translationModel']['type'] + '-rhs' + '.html'
         )
-        print(rhs_name)
         rhs_title, rhs_authors, rhs_content = get_translated(
             URL, event['sourceLanguage'], event['targetLanguage'], event['translationModel']
         )
-        print(rhs_content)
-        print(rhs_authors)
 
         rhs_html = replace_text_with_translation(lhs_content, rhs_content)['file']
-        print(rhs_html)
         s3_connection.put_object(Bucket=BUCKET, Key=rhs_name, Body=rhs_html.encode())
     except Exception as e:
         return {
