@@ -11,24 +11,18 @@ import "./App.css";
 import "@cloudscape-design/global-styles/index.css";
 
 // Import all required components
-import { Box, Form, Button, TextContent } from "@cloudscape-design/components";
+import { Box, Form, Button} from "@cloudscape-design/components";
 import Alert from "./components/Alert";
 import LanguageSelect from './components/LanguageSelect';
 import TranslationModelSelect from './components/TranslationModelSelect';
 import URLInput from "./components/URLInput";
-import RatingStars from "./components/RatingStars";
 import OriginalPost from "./components/OriginalPost";
 import TranslatedPost from "./components/TranslatedPost";
 import {defaultOriginalHTML} from "./components/defaultOriginalHTML";
 import {defaultTranslatedHTML} from "./components/defaultTranslatedHTML";
 
-// Import loader from react-spinners
-import ClipLoader from "react-spinners/ClipLoader";
-
 // Importing logo image
 import logo from './TUpoweredAWS.png';
-
-
 
 Amplify.configure(awsExports);
 
@@ -201,7 +195,7 @@ function App() {
 
   //Rating Functions
   //changes the rating of the blog post
-  const changeRating = async (newRating, name) => {
+  const changeRating = async (newRating) => {
     setRating(newRating);
     //check if rating has been submitted before
     if (!ratingSubmitted) {
