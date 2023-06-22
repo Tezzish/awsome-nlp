@@ -17,6 +17,9 @@ import LanguageSelect from './components/LanguageSelect';
 import TranslationModelSelect from './components/TranslationModelSelect';
 import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
+import {defaultOriginalHTML} from "./components/defaultOriginalHTML";
+import {defaultTranslatedHTML} from "./components/defaultTranslatedHTML";
+
 
 // Import loader from react-spinners
 import ClipLoader from "react-spinners/ClipLoader";
@@ -50,8 +53,8 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [originalPost, setOriginalPost] = useState(null);
-  const [translatedPost, setTranslatedPost] = useState(null);
+  const [originalPost, setOriginalPost] = useState(defaultOriginalHTML);
+  const [translatedPost, setTranslatedPost] = useState(defaultTranslatedHTML);
 
   //On Change Handlers
   const handleInputChangeURL = (newValue) => {
