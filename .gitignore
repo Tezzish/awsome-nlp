@@ -22,6 +22,7 @@ amplify/backend/function/UserConfigFunction/.gradle
 amplify/backend/function/getBlogContent/test/__pycache__/
 amplify/backend/function/stepFunctionInvoker/test/__pycache__/
 amplify/backend/function/storingTranslation/test/__pycache__/
+amplify/backend/function/storingTranslation/src/__pycache__/
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
