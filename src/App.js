@@ -71,45 +71,6 @@ function App() {
     setAlertIsVisible(false);
   };
 
-  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
-    try {
-      console.log('sending config to backend');
-      console.log('target language: ' + targetLanguage);
-      console.log(targetLanguage)
-      console.log('translation model: ' + translationModel);
-      console.log(translationModel)
-
-      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
-        input: {
-          url: url,
-          sourceLanguage: { name: "ENGLISH", code: "en" },
-          targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
-          translationModel: { type: translationModel.label }
-        }
-      }));
-
-      console.log('send successful');
-      console.log(JSON.stringify(output));
-
-      const original = output.data.getStepFunctionInvoker.lhs;
-      const translated = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.id;
-      console.log(original);
-
-      setRating(0);
-      setRatingSubmitted(false);
-      setOriginalPost(original);
-      setTranslatedPost(translated);
-
-      setIsLoading(false);
-      setBackendFinished(true);
-      setRatingBlogPostId(id);
-    } catch (error) {
-      console.error('Error sending config to backend:', error);
-      setIsLoading(false);
-    }
-  }
-
   // Main translation action trigger on button click
   const handleButtonClick = (e) => {
     //Inform user that translation is in progress and prevent default action (page reload)
@@ -151,20 +112,7 @@ function App() {
     }
     else {
       //if all fields are filled, try translation
-      try {
-        // send to backend
-        // sendOriginalToBackend(url);
-        // sendConfigToBackend(url, lang, translator)
-        // calls the function to trigger step function
-        sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
-      } catch (error) {
-        //if translation or backend communication fails, show error, set loading to false, and show alert.
-        console.log("Error:", error);
-        setIsLoading(false);
-        setAlertIsVisible(true);
-        setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
-        setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
-      }
+      sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
     }
   };
 
@@ -205,70 +153,46 @@ function App() {
     fetchLanguagesAndModels();
   }, []);
 
-  // sends the url of the original blog post to the backend to be parsed
-  // async function sendOriginalToBackend(url1) {
-  //   console.log('sending original blog post url to backend: URL =' + url1);
-  //   try {
-  //     const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
-  //     console.log('response from backend: ', response);
+  // Communicate with backend to get original and translated posts
+  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+    try {
+      // get original and translated posts from backend
+      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+        input: {
+          url: url,
+          sourceLanguage: { name: "ENGLISH", code: "en" },
+          targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
+          translationModel: { type: translationModel.label }
+        }
+      }));
 
-  //     // Parse HTML string into document
-  //     const parser = new DOMParser();
-  //     const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
+      // Set original and translated posts
+      const original = output.data.getStepFunctionInvoker.lhs;
+      const translated = output.data.getStepFunctionInvoker.rhs;
+      const id = output.data.getStepFunctionInvoker.id;
 
-  //     // Iterate over all elements and remove 'style' attribute
-  //     const elements = doc.getElementsByTagName('*');
-  //     for (let i = 0; i < elements.length; i++) {
-  //       elements[i].removeAttribute('style');
-  //     }
+      // Set original and translated posts
+      setOriginalPost(original);
+      setTranslatedPost(translated);
 
-  //     // Remove all elements with class 'blog-share-dialog'
-  //     const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
-  //     for (let i = 0; i < shareDialogs.length; i++) {
-  //       shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
-  //     }
+      // Set rating and loading states
+      setRating(0);
+      setRatingSubmitted(false);
+      setIsLoading(false);
+      setBackendFinished(true);
+      setRatingBlogPostId(id);
 
-  //     // Serialize document back into HTML string
-  //     const serializer = new XMLSerializer();
-  //     const strippedHTML = serializer.serializeToString(doc);
+    } catch (error) {
+      // Log error and set loading state
+      console.error('Error sending config to backend:', error);
+      console.log("Error:", error);
+      setIsLoading(false);
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
+      setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
+    }
+  }
 
-  //     const leftWindow = document.getElementById('leftWindow');
-  //     leftWindow.innerHTML = strippedHTML;
-
-  //     return response;
-  //   } catch (error) {
-  //     console.log('Error sending original blog post to backend:', error);
-  //   }
-  // }
-
-
-  // const sendConfigToBackend = async (url, language, translationModel) => {
-  //   try {
-  //     const output = await API.graphql(graphqlOperation(translate, {
-  //       input: {
-  //         url: url,
-  //         targetLanguage: { name: "TURKISH", code: "tr" },
-  //         sourceLanguage: { name: "ENGLISH", code: "en" },
-  //         translationModel: { type: "amazonTranslate" }
-  //       }
-  //     }));
-  //     console.log('send successful');
-  //     console.log(JSON.stringify(output))
-
-  //     const translatedPost = output.data.translate;
-  //     const title = translatedPost.title;
-  //     const authors = translatedPost.authors.join(', ');
-  //     const content = translatedPost.content.join('\n');
-  //     setRatingBlogPostId(translatedPost.id);
-
-  //     setTranslatedContent({ title, authors, content });
-  //     setBackendFinished(true)
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log('Error sending config to backend:', error);
-  //     setIsLoading(false);
-  //   }
-  // };
 
   //Rating Functions
   //changes the rating of the blog post
