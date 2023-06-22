@@ -1,43 +1,49 @@
+/* Main App container style */
 .App {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  font-family: Arial, sans-serif; /* Sets the font family of the App */
+  display: flex; /* Using Flexbox for layout */
+  flex-direction: column; /* Main axis direction is from top to bottom */
+  height: 100vh; /* App height is 100% of viewport height */
+  overflow: hidden; /* Any content that extends beyond the container will be hidden */
 }
 
+/* Style for highlighted elements */
 .highlight {
-  color: #FF9900;
+  color: #FF9900; /* Bright orange color */
 }
 
+/* Header section style */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #282c34; /* Dark greyish-blue background color */
+  min-height: 100vh; /* Header height will be at least 100% of viewport height */
+  display: flex; /* Using Flexbox for layout */
+  flex-direction: column; /* Main axis direction is from top to bottom */
+  align-items: center; /* Items are centered along cross axis */
+  justify-content: center; /* Items are centered along main axis */
+  font-size: calc(10px + 2vmin); /* Responsive font size */
+  color: white; /* White font color */
 }
 
+/* Link style in App */
 .App-link {
-  color: #61dafb;
+  color: #61dafb; /* Light blue color */
 }
 
+/* General icon style */
 .icon {
-  position: absolute;
-  top: -25px;
-  left: 40px;
-  z-index: 1;
-  width: 125px;
-  height: 125px;
-  object-fit: contain;
+  position: absolute; /* Positioned relative to the closest positioned ancestor */
+  top: -25px; /* Position it 25px above the top */
+  left: 40px; /* Position it 40px from the left */
+  z-index: 1; /* Stack order level */
+  width: 125px; /* Width of the icon */
+  height: 125px; /* Height of the icon */
+  object-fit: contain; /* The image content should be scaled while maintaining aspect ratio */
 }
 
+/* Specific alert icon style */
 .icon-alert {
   position: absolute;
-  top: 50px;
+  top: 50px; /* Position it 50px from the top */
   left: 40px;
   z-index: 1;
   width: 125px;
@@ -45,82 +51,84 @@
   object-fit: contain;
 }
 
+/* Style for the dropdown container */
 .dropdown-container {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  padding: 1rem;
-  background: #232f3e;
+  display: flex; /* Using Flexbox for layout */
+  justify-content: space-evenly; /* Items are evenly distributed along main axis */
+  width: 100%; /* Full width */
+  padding: 1rem; /* Padding all around */
+  background: #232f3e; /* Dark blue-grey background color */
 }
 
+/* General style for inputs, selects and buttons */
 input,
 select,
 button {
-  background-color: #00A6D6;
-  color: white;
-  padding: 0.5rem;
-  border-radius: 4px;
+  background-color: #00A6D6; /* Bright blue background color */
+  color: white; /* White font color */
+  padding: 0.5rem; /* Padding all around */
+  border-radius: 4px; /* Rounded corners */
 }
 
+/* Style for the content container */
 .content-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;  /* to align the elements at the top */
-  width: 100%;
-  height: 100%;
+  display: flex; /* Using Flexbox for layout */
+  justify-content: center; /* Items are centered along main axis */
+  align-items: flex-start; /* Items aligned to the top along the cross axis */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
 }
 
-
+/* Style for the left content area */
 .left-side {
-  width: 45%;
-  height: 90vh;
-  padding: 5px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  max-width: 100%;
-  overflow-x: auto;  /* Adjusted overflow-x to auto */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: 45%; /* Width is 45% of container */
+  height: 90vh; /* Height is 90% of viewport height */
+  padding: 10px; /* Padding all around */
+  box-sizing: border-box; /* Padding is included in the total width/height */
+  overflow-y: auto; /* Vertical scroll bar if content overflows */
+  overflow-x: hidden; /* Horizontal scroll bar is always hidden */
+  display: flex; /* Using Flexbox for layout */
+  flex-direction: column; /* Main axis direction is from top to bottom */
+  justify-content: space-between; /* Space distributed evenly along main axis */
 }
 
+/* Style for the right content area */
 .right-side {
   width: 45%;
   height: 90vh;
-  padding: 5px;
+  padding: 10px;
   box-sizing: border-box;
-  border: solid darkorange;
   border-width: 2px 2px;
   border-radius: 4px;
   overflow-y: auto;
-  max-width: 100%;
-  overflow-x: auto;  /* Adjusted overflow-x to auto */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center; /* Items are centered along the cross axis */
 }
 
-
-
+/* Style for the rating section */
 .rating-section {
-  align-self: flex-end;
-  margin-bottom: auto;
-}
-.rating-section h4 {
-  font-size: 0.7rem;
+  align-self: flex-end; /* Align this item to the end of the cross axis */
+  margin-bottom: auto; /* Bottom margin grows to use extra space */
 }
 
+/* Style for the heading in the rating section */
+.rating-section h4 {
+  font-size: 0.7rem; /* Smaller font size */
+}
+
+/* Style for the horizontal line element */
 hr {
   border: 1px solid ;
   height: 1px;
-  background: black; /* or any color you prefer */
-  width: 80%;
+  background: black; /* Black color */
+  width: 80%; /* Width is 80% of container */
 }
 
+/* Style for the vertical divider */
 .vertical-divider {
-  border-left: 1px solid #000;
-  height: 90%;
-  margin: 20px 10px 0 10px; /* Add a top margin */
+  border-left: 1px solid #000; /* Left border is a black line */
+  height: 90%; /* Height is 90% of container */
+  margin: 20px 10px 0 10px; /* Margin on all sides, but with more on top */
 }
