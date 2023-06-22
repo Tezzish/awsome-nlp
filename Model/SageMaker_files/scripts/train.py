@@ -1,6 +1,7 @@
 from transformers import BartForConditionalGeneration, Trainer, BartTokenizer, Seq2SeqTrainingArguments
 from datasets import load_from_disk
 from sacrebleu import corpus_bleu
+import boto3
 import logging
 import sys
 import argparse
@@ -40,6 +41,9 @@ if __name__ == "__main__":
     # load datasets
     train_dataset = load_from_disk(args.training_dir)
     test_dataset = load_from_disk(args.test_dir)
+    
+    train_dataset = train_dataset[:2000]
+    test_dataset = train_dataset[:2000]
 
     logger.info(f" loaded train_dataset length is: {len(train_dataset)}")
     logger.info(f" loaded test_dataset length is: {len(test_dataset)}")
@@ -63,9 +67,9 @@ if __name__ == "__main__":
     # training arguments
     training_args = Seq2SeqTrainingArguments(
         output_dir='./results',
-        num_train_epochs=1,
-        per_device_train_batch_size=1,
-        per_device_eval_batch_size=1,
+        num_train_epochs=args.epochs,
+        per_device_train_batch_size=args.train_batch_size,
+        per_device_eval_batch_size=args.eval_batch_size,
         warmup_steps=500,
         weight_decay=0.01,
         logging_dir='./logs',
