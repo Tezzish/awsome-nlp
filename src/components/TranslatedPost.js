@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, TextContent } from "@cloudscape-design/components";
 import ClipLoader from 'react-spinners/ClipLoader';
 import RatingStars from "./RatingStars";
