@@ -16,7 +16,14 @@ amplify/backend/function/UserConfigFunction/dist/latest-build.zip
 amplify/team-provider-info.json
 amplify/backend/awscloudformation/build/
 amplify/backend/function/UserConfigFunction/.gradle
-amplify/backend/amplify-meta.json
+# amplify/backend/amplify-meta.json
+
+
+amplify/backend/function/getBlogContent/test/__pycache__/
+amplify/backend/function/stepFunctionInvoker/test/__pycache__/
+amplify/backend/function/storingTranslation/test/__pycache__/
+amplify/backend/function/storingTranslation/src/__pycache__/
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -42,7 +49,6 @@ amplifytools.xcconfig
 
 amplify/backend/function/getBlogContent/test/__pycache__/
 amplify/backend/function/UserConfigFunction/out/
-amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data
