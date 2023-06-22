@@ -90,6 +90,7 @@ button {
   display: flex; /* Using Flexbox for layout */
   flex-direction: column; /* Main axis direction is from top to bottom */
   justify-content: space-between; /* Space distributed evenly along main axis */
+  /*align-items: center;  /* Items are centered along cross axis */
 }
 
 /* Style for the right content area */
@@ -98,14 +99,23 @@ button {
   height: 90vh;
   padding: 10px;
   box-sizing: border-box;
-  border: solid darkorange;
-  border-width: 2px 2px;
-  border-radius: 4px;
-  overflow-y: auto;
+  overflow-y: auto; /* Vertical scroll bar if content overflows */
+  overflow-x: hidden; /* Horizontal scroll bar is always hidden */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center; /* Items are centered along the cross axis */
+  /*align-items: center; /* Items are centered along the cross axis */
+}
+
+.left-side.loading, .right-side.loading {
+  align-items: center;
+  justify-content: center;
+}
+
+.left-side-content, .right-content {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 /* Style for the rating section */

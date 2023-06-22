@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
-import { getBlogPostParsed, listLanguages, listTranslationModels, translate } from "./graphql/queries";
+import { listLanguages, listTranslationModels, getStepFunctionInvoker } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
 
 // Import all required CSS styles
@@ -32,8 +32,8 @@ function App() {
   //Form State Declarations
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
   const [URLValue, setURLValue] = useState();
 
   //Rating State Declarations
@@ -50,7 +50,8 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [translatedContent, setTranslatedContent] = useState({ title: '', authors: '', content: '' });
+  const [originalPost, setOriginalPost] = useState(null);
+  const [translatedPost, setTranslatedPost] = useState(null);
 
   //On Change Handlers
   const handleInputChangeURL = (newValue) => {
@@ -58,17 +59,56 @@ function App() {
   };
 
   const handleInputChangeLanguage = (selectedOption) => {
-    setSelectedLanguage(selectedOption.value);
+    setSelectedLanguage(selectedOption);
   };
 
   const handleInputChangeModel = (selectedOption) => {
-    setSelectedModel(selectedOption.value);
+    setSelectedModel(selectedOption);
   };
 
   // Alert dismissal handler
   const handleDismiss = () => {
     setAlertIsVisible(false);
   };
+
+  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+    try {
+      console.log('sending config to backend');
+      console.log('target language: ' + targetLanguage);
+      console.log(targetLanguage)
+      console.log('translation model: ' + translationModel);
+      console.log(translationModel)
+
+      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+        input: {
+          url: url,
+          sourceLanguage: { name: "ENGLISH", code: "en" },
+          targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
+          translationModel: { type: translationModel.label }
+        }
+      }));
+
+      console.log('send successful');
+      console.log(JSON.stringify(output));
+
+      const original = output.data.getStepFunctionInvoker.lhs;
+      const translated = output.data.getStepFunctionInvoker.rhs;
+      const id = output.data.getStepFunctionInvoker.id;
+      console.log(original);
+
+      setRating(0);
+      setRatingSubmitted(false);
+      setOriginalPost(original);
+      setTranslatedPost(translated);
+
+      setIsLoading(false);
+      setBackendFinished(true);
+      setRatingBlogPostId(id);
+    } catch (error) {
+      console.error('Error sending config to backend:', error);
+      setIsLoading(false);
+    }
+  }
 
   // Main translation action trigger on button click
   const handleButtonClick = (e) => {
@@ -78,7 +118,8 @@ function App() {
 
     //set url, land, and translator to user values
     const url = URLValue;
-    const lang = selectedLanguage;
+    const sourceLanguage = { name: "ENGLISH", code: "en" };
+    const targetLanguage = selectedLanguage;
     const translator = selectedModel;
 
     //set loading and alert states
@@ -95,14 +136,14 @@ function App() {
       setIsLoading(false);
     }
     //check if a language is selected
-    else if (lang === "") {
+    else if (targetLanguage === null) {
       setAlertIsVisible(true);
       setAlertHeader(<React.Fragment>Language Not Selected</React.Fragment>);
       setAlertContent("Please select a language for the translation.");
       setIsLoading(false);
     }
     //check if a translation model is selected
-    else if (translator === "") {
+    else if (translator === null) {
       setAlertIsVisible(true);
       setAlertHeader(<React.Fragment>Translation Model Not Selected</React.Fragment>);
       setAlertContent("Please select a translation model.");
@@ -112,8 +153,10 @@ function App() {
       //if all fields are filled, try translation
       try {
         // send to backend
-        sendOriginalToBackend(url);
-        sendConfigToBackend(url, lang, translator)
+        // sendOriginalToBackend(url);
+        // sendConfigToBackend(url, lang, translator)
+        // calls the function to trigger step function
+        sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
       } catch (error) {
         //if translation or backend communication fails, show error, set loading to false, and show alert.
         console.log("Error:", error);
@@ -163,78 +206,69 @@ function App() {
   }, []);
 
   // sends the url of the original blog post to the backend to be parsed
-  async function sendOriginalToBackend(url1) {
-    console.log('sending original blog post url to backend: URL =' + url1);
-    try {
-      // send url to backend
-      const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
-      console.log('response from backend: ', response);
+  // async function sendOriginalToBackend(url1) {
+  //   console.log('sending original blog post url to backend: URL =' + url1);
+  //   try {
+  //     const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
+  //     console.log('response from backend: ', response);
 
-      // Parse HTML string into document
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
+  //     // Parse HTML string into document
+  //     const parser = new DOMParser();
+  //     const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
 
-      // Iterate over all elements and remove 'style' attribute
-      const elements = doc.getElementsByTagName('*');
-      for (let i = 0; i < elements.length; i++) {
-        elements[i].removeAttribute('style');
-      }
+  //     // Iterate over all elements and remove 'style' attribute
+  //     const elements = doc.getElementsByTagName('*');
+  //     for (let i = 0; i < elements.length; i++) {
+  //       elements[i].removeAttribute('style');
+  //     }
 
-      // Remove all elements with class 'blog-share-dialog'
-      const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
-      for (let i = 0; i < shareDialogs.length; i++) {
-        shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
-      }
+  //     // Remove all elements with class 'blog-share-dialog'
+  //     const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
+  //     for (let i = 0; i < shareDialogs.length; i++) {
+  //       shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
+  //     }
 
-      // Serialize document back into HTML string
-      const serializer = new XMLSerializer();
-      const strippedHTML = serializer.serializeToString(doc);
+  //     // Serialize document back into HTML string
+  //     const serializer = new XMLSerializer();
+  //     const strippedHTML = serializer.serializeToString(doc);
 
-      // Set HTML string as innerHTML of left window
-      const leftWindow = document.getElementById('leftWindow');
-      leftWindow.innerHTML = strippedHTML;
+  //     const leftWindow = document.getElementById('leftWindow');
+  //     leftWindow.innerHTML = strippedHTML;
 
-      return response;
-    } catch (error) {
-      // log error to console in case of failure
-      console.log('Error sending original blog post to backend:', error);
-    }
-  }
+  //     return response;
+  //   } catch (error) {
+  //     console.log('Error sending original blog post to backend:', error);
+  //   }
+  // }
 
 
-  const sendConfigToBackend = async (url, language, translationModel) => {
-    try {
-      // send config to backend
-      const output = await API.graphql(graphqlOperation(translate, {
-        input: {
-          url: url,
-          targetLanguage: { name: "TURKISH", code: "tr" },
-          sourceLanguage: { name: "ENGLISH", code: "en" },
-          translationModel: { type: "amazonTranslate" }
-        }
-      }));
-      // log output to console
-      console.log('send successful');
-      console.log(JSON.stringify(output))
+  // const sendConfigToBackend = async (url, language, translationModel) => {
+  //   try {
+  //     const output = await API.graphql(graphqlOperation(translate, {
+  //       input: {
+  //         url: url,
+  //         targetLanguage: { name: "TURKISH", code: "tr" },
+  //         sourceLanguage: { name: "ENGLISH", code: "en" },
+  //         translationModel: { type: "amazonTranslate" }
+  //       }
+  //     }));
+  //     console.log('send successful');
+  //     console.log(JSON.stringify(output))
 
-      // set translated  title, author, and content
-      const translatedPost = output.data.translate;
-      const title = translatedPost.title;
-      const authors = translatedPost.authors.join(', ');
-      const content = translatedPost.content.join('\n');
-      setRatingBlogPostId(translatedPost.id);
+  //     const translatedPost = output.data.translate;
+  //     const title = translatedPost.title;
+  //     const authors = translatedPost.authors.join(', ');
+  //     const content = translatedPost.content.join('\n');
+  //     setRatingBlogPostId(translatedPost.id);
 
-      //set translated content in state
-      setRatingSubmitted(false);
-      setTranslatedContent({ title, authors, content });
-      setBackendFinished(true)
-      setIsLoading(false);
-    } catch (error) {
-      // log error to console in case of failure
-      console.log('Error sending config to backend:', error);
-      setIsLoading(false);
-    }
-  };
+  //     setTranslatedContent({ title, authors, content });
+  //     setBackendFinished(true)
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     console.log('Error sending config to backend:', error);
+  //     setIsLoading(false);
+  //   }
+  // };
 
   //Rating Functions
   //changes the rating of the blog post
@@ -306,19 +340,23 @@ function App() {
         </div>
       </Form>
       <Box className="content-container">
-        <TextContent variant="div" className="left-side" id="leftWindow"></TextContent>
-        <div className="vertical-divider"></div>
-        <Box variant="div" className="right-side">
+        <Box variant="div" className={`left-side ${isLoading ? 'loading' : ''}`}>
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent>
+              <TextContent variant="div" className="left-side-content">
+                <div dangerouslySetInnerHTML={{ __html: originalPost }} />
+              </TextContent>
+          )}
+        </Box>
+        <div className="vertical-divider"></div>
+        <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>
+          {isLoading ? (
+              <ClipLoader color="#000000" loading={isLoading} size={50} />
+          ) : (
+              <TextContent variant="div" className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-                <h2>{translatedContent.title}</h2>
-                <h3>{translatedContent.authors}</h3>
-                {translatedContent.content.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                ))}
+                <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
               </TextContent>
           )}
         </Box>
