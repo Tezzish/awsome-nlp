@@ -28,8 +28,8 @@ function App() {
   //Form State Declarations
   const [languages, setLanguages] = useState([]);
   const [translationModels, setTranslationModels] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState([]);
-  const [selectedModel, setSelectedModel] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedModel, setSelectedModel] = useState(null);
   const [URLValue, setURLValue] = useState();
 
   //Rating State Declarations
@@ -55,11 +55,11 @@ function App() {
   };
 
   const handleInputChangeLanguage = (selectedOption) => {
-    setSelectedLanguage(selectedOption.value);
+    setSelectedLanguage(selectedOption);
   };
 
   const handleInputChangeModel = (selectedOption) => {
-    setSelectedModel(selectedOption.value);
+    setSelectedModel(selectedOption);
   };
 
   const handleDismiss = () => {
@@ -69,13 +69,17 @@ function App() {
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend');
-      console.log(selectedLanguage);
+      console.log('target language: ' + targetLanguage);
+      console.log(targetLanguage)
+      console.log('translation model: ' + translationModel);
+      console.log(translationModel)
+
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
           sourceLanguage: { name: "ENGLISH", code: "en" },
-          targetLanguage: { name: "TURKISH", code: "tr" },
-          translationModel: { type: "amazonTranslate" }
+          targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
+          translationModel: { type: translationModel.label }
         }
       }));
 
@@ -107,7 +111,7 @@ function App() {
     console.log("Button Clicked");
     const url = URLValue;
     const sourceLanguage = { name: "ENGLISH", code: "en" };
-    const targetLanguage = { name: "TURKISH", code: "tr" };
+    const targetLanguage = selectedLanguage;
     const translator = selectedModel;
 
     setIsLoading(true);
@@ -302,7 +306,7 @@ function App() {
         </div>
       </Form>
       <Box className="content-container">
-        <Box variant="div" className="left-side">
+        <Box variant="div" className={`left-side ${isLoading ? 'loading' : ''}`}>
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
@@ -312,7 +316,7 @@ function App() {
           )}
         </Box>
         <div className="vertical-divider"></div>
-        <Box variant="div" className="right-side">
+        <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
