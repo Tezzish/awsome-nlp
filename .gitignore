@@ -20,6 +20,8 @@ amplify/backend/function/UserConfigFunction/.gradle
 
 
 amplify/backend/function/getBlogContent/test/__pycache__/
+amplify/backend/function/stepFunctionInvoker/test/__pycache__/
+amplify/backend/function/storingTranslation/test/__pycache__/
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
@@ -46,7 +48,6 @@ amplifytools.xcconfig
 
 amplify/backend/function/getBlogContent/test/__pycache__/
 amplify/backend/function/UserConfigFunction/out/
-amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data

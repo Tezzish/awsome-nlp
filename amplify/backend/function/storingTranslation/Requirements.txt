@@ -1,0 +1,4 @@
+json
+boto3
+bs4
+copy
