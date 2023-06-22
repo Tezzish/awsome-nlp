@@ -98,13 +98,12 @@ button {
   height: 90vh;
   padding: 10px;
   box-sizing: border-box;
-  border-width: 2px 2px;
-  border-radius: 4px;
-  overflow-y: auto;
+  overflow-y: auto; /* Vertical scroll bar if content overflows */
+  overflow-x: hidden; /* Horizontal scroll bar is always hidden */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center; /* Items are centered along the cross axis */
+  /*align-items: center; /* Items are centered along the cross axis */
 }
 
 /* Style for the rating section */

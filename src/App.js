@@ -314,10 +314,10 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <Box variant="div" className="right-content">
+              <TextContent variant="div" className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
                 <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
-              </Box>
+              </TextContent>
           )}
         </Box>
       </Box>
