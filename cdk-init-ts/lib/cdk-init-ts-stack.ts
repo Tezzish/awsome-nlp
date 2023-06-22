@@ -9,6 +9,10 @@ import { AuthorizationType} from 'aws-cdk-lib/aws-appsync';
 import * as appsync from 'aws-cdk-lib/aws-appsync'
 import * as ddb from 'aws-cdk-lib/aws-dynamodb'
 import * as amplify from '@aws-cdk/aws-amplify-alpha'
+import * as sf from 'aws-cdk-lib/aws-stepfunctions' 
+import * as tasks from 'aws-cdk-lib/aws-stepfunctions-tasks'
+import values from './exports';
+import { CacheControl } from 'aws-cdk-lib/aws-codepipeline-actions';
 
 
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
@@ -17,17 +21,22 @@ export class CdkInitTsStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    //  // Define an S3 bucket
-    //  const bucket = new cdk.aws_s3.Bucket(this, 'tscodebucket', {
-    //   bucketName: 'tscodebucket'
-    // });
+     // Define an S3 bucket
+     const bucket = new cdk.aws_s3.Bucket(this, 'tscodebucket', {
+      bucketName: 'tscodebucket',
+      autoDeleteObjects: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    
+  
 
-    // const deployment = new s3deploy.BucketDeployment(this, 'DeploymentBucket', {
-    //   sources: [s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/user_config_latest.zip'),
-    //     s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/get_blog_content.zip')],
-    //   destinationBucket: bucket,
-    //   extract: false
-    // });
+    const deployment = new s3deploy.BucketDeployment(this, 'DeploymentBucket', {
+      sources: [s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/user_config_latest.zip'),
+        s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/get_blog_content.zip')],
+        metadata: {'key': "userconfiglatest", 'key2': "userconfiglatest2" },
+      destinationBucket: bucket,
+      extract: false,
+    });
 
 
     // Define Lambda Execution Role
@@ -39,13 +48,12 @@ export class CdkInitTsStack extends cdk.Stack {
       ]
     });
 
-    const bucket = cdk.aws_s3.Bucket.fromBucketName(this, 'tscodebucket', 'tscodebucket');
 
     // Define UserConfigFunctionCDK
     const userConfigFunctionCDK = new Function(this, 'UserConfigFunctionCDK', {
       role: userConfigFunctionRole,
       runtime: Runtime.JAVA_17,
-      code: Code.fromBucket(bucket, 'e8977cbf58d4dcee9c8746350834eed39d5effcb02a65be5316f7dbf117a1fcd.zip'), //idk how to change the names :sob:
+      code: Code.fromBucket(deployment.deployedBucket, '0b4eba583948a0762360f5209241f2dff48f4cc319e3b105a20b3e96020795c8.zip'), //idk how to change the names :sob:
       handler: 'com.awsomenlp.lambda.config.UserConfigHandler::handleRequest',
       description: 'UserConfigLambda',
       memorySize: 256,
@@ -55,7 +63,7 @@ export class CdkInitTsStack extends cdk.Stack {
     // Define GetBlogPostParsedFunction
     const getBlogPostParsedFunction = new Function(this, 'GetBlogPostParsedFunction', {
       runtime: Runtime.PYTHON_3_10,
-      code: Code.fromBucket(bucket, '7f3a37abd3a94feec33aada636add5af982bda1231d84433177736b386e4b4f0.zip'),
+      code: Code.fromBucket(deployment.deployedBucket, '7f3a37abd3a94feec33aada636add5af982bda1231d84433177736b386e4b4f0.zip'),
       handler: 'app.handler',
       description: 'Function to get blog post parsed',
       memorySize: 256,
@@ -109,6 +117,7 @@ export class CdkInitTsStack extends cdk.Stack {
     const translationConfigTable = new ddb.Table(this, 'TranslationConfigTable', {
       partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
     });
+
 
     const blogPostDS = api.addDynamoDbDataSource('BlogPost', blogPostTable);
     const ratingDS = api.addDynamoDbDataSource('Rating', ratingTable);
@@ -320,9 +329,9 @@ export class CdkInitTsStack extends cdk.Stack {
      */
     const amplifyApp = new amplify.App(this, 'app', {
       sourceCodeProvider:  new amplify.GitHubSourceCodeProvider({
-        owner: 'kyonc2022',
-        repository: 'awsome-nlp',
-        oauthToken: cdk.SecretValue.secretsManager('kyonkey'),
+        owner: values.owner,
+        repository: values.repository,
+        oauthToken: cdk.SecretValue.secretsManager(values.keyname),
       }),
       environmentVariables: {
         'ENDPOINT': api.graphqlUrl,
@@ -330,8 +339,17 @@ export class CdkInitTsStack extends cdk.Stack {
         'API_KEY': (api.apiKey ? api.apiKey : "null")
       }
     });
-    //amplifyApp.addBranch("dev");
-    amplifyApp.addBranch("cdk_init");
+    amplifyApp.addBranch("main");
+    amplifyApp.addBranch("dev");
+
+    //Statemachine
+
+    const stateMachine = new sf.StateMachine(this, 'StateMachine', {
+      definition: new tasks.LambdaInvoke(this, "task", {
+        lambdaFunction: userConfigFunctionCDK
+      })
+    })
+    
     
     // The code that defines your stack goes here
 
