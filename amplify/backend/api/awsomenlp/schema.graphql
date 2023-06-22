@@ -454,7 +454,7 @@ type html {
     file: String
 }
 
-type lhsAndRhs {
+type LhsAndRhs {
     lhs: String
     rhs: String
     id: String
@@ -479,7 +479,7 @@ type Mutation {
 }
 
 type Query {
-    getStepFunctionInvoker(input: ConfigInput): lhsAndRhs
+    getStepFunctionInvoker(input: ConfigInput): LhsAndRhs
     translate(input: ConfigInput): BlogPost
 	getBlogPostParsed(url: String): html
 	getTranslationConfig(id: ID!): TranslationConfig
