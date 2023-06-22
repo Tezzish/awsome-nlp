@@ -46,18 +46,12 @@ def handler(event, context):
         }
     # store the html in s3
     try:
-        # print("AM I EVEN TRYING")
-        # file_exists = any(obj.key == FILE_NAME for obj in s3.Bucket(BUCKET).objects.all())
-        print("FILE EXISTS KINDA DOES STH")
         if 'Item' not in response:
             s3_connection.put_object(Bucket=BUCKET, Key=FILE_NAME + '-lhs'+'.html', Body=lhs_html.encode())
-            print("IS THIS EVEN WORKING")
-        print("1")
         rhs_name = (
             FILE_NAME + '[translated]-' + event['targetLanguage']['code'] + '-' +
             event['translationModel']['type'] + '-rhs' + '.html'
         )
-        print("2")
         print(rhs_name)
         rhs_title, rhs_authors, rhs_content = get_translated(
             URL, event['sourceLanguage'], event['targetLanguage'], event['translationModel']
