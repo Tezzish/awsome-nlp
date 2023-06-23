@@ -50,23 +50,23 @@ function App() {
   const [translatedPost, setTranslatedPost] = useState(null);
 
   //Handlers
-  const handleInputChangeURL = (newValue) => {
+  export const handleInputChangeURL = (newValue) => {
     setURLValue(newValue);
   };
 
-  const handleInputChangeLanguage = (selectedOption) => {
+  export const handleInputChangeLanguage = (selectedOption) => {
     setSelectedLanguage(selectedOption);
   };
 
-  const handleInputChangeModel = (selectedOption) => {
+  export const handleInputChangeModel = (selectedOption) => {
     setSelectedModel(selectedOption);
   };
 
-  const handleDismiss = () => {
+  export const handleDismiss = () => {
     setAlertIsVisible(false);
   };
 
-  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+  export const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend');
       console.log('target language: ' + targetLanguage);
@@ -88,7 +88,7 @@ function App() {
 
       const original = output.data.getStepFunctionInvoker.lhs;
       const translated = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.id;
+      const id = output.data.getStepFunctionInvoker.id; 
       console.log(original);
 
       setRating(0);
@@ -106,7 +106,7 @@ function App() {
   }
 
   //TODO: Currently we are displaying the same values for the left and right iframes
-  const handleButtonClick = (e) => {
+  export const handleButtonClick = (e) => {
     e.preventDefault();
     console.log("Button Clicked");
     const url = URLValue;
@@ -154,7 +154,7 @@ function App() {
   };
 
   //Booleans
-  const isValidURL = (str) => {
+  export const isValidURL = (str) => {
     try {
       new URL(str);
       return str.includes("https://aws.amazon.com/blogs/");
@@ -182,73 +182,9 @@ function App() {
     fetchLanguagesAndModels();
   }, []);
 
-  // sends the url of the original blog post to the backend to be parsed
-  // async function sendOriginalToBackend(url1) {
-  //   console.log('sending original blog post url to backend: URL =' + url1);
-  //   try {
-  //     const response = await API.graphql(graphqlOperation(getBlogPostParsed, { url: url1 }));
-  //     console.log('response from backend: ', response);
-
-  //     // Parse HTML string into document
-  //     const parser = new DOMParser();
-  //     const doc = parser.parseFromString(response.data.getBlogPostParsed.file, 'text/html');
-
-  //     // Iterate over all elements and remove 'style' attribute
-  //     const elements = doc.getElementsByTagName('*');
-  //     for (let i = 0; i < elements.length; i++) {
-  //       elements[i].removeAttribute('style');
-  //     }
-
-  //     // Remove all elements with class 'blog-share-dialog'
-  //     const shareDialogs = Array.from(doc.getElementsByClassName('blog-share-dialog'));
-  //     for (let i = 0; i < shareDialogs.length; i++) {
-  //       shareDialogs[i].parentNode.removeChild(shareDialogs[i]);
-  //     }
-
-  //     // Serialize document back into HTML string
-  //     const serializer = new XMLSerializer();
-  //     const strippedHTML = serializer.serializeToString(doc);
-
-  //     const leftWindow = document.getElementById('leftWindow');
-  //     leftWindow.innerHTML = strippedHTML;
-
-  //     return response;
-  //   } catch (error) {
-  //     console.log('Error sending original blog post to backend:', error);
-  //   }
-  // }
-
-
-  // const sendConfigToBackend = async (url, language, translationModel) => {
-  //   try {
-  //     const output = await API.graphql(graphqlOperation(translate, {
-  //       input: {
-  //         url: url,
-  //         targetLanguage: { name: "TURKISH", code: "tr" },
-  //         sourceLanguage: { name: "ENGLISH", code: "en" },
-  //         translationModel: { type: "amazonTranslate" }
-  //       }
-  //     }));
-  //     console.log('send successful');
-  //     console.log(JSON.stringify(output))
-
-  //     const translatedPost = output.data.translate;
-  //     const title = translatedPost.title;
-  //     const authors = translatedPost.authors.join(', ');
-  //     const content = translatedPost.content.join('\n');
-  //     setRatingBlogPostId(translatedPost.id);
-
-  //     setTranslatedContent({ title, authors, content });
-  //     setBackendFinished(true)
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.log('Error sending config to backend:', error);
-  //     setIsLoading(false);
-  //   }
-  // };
 
   //Rating Functions
-  const changeRating = async (newRating, name) => {
+  export const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
       createRatingFunc(newRating, ratingBlogPostId);
@@ -258,7 +194,7 @@ function App() {
     }
   };
 
-  async function createRatingFunc(star, ratingBlogPostId) {
+  export async function createRatingFunc(star, ratingBlogPostId) {
     try {
       const output = await API.graphql(graphqlOperation(createRating, {
         input: {
@@ -273,7 +209,7 @@ function App() {
     }
   }
 
-  async function mutateRatingFunc(star) {
+  export async function mutateRatingFunc(star) {
     try {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
@@ -298,8 +234,8 @@ function App() {
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
         <div className="dropdown-container">
           <URLInput onChange={handleInputChangeURL} />
-          <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
+          <LanguageSelect data-testid="language-select" languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect data-testid="model-select" translationModels={translationModels} onChange={handleInputChangeModel} />
           <div>
             <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
@@ -331,3 +267,5 @@ function App() {
   );
 }
 export default App;
+
+
