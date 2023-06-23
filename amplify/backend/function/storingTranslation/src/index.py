@@ -43,7 +43,7 @@ def handler(event, context):
         return {
             'statusCode': 500,
             'body': 'problem with LHS lambda',
-            'exception': e,
+            'exception': str(e),
         }
     # store the html in s3
     try:
@@ -63,7 +63,7 @@ def handler(event, context):
         return {
             'statusCode': 500,
             'body': 'problem with S3 or RHS lambda',
-            'exception': e,
+            'exception': str(e),
         }
 
     # update the db

@@ -6,7 +6,7 @@ This code serves to be able to remake all of the AWS resources this project requ
 
 This project assumes you have an AWS account and a working instance of the AWS CLI, otherwise, otherwise refer to [this guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Furthermore, ensure your AWS account has access to IAM roles and Secrets.
 
-Furthermore, you need to have Java 17 installed and as the active version (run `java -version` to ensure this is the case), and Gradle (run `gradle` to ensure)
+Furthermore, you need to have Java **17** installed and as the active version (run `java -version` to ensure this is the case), and Gradle 8.x (run `gradle -version` to ensure).
 
 ### Github
 1. Fork this Repository
@@ -24,14 +24,14 @@ Furthermore, you need to have Java 17 installed and as the active version (run `
 ### Locally
 1. Navigate to the [source directory](lib/)
 
-2. In ```exports.ts```, change the ```owner``` field to your Github name, the ```repository``` field to the repo name, and the ```keyname``` to what you stored your AWS secret as (should be **oauthkey**).
+2. In `exports.ts`, change the `owner` field to your Github name, the `repository` field to the repo name, and the `keyname` to what you stored your AWS secret as (should be **oauthkey**).
 
 3. Run these commands:
 
-`./buildall.sh` to build all of the Lambda Functions
-**Note** If you are running this on a Unix based based system, there may be an extra carriage return, in the bash scripts, so install the dos2unix tool and then run `./dos2unix.sh`. It should work afterwards.
-`cdk synth` to synthesize the CloudFormation template
-`cdk bootstrap` to provision to the resources
-`cdk deploy` to deploy the resources
+```$ ./buildall.sh``` to build all of the Lambda Functions
+**Note** If you are running this on a Unix based based system, there may be an extra carriage return, in the bash scripts, so install the dos2unix tool and then run ```$ ./dos2unix.sh```. It should work afterwards.
+```$ cdk synth``` to synthesize the CloudFormation template
+```$ cdk bootstrap``` to provision to the resources
+```$ cdk deploy``` to deploy the resources
 
 
