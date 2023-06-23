@@ -17,13 +17,10 @@ import com.awsomenlp.lambda.config.resolvers.AppSyncResolver;
 import com.awsomenlp.lambda.config.resolvers.URLResolver;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,7 +34,7 @@ import org.junit.jupiter.api.Test;
 class UserConfigHandlerTest {
 
   ObjectMapper objectMapper = new ObjectMapper();
-  //I KNOW, TERRIBLE WAY TO STORE IT
+  //I KNOW, TERRIBLE WAY TO STORE IT, BUT IT NEEDS TO BE CHANGED BY HAND
   String apiKey = "da2-o3qctlwtsvcudkwcf7czya63fa";
   String endPoint = "https://nxab62gupfgqle5xouca3ygqp4."
       + "appsync-api.eu-west-1.amazonaws.com/graphql";
@@ -50,34 +47,6 @@ class UserConfigHandlerTest {
     //Prepare input
     OkHttpClient client = new OkHttpClient();
 
-    Map<String, Object> variables = new HashMap<>();
-    Map<String, Object> input = new HashMap<>();
-    Map<String, String> targetLanguage = new HashMap<>();
-    Map<String, String> sourceLanguage = new HashMap<>();
-    Map<String, String> translationModel = new HashMap<>();
-
-    targetLanguage.put("name", "TURKISH");
-    targetLanguage.put("code", "tr");
-
-    sourceLanguage.put("name", "ENGLISH");
-    sourceLanguage.put("code", "en");
-
-    translationModel.put("type", "amazonTranslate");
-
-    input.put("url",
-        "https://aws.amazon.com/blogs/desktop-"
-            + "and-application-streaming/network-coverage-"
-            + "delivers-secure-operations-by-utilizing-amazon"
-            + "-end-user-computing-services/");
-    input.put("targetLanguage", targetLanguage);
-    input.put("sourceLanguage", sourceLanguage);
-    input.put("translationModel", translationModel);
-
-    variables.put("input", input);
-
-    Gson gson = new Gson();
-    String jsonVariables = gson.toJson(variables);
-
     String graphqlQuery =
         "{ \"query\": \"query MyQuery { translate(input: {sourceLanguage:"
             + " {code: \\\"en\\\", name: \\\"ENGLISH\\\"}, targetLanguage:"
@@ -88,8 +57,8 @@ class UserConfigHandlerTest {
             + "-coverage-delivers-secure"
             + "-operations-by-utilizing-amazon"
             + "-end-user-computing-services/\\\"})"
-            + " { authors content } }\", \"variables\": "
-            + jsonVariables + " }";
+            + " { authors content } }"
+            + " }";
 
     MediaType mediaType = MediaType.parse("application/json");
     RequestBody body = RequestBody.create(mediaType, graphqlQuery);

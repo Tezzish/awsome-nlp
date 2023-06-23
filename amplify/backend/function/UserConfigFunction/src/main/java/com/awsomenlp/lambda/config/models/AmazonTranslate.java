@@ -57,11 +57,6 @@ public class AmazonTranslate extends TranslationModel {
   }
 
 
-  //  TODO ADD CREDENTIALS
-  //  TODO ADD REGION
-  //  TODO ADD CUSTOM TERMS (SUPPORTED)
-  //  TODO ADD TRANSLATING AUTHOR TITLE
-
   /**
    * @param text
    * @return Translated text or partially translated text if it was
