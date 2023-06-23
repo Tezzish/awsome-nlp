@@ -26,9 +26,8 @@ export class CdkInitTsStack extends cdk.Stack {
     //   // removalPolicy: cdk.RemovalPolicy.DESTROY
     // });
 
-    // const translationBucket = new cdk.aws_s3.Bucket(this, 'translations-aws-blog-posts-bucket', {
-    //   bucketName: 'translations-aws-blog-posts-bucket',
-    // });
+    const translationBucket = new cdk.aws_s3.Bucket(this, 'translations-aws-blog-posts-bucket', {
+    });
     
   
 
@@ -295,9 +294,9 @@ export class CdkInitTsStack extends cdk.Stack {
       partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
     });
 
-    // const translationTable = new ddb.Table(this, 'translations-aws-blog-posts', {
-    //   partitionKey: {name: 'URL', type: ddb.AttributeType.STRING}
-    // })
+    const translationTable = new ddb.Table(this, 'translations-aws-blog-posts', {
+      partitionKey: {name: 'URL', type: ddb.AttributeType.STRING}
+    })
 
 
     const blogPostDS = api.addDynamoDbDataSource('BlogPost', blogPostTable);
@@ -514,12 +513,16 @@ export class CdkInitTsStack extends cdk.Stack {
       'API_KEY': (api.apiKey ? api.apiKey : "null"),
       'STEP_FUNCTION_ARN': stateMachine.stateMachineArn,
       'USER_CONFIG_NAME': userConfigFunction.functionName,
-      'GET_BLOG_CONTENT_NAME': getBlogPostParsedFunction.functionName
+      'GET_BLOG_CONTENT_NAME': getBlogPostParsedFunction.functionName,
+      'TRANSLATION_TABLE_NAME': translationTable.tableName,
+      'TRANSLATION_BUCKET_NAME': translationBucket.bucketName
     };
     
     storageTranslationFunction.addEnvironment('USER_CONFIG_NAME', environmentVariables.USER_CONFIG_NAME)
     storageTranslationFunction.addEnvironment('GET_BLOG_CONTENT_NAME', environmentVariables.GET_BLOG_CONTENT_NAME )
-
+    storageTranslationFunction.addEnvironment('TRANSLATION_TABLE_NAME', environmentVariables.TRANSLATION_TABLE_NAME)
+    storageTranslationFunction.addEnvironment('TRANSLATION_BUCKET_NAME', environmentVariables.TRANSLATION_BUCKET_NAME)
+    checkingURLFunction.addEnvironment('TRANSLATION_TABLE_NAME', environmentVariables.TRANSLATION_TABLE_NAME)
     stepFunctionInvokerFunction.addEnvironment('STEP_FUNCTION_ARN', environmentVariables.STEP_FUNCTION_ARN)
     
     const amplifyApp = new amplify.App(this, 'app', {

@@ -11,14 +11,14 @@ s3_connection = boto3.client('s3')
 # DynamoDB connection
 dynamodb_connection = boto3.resource('dynamodb')
 # DynamoDB table name
-table = dynamodb_connection.Table('translations-aws-blog-posts')
+table = dynamodb_connection.Table(os.getenv('TRANSLATION_TABLE_NAME'))
 
 translate = boto3.client('translate')
 
 
 def handler(event, context):
     # bucket that will be used to store the file
-    BUCKET = 'translations-aws-blog-posts-bucket'
+    BUCKET = os.getenv('TRANSLATION_BUCKET_NAME')
     # get url from event
     URL = event['url']
     # create file name from url (this is our key)

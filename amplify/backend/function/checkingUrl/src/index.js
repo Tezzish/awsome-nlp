@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
   console.log(event['url']);
   var lastSegment = segments[segments.length - 1] + "[translated]-" + event['targetLanguage']['code'] + "-" + event['translationModel']['type'];
   const params = {
-    TableName : 'translations-aws-blog-posts',
+    TableName : process.env.TRANSLATION_TABLE_NAME,
     /* Item properties will depend on your application concerns */
     Key: {
       URL: lastSegment
