@@ -52,6 +52,10 @@ function App() {
   const [originalPost, setOriginalPost] = useState(defaultOriginalHTML);
   const [translatedPost, setTranslatedPost] = useState(defaultTranslatedHTML);
 
+  //Highlighting State Declarations
+  const [highlightedParagraphIndex, setHighlightedParagraphIndex] = useState(null);
+
+
   //On Change Handlers
   const handleInputChangeURL = (newValue) => {
     setURLValue(newValue);
@@ -64,6 +68,10 @@ function App() {
   const handleInputChangeModel = (selectedOption) => {
     setSelectedModel(selectedOption);
   };
+
+  const handleHighlight = (index) => {
+    setHighlightedParagraphIndex(index);
+  }
 
   // Alert dismissal handler
   const handleDismiss = () => {
@@ -263,9 +271,9 @@ function App() {
           </div>
         </Form>
         <Box className="content-container">
-          <OriginalPost isLoading={isLoading} originalPost={originalPost} />
+          <OriginalPost isLoading={isLoading} originalPost={originalPost} highlightedParagraphIndex={highlightedParagraphIndex} handleHighlight={handleHighlight} />
           <div className="vertical-divider"></div>
-          <TranslatedPost isLoading={isLoading} translatedPost={translatedPost} backendFinished={backendFinished} rating={rating} changeRating={changeRating} />
+          <TranslatedPost isLoading={isLoading} translatedPost={translatedPost} backendFinished={backendFinished} rating={rating} changeRating={changeRating} highlightedParagraphIndex={highlightedParagraphIndex} handleHighlight={handleHighlight} />
         </Box>
       </div>
   );

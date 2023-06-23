@@ -3,7 +3,9 @@ import { Box, TextContent } from "@cloudscape-design/components";
 import ClipLoader from 'react-spinners/ClipLoader';
 import RatingStars from "./RatingStars";
 
-function TranslatedPost({ isLoading, translatedPost, backendFinished, rating, changeRating }) {
+function TranslatedPost({ isLoading, translatedPost, backendFinished, rating, changeRating, highlightedParagraphIndex, handleHighlight }) {
+    const paragraphs = translatedPost.split('<p>').filter((paragraph) => paragraph.length > 0);
+
     return (
         <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>
             {isLoading ? (
@@ -11,7 +13,16 @@ function TranslatedPost({ isLoading, translatedPost, backendFinished, rating, ch
             ) : (
                 <TextContent variant="div" className="right-content">
                     {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-                    <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
+                    {
+                        paragraphs.map((paragraph, index) => (
+                            <p
+                                key={index}
+                                onClick={() => handleHighlight(index)}
+                                className={highlightedParagraphIndex === index ? 'highlighted' : ''}
+                                dangerouslySetInnerHTML={{ __html: paragraph }}
+                            />
+                        ))
+                    }
                 </TextContent>
             )}
         </Box>

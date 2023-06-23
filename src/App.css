@@ -8,8 +8,8 @@
 }
 
 /* Style for highlighted elements */
-.highlight {
-  color: #FF9900; /* Bright orange color */
+.highlighted {
+  background-color: #61dafb;
 }
 
 /* Header section style */

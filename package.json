@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "aws-amplify": "^5.3.0",
     "aws-sdk": "^2.1393.0",
+    "html-react-parser": "^4.0.0",
     "node-html-parser": "^6.1.5",
     "nvm": "0.0.4",
     "react": "^18.2.0",
