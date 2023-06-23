@@ -11,7 +11,9 @@ import static org.mockito.Mockito.when;
 
 
 import com.awsomenlp.lambda.config.models.TranslationModel;
+import com.awsomenlp.lambda.config.objects.Author;
 import com.awsomenlp.lambda.config.objects.Config;
+import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
 import com.awsomenlp.lambda.config.resolvers.AppSyncResolver;
 import com.awsomenlp.lambda.config.resolvers.URLResolver;
@@ -21,12 +23,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.json.JSONObject;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -92,6 +98,46 @@ class UserConfigHandlerTest {
       assertNotEquals(null, paragraph);
       assertNotEquals("", paragraph);
     }
+  }
+
+  @Test
+  void testHandleRequestNoTitle() throws IOException {
+    // Prepare input
+    Document doc = mock(Document.class);
+
+    // Mock the Elements and Element classes for title, name and paragraph
+    Elements titleElements = mock(Elements.class);
+    Elements nameElements = mock(Elements.class);
+    Element nameElement = mock(Element.class);
+    Elements paraElements = mock(Elements.class);
+    Element paraElement = mock(Element.class);
+
+    // Set the behaviors for the mocks
+    when(doc.select("h1")).thenReturn(titleElements);
+    when(titleElements.isEmpty()).thenReturn(true);
+
+    when(doc.select("[property=author] [property=name]"))
+        .thenReturn(nameElements);
+    when(nameElements.iterator())
+        .thenReturn(Arrays.asList(nameElement).iterator());
+    when(nameElement.text()).thenReturn("Test Author");
+
+    when(doc.select("p, h2")).thenReturn(paraElements);
+    when(paraElements.iterator())
+        .thenReturn(Arrays.asList(paraElement).iterator());
+    when(paraElement.text()).thenReturn("Test Paragraph");
+
+    // Prepare the expected result
+    Text expectedText = new Text(Language.ENGLISH, "",
+        Arrays.asList(new Author("", "", "Test Author")),
+        Arrays.asList("Test Paragraph"));
+
+    // Test execution
+    URLResolver urlResolver = new URLResolver();
+    Text actualText = urlResolver.resolveDocument(doc);
+
+    // Assert
+    assertEquals(expectedText, actualText);
   }
 
   @Test
