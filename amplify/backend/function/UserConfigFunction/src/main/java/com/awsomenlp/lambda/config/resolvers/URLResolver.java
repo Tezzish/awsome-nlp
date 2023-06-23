@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 public class URLResolver {
@@ -41,6 +43,28 @@ public class URLResolver {
   }
 
   /**
+   * Parses and returns all text nodes from an element (HTML element).
+   * @param element  HTML element
+   * @return List<String> List of text nodes
+   */
+  public List<String> getTextNodes(Element element) {
+    List<String> texts = new ArrayList<>();
+    for (Node node : element.childNodes()) {
+      if (node instanceof TextNode) {
+        texts.add(((TextNode) node).getWholeText());
+      } else if (node instanceof Element) {
+        Element elemNode = (Element) node;
+        // Skip certain tags like 'code', add more tags as required
+        if (!"code".equals(elemNode.tagName())) {
+          texts.addAll(getTextNodes(elemNode));
+        }
+      }
+    }
+    return texts;
+  }
+
+
+  /**
    * Takes an AWSblogpost HTML Document, scrapes it, and returns a matching
    * Text object.
    *
@@ -49,14 +73,14 @@ public class URLResolver {
    * @throws IOException
    */
   public Text resolveDocument(Document doc) throws IOException {
-    //Get Title from blogpost
+    // Get Title from blogpost
     Elements titEles = doc.select("h1");
     String title = "";
     if (!titEles.isEmpty()) {
       title = titEles.first().text();
     }
 
-    //get Authors from blogpost
+    // Get Authors from blogpost
     Elements nameEles = doc.select("[property=author] [property=name]");
     List<Author> auths = new ArrayList<>();
     for (Element ele : nameEles) {
@@ -64,13 +88,15 @@ public class URLResolver {
     }
     auths = auths.stream().distinct().collect(Collectors.toList());
 
-    //get headers and paragraphs from blogpost
-    Elements paraEles = doc.select("p, h2, li");
-    List<String> paragraphs = new ArrayList<>();
-    for (Element ele : paraEles) {
-      paragraphs.add(ele.text());
+    // Get text from blogpost excluding 'code', 'script', etc.
+    Element contentDiv = doc.selectFirst("div.aws-blog-content"); // select the specific div
+
+    if (contentDiv == null) {
+      throw new IOException("Unable to find expected content div in HTML document.");
     }
 
-    return new Text(Language.ENGLISH, title, auths, paragraphs);
+    List<String> content = getTextNodes(contentDiv);
+
+    return new Text(Language.ENGLISH, title, auths, content);
   }
 }

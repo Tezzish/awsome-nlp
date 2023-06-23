@@ -186,45 +186,23 @@ def replace_text_with_translation(lhs_content, rhs_content):
     # Parse the HTML content
     soup = bs.BeautifulSoup(rhs['file'], 'html.parser')
 
-    # Get the first content element and remove it from translated_content
-    translated_content = rhs_content.get('content', [])  # provide a default value to prevent key errors
-    first_content = translated_content.pop(0) if translated_content else None
+    # Get the body element
+    translated_content = rhs_content.get('content', [])
 
-    # Replace the blog title with the translated title, if it exists
-    blog_title = soup.find('h1', class_="lb-h2 blog-post-title")
-    if blog_title and rhs_content.get('title'):
-        blog_title.string = rhs_content['title']
-
-    # Replace the authors
-    authors = soup.find_all(property="name")
-    translated_authors = rhs_content.get('author', [])  # provide a default value to prevent key errors
-    if authors and len(authors) == len(translated_authors):
-        for author, new_author in zip(authors, translated_authors):
-            author.string = new_author
-    # Replace the h2 blog-title with the first content element, if it exists
-    h2_blog_title = soup.find('h2', class_="lb-h5 blog-title")
-    if h2_blog_title and first_content:
-        h2_blog_title.string = first_content
     # Get the content section
-    content_section = soup.find(class_="blog-post-content lb-rtxt", property="articleBody")
+    content_section = soup.find('div', class_='aws-blog-content')
     if content_section:
-        # Get all p, h2, and li tags from the content section, keeping the order they were found
-        content_elements = content_section.find_all(['p', 'h2', 'li'])
-
-        # Initialize a counter for translated content
-        translated_content_counter = 0
-
-        for element in content_elements:
-            # Skip 'p' tags that contain 'img' tags
-            if element.name == 'p' and element.find('img'):
-                continue
-            # Check if we have enough translated content to replace
-            if translated_content_counter < len(translated_content):
+        # Iterate over all elements with an id that are not code elements
+        for element in content_section.select('[id]:not(code)'):
+            id_num = element['id'].split('-')[1]  # get the number part of the id
+            # Check if we have the corresponding translated content
+            if int(id_num) - 1 < len(translated_content):
                 # Replace the content
-                element.string = translated_content[translated_content_counter]
-                # Increment the translated content counter
-                translated_content_counter += 1
+                new_content = bs.NavigableString(translated_content[int(id_num) - 1])
+                element.replace_with(new_content)
+
     # Update the file in rhs
     rhs['file'] = str(soup)
 
     return rhs
+

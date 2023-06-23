@@ -62,9 +62,16 @@ def getAuthorNames(url):
     return author_names
 
 
-# this function retrieves the content of the blog post
+# this function retrieves the content of the blog post and assigns IDs to each element
 def parser(url):
     html = urlopen(url).read()
     soup = bs.BeautifulSoup(html, 'html.parser')
-    blog_content = soup.find('div', class_='aws-blog-content').prettify()
-    return blog_content
+    blog_content_div = soup.find('div', class_='aws-blog-content')
+
+    # Assign an id to each child element
+    for i, element in enumerate(blog_content_div, start=1):
+        if element.name != 'code':
+            element['id'] = f"element-{i}"
+
+    return blog_content_div.prettify()
+
