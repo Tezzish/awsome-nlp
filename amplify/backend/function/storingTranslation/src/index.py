@@ -2,6 +2,7 @@ import boto3
 import json
 import bs4 as bs
 from copy import deepcopy
+import os
 
 # Get the service resource.
 lambda_connection = boto3.client('lambda')
@@ -35,7 +36,7 @@ def handler(event, context):
         if 'Item' not in response:
             lhs_title, lhs_authors, lhs_content, lhs_html = get_html(
                 URL, event['sourceLanguage'], event['targetLanguage'],
-                event['translationModel'], 'getBlogContent-storagedev'
+                event['translationModel'] ,os.getenv('GET_BLOG_CONTENT_NAME'),
             )
 
     except Exception as e:
@@ -144,7 +145,7 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
     try:
         # sends the url to the lambda that will get the html
         response = lambda_connection.invoke(
-            FunctionName="UserConfigFunction-storagedev",
+            FunctionName= os.getenv('USER_CONFIG_NAME'),
             InvocationType='RequestResponse',
             Payload=json.dumps(
                 {
