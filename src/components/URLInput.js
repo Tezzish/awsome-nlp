@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from "@cloudscape-design/components/input";
 
+// This component is used to display an input so the user can input a URL
 const URLInput = ({ onChange }) => {
     const [value, setValue] = React.useState("");
 
