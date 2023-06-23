@@ -53,7 +53,8 @@ function App() {
   const [translatedPost, setTranslatedPost] = useState(defaultTranslatedHTML);
 
   //Highlighting State Declarations
-  const [highlightedParagraphIndex, setHighlightedParagraphIndex] = useState(null);
+  const [highlightedElementIndex, setHighlightedElementIndex] = useState(null);
+  const [highlightedElementId, setHighlightedElementId] = useState(null);
 
 
   //On Change Handlers
@@ -69,9 +70,10 @@ function App() {
     setSelectedModel(selectedOption);
   };
 
-  const handleHighlight = (index) => {
-    setHighlightedParagraphIndex(index);
-  }
+  const handleHighlight = (id) => {
+    setHighlightedElementIndex(id);
+    setHighlightedElementId(id);
+  };
 
   // Alert dismissal handler
   const handleDismiss = () => {
@@ -271,9 +273,22 @@ function App() {
           </div>
         </Form>
         <Box className="content-container">
-          <OriginalPost isLoading={isLoading} originalPost={originalPost} highlightedParagraphIndex={highlightedParagraphIndex} handleHighlight={handleHighlight} />
+          <OriginalPost
+              isLoading={isLoading}
+              originalPost={originalPost}
+              highlightedElementIndex={highlightedElementIndex}
+              handleHighlight={handleHighlight}
+          />
           <div className="vertical-divider"></div>
-          <TranslatedPost isLoading={isLoading} translatedPost={translatedPost} backendFinished={backendFinished} rating={rating} changeRating={changeRating} highlightedParagraphIndex={highlightedParagraphIndex} handleHighlight={handleHighlight} />
+          <TranslatedPost
+              isLoading={isLoading}
+              translatedPost={translatedPost}
+              backendFinished={backendFinished}
+              rating={rating}
+              changeRating={changeRating}
+              highlightedElementIndex={highlightedElementIndex}
+              handleHighlight={handleHighlight}
+          />
         </Box>
       </div>
   );
