@@ -16,7 +16,7 @@ import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from './TUpoweredAWS.png';
-
+export default App;
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -50,23 +50,23 @@ function App() {
   const [translatedPost, setTranslatedPost] = useState(null);
 
   //Handlers
-  export const handleInputChangeURL = (newValue) => {
+  const handleInputChangeURL = (newValue) => {
     setURLValue(newValue);
   };
 
-  export const handleInputChangeLanguage = (selectedOption) => {
+  const handleInputChangeLanguage = (selectedOption) => {
     setSelectedLanguage(selectedOption);
   };
 
-  export const handleInputChangeModel = (selectedOption) => {
+  const handleInputChangeModel = (selectedOption) => {
     setSelectedModel(selectedOption);
   };
 
-  export const handleDismiss = () => {
+  const handleDismiss = () => {
     setAlertIsVisible(false);
   };
 
-  export const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend');
       console.log('target language: ' + targetLanguage);
@@ -106,7 +106,7 @@ function App() {
   }
 
   //TODO: Currently we are displaying the same values for the left and right iframes
-  export const handleButtonClick = (e) => {
+  const handleButtonClick = (e) => {
     e.preventDefault();
     console.log("Button Clicked");
     const url = URLValue;
@@ -154,7 +154,7 @@ function App() {
   };
 
   //Booleans
-  export const isValidURL = (str) => {
+  const isValidURL = (str) => {
     try {
       new URL(str);
       return str.includes("https://aws.amazon.com/blogs/");
@@ -184,7 +184,7 @@ function App() {
 
 
   //Rating Functions
-  export const changeRating = async (newRating, name) => {
+  const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
       createRatingFunc(newRating, ratingBlogPostId);
@@ -194,7 +194,7 @@ function App() {
     }
   };
 
-  export async function createRatingFunc(star, ratingBlogPostId) {
+  async function createRatingFunc(star, ratingBlogPostId) {
     try {
       const output = await API.graphql(graphqlOperation(createRating, {
         input: {
@@ -209,7 +209,7 @@ function App() {
     }
   }
 
-  export async function mutateRatingFunc(star) {
+  async function mutateRatingFunc(star) {
     try {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
@@ -233,9 +233,9 @@ function App() {
       <Form>
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
         <div className="dropdown-container">
-          <URLInput onChange={handleInputChangeURL} />
-          <LanguageSelect data-testid="language-select" languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect data-testid="model-select" translationModels={translationModels} onChange={handleInputChangeModel} />
+          <URLInput id="url-input" onChange={handleInputChangeURL} />
+          <LanguageSelect id="language-select" languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect id="model-select" translationModels={translationModels} onChange={handleInputChangeModel} />
           <div>
             <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
@@ -246,7 +246,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="left-side-content">
+              <TextContent variant="div" id="leftSide"className="left-side-content">
                 <div dangerouslySetInnerHTML={{ __html: originalPost }} />
               </TextContent>
           )}
@@ -256,7 +256,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="right-content">
+              <TextContent variant="div" id="rightSide" className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
                 <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
               </TextContent>
@@ -266,6 +266,6 @@ function App() {
     </div>
   );
 }
-export default App;
+
 
 
