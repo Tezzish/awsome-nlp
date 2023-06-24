@@ -65,13 +65,21 @@ def getAuthorNames(url):
 # this function retrieves the content of the blog post and assigns IDs to each element
 def parser(url):
     html = urlopen(url).read()
-    soup = bs.BeautifulSoup(html, 'html.parser')
+    soup = bs(html, 'html.parser')
     blog_content_div = soup.find('div', class_='aws-blog-content')
 
-    # Assign an id to each child element
-    for i, element in enumerate(blog_content_div, start=1):
-        if element.name != 'code':
-            element['id'] = f"element-{i}"
+    id_counter = [1]  # using list so it's mutable in nested function
+
+    def assign_ids(element):
+        for child in element.children:
+            if isinstance(child, bs.NavigableString):
+                continue
+            if child.name != 'code':
+                child['id'] = f"element-{id_counter[0]}"
+                id_counter[0] += 1
+            assign_ids(child)
+
+    assign_ids(blog_content_div)
 
     return blog_content_div.prettify()
 

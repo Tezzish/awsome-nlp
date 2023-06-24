@@ -184,22 +184,22 @@ def replace_text_with_translation(lhs_content, rhs_content):
     rhs = deepcopy(lhs_content)
 
     # Parse the HTML content
-    soup = bs.BeautifulSoup(rhs['file'], 'html.parser')
+    soup = bs(rhs['file'], 'html.parser')
 
-    # Get the body element
+    # Get the translated content
     translated_content = rhs_content.get('content', [])
 
     # Get the content section
     content_section = soup.find('div', class_='aws-blog-content')
     if content_section:
         # Iterate over all elements with an id that are not code elements
-        for element in content_section.select('[id]:not(code)'):
-            id_num = element['id'].split('-')[1]  # get the number part of the id
+        for element in content_section.find_all(lambda tag: tag.get('id') and tag.name != 'code'):
+            id_num = element.get('id').split('-')[1]  # get the number part of the id
             # Check if we have the corresponding translated content
             if int(id_num) - 1 < len(translated_content):
                 # Replace the content
                 new_content = bs.NavigableString(translated_content[int(id_num) - 1])
-                element.replace_with(new_content)
+                element.string.replace_with(new_content)
 
     # Update the file in rhs
     rhs['file'] = str(soup)

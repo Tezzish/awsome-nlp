@@ -54,8 +54,6 @@ function App() {
 
   //Highlighting State Declarations
   const [highlightedElementIndex, setHighlightedElementIndex] = useState(null);
-  const [highlightedElementId, setHighlightedElementId] = useState(null);
-
 
   //On Change Handlers
   const handleInputChangeURL = (newValue) => {
@@ -72,7 +70,6 @@ function App() {
 
   const handleHighlight = (id) => {
     setHighlightedElementIndex(id);
-    setHighlightedElementId(id);
   };
 
   // Alert dismissal handler
