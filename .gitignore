@@ -63,3 +63,11 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
+_pycache_
+amplify/backend/function/getBlogContent/package/
+amplify/backend/function/stepFunctionInvoker/package/event.json
+amplify/backend/function/stepFunctionInvoker/package/
+amplify/backend/function/storingTranslation/package/
+amplify/backend/function/storingTranslation/storing_translation.zip
+amplify/backend/function/getBlogContent/get_blog_content.zip
+amplify/backend/function/stepFunctionInvoker/step_function_invoker.zip

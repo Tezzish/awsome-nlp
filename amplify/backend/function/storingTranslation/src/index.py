@@ -2,6 +2,7 @@ import boto3
 import json
 import bs4 as bs
 from copy import deepcopy
+import os
 
 # Get the service resource.
 lambda_connection = boto3.client('lambda')
@@ -10,14 +11,14 @@ s3_connection = boto3.client('s3')
 # DynamoDB connection
 dynamodb_connection = boto3.resource('dynamodb')
 # DynamoDB table name
-table = dynamodb_connection.Table('translations-aws-blog-posts')
+table = dynamodb_connection.Table(os.getenv('TRANSLATION_TABLE_NAME'))
 
 translate = boto3.client('translate')
 
 
 def handler(event, context):
     # bucket that will be used to store the file
-    BUCKET = 'translations-aws-blog-posts-bucket'
+    BUCKET = os.getenv('TRANSLATION_BUCKET_NAME')
     # get url from event
     URL = event['url']
     # create file name from url (this is our key)
@@ -35,14 +36,14 @@ def handler(event, context):
         if 'Item' not in response:
             lhs_title, lhs_authors, lhs_content, lhs_html = get_html(
                 URL, event['sourceLanguage'], event['targetLanguage'],
-                event['translationModel'], 'getBlogContent-storagedev'
+                event['translationModel'] ,os.getenv('GET_BLOG_CONTENT_NAME'),
             )
 
     except Exception as e:
         return {
             'statusCode': 500,
             'body': 'problem with LHS lambda',
-            'exception': e,
+            'exception': str(e),
         }
     # store the html in s3
     try:
@@ -62,7 +63,7 @@ def handler(event, context):
         return {
             'statusCode': 500,
             'body': 'problem with S3 or RHS lambda',
-            'exception': e,
+            'exception': str(e),
         }
 
     # update the db
@@ -144,7 +145,7 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
     try:
         # sends the url to the lambda that will get the html
         response = lambda_connection.invoke(
-            FunctionName="UserConfigFunction-storagedev",
+            FunctionName= os.getenv('USER_CONFIG_NAME'),
             InvocationType='RequestResponse',
             Payload=json.dumps(
                 {

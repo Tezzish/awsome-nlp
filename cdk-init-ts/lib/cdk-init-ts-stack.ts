@@ -3,35 +3,51 @@ import { Construct } from 'constructs';
 import { Role, ServicePrincipal, ManagedPolicy } from 'aws-cdk-lib/aws-iam';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
-import { Function, Runtime, Code } from 'aws-cdk-lib/aws-lambda';
+import { Function, Runtime, Code, S3Code } from 'aws-cdk-lib/aws-lambda';
 import { GraphqlApi, SchemaFile } from 'aws-cdk-lib/aws-appsync';
 import { AuthorizationType} from 'aws-cdk-lib/aws-appsync';
 import * as appsync from 'aws-cdk-lib/aws-appsync'
 import * as ddb from 'aws-cdk-lib/aws-dynamodb'
 import * as amplify from '@aws-cdk/aws-amplify-alpha'
-
-
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
-
+import values from './exports';
+import * as sf from 'aws-cdk-lib/aws-stepfunctions'
+import * as tasks from 'aws-cdk-lib/aws-stepfunctions-tasks'
+import { StateMachineInput } from 'aws-cdk-lib/aws-codepipeline-actions';
+import { CfnJob } from 'aws-cdk-lib/aws-databrew';
+import { S3 } from 'aws-cdk-lib/aws-ses-actions';
 export class CdkInitTsStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    //  // Define an S3 bucket
-    //  const bucket = new cdk.aws_s3.Bucket(this, 'tscodebucket', {
-    //   bucketName: 'tscodebucket'
+     // Define an S3 bucket
+    //  const bucket = new cdk.aws_s3.CfnBucket(this, 'tscodebucket', {
+    //   bucketName: 'tscodebucket',
+    //   // autoDeleteObjects: true,
+    //   // removalPolicy: cdk.RemovalPolicy.DESTROY
     // });
 
+    const translationBucket = new cdk.aws_s3.Bucket(this, 'translations-aws-blog-posts-bucket', {
+    });
+    
+  
+
+    // //Deploy S3 resources
     // const deployment = new s3deploy.BucketDeployment(this, 'DeploymentBucket', {
     //   sources: [s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/user_config_latest.zip'),
-    //     s3deploy.Source.asset('../amplify/backend/function/UserConfigFunction/build/distributions/get_blog_content.zip')],
+    //     s3deploy.Source.asset('../amplify/backend/function/getBlogContent/get_blog_content.zip'),
+    //     s3deploy.Source.asset('../amplify/backend/function/stepFunctionInvoker/step_function_invoker.zip'),
+    //     s3deploy.Source.asset('../amplify/backend/function/storingTranslation/storing_translation.zip'),
+    //     s3deploy.Source.asset('../amplify/backend/function/checkingUrl/checking_url.zip'),
+    //   ],
+
+    //     metadata: {'key': "userconfiglatest", 'key2': "userconfiglatest2" },
     //   destinationBucket: bucket,
-    //   extract: false
+    //   extract: false,
     // });
 
 
-    // Define Lambda Execution Role
-    const userConfigFunctionRole = new Role(this, 'LambdaExecutionRole', {
+    // Define Lambda Execution Roles
+    const userConfigFunctionRole = new Role(this, 'userConfigFunctionRole', {
       assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
       managedPolicies: [
         ManagedPolicy.fromAwsManagedPolicyName('TranslateFullAccess'),
@@ -39,28 +55,188 @@ export class CdkInitTsStack extends cdk.Stack {
       ]
     });
 
-    const bucket = cdk.aws_s3.Bucket.fromBucketName(this, 'tscodebucket', 'tscodebucket');
+    const checkingURLRole = new Role(this, 'checkingURLRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      managedPolicies: [
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess')
+      ]
+    });
 
-    // Define UserConfigFunctionCDK
-    const userConfigFunctionCDK = new Function(this, 'UserConfigFunctionCDK', {
+    const storageTranslationRole = new Role(this, 'storageTranslationRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      managedPolicies: [
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess'),
+        ManagedPolicy.fromAwsManagedPolicyName('AWSLambda_FullAccess')
+      ]
+    });
+
+    const stepFunctionInvokerRole = new Role(this, 'stepFunctionInvokerRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      managedPolicies: [
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess'),
+        ManagedPolicy.fromAwsManagedPolicyName('AmazonDynamoDBFullAccess'),
+        ManagedPolicy.fromAwsManagedPolicyName('AWSStepFunctionsFullAccess')
+      ]
+    });
+
+
+
+    // Define UserConfigFunction
+    const userConfigFunction = new Function(this, 'UserConfigFunction', { 
       role: userConfigFunctionRole,
       runtime: Runtime.JAVA_17,
-      code: Code.fromBucket(bucket, 'e8977cbf58d4dcee9c8746350834eed39d5effcb02a65be5316f7dbf117a1fcd.zip'), //idk how to change the names :sob:
+      code: S3Code.fromAsset("../amplify/backend/function/UserConfigFunction/build/distributions/user_config_latest.zip"), //idk how to change the names :sob:
       handler: 'com.awsomenlp.lambda.config.UserConfigHandler::handleRequest',
       description: 'UserConfigLambda',
-      memorySize: 256,
+      memorySize: 1024,
       timeout: cdk.Duration.seconds(45)
     });
+
 
     // Define GetBlogPostParsedFunction
     const getBlogPostParsedFunction = new Function(this, 'GetBlogPostParsedFunction', {
       runtime: Runtime.PYTHON_3_10,
-      code: Code.fromBucket(bucket, '7f3a37abd3a94feec33aada636add5af982bda1231d84433177736b386e4b4f0.zip'),
+      code: S3Code.fromAsset("../amplify/backend/function/getBlogContent/get_blog_content.zip"),
       handler: 'app.handler',
       description: 'Function to get blog post parsed',
-      memorySize: 256,
+      memorySize: 1024,
       timeout: cdk.Duration.seconds(45)
     });
+    
+    // Define CheckingURLFunction
+    const checkingURLFunction = new Function(this, 'CheckingURLFunction', {
+      runtime: Runtime.NODEJS_18_X,
+      role: checkingURLRole,
+      code: S3Code.fromAsset("../amplify/backend/function/checkingUrl/checking_url.zip"),
+      handler: 'index.handler',
+      description: 'For a given URL, ensure it is a valid AWS blogpost URL.',
+      memorySize: 1024,
+      timeout: cdk.Duration.seconds(45)
+    })
+
+    // Define StorageTranslationFunction
+    const storageTranslationFunction = new Function(this, 'StorageTranslationFunction', {
+      runtime: Runtime.PYTHON_3_10,
+      role: storageTranslationRole,
+      code: S3Code.fromAsset("../amplify/backend/function/storingTranslation/storing_translation.zip"),
+      handler: 'index.handler',
+      description: 'For a given blog post, check if it and its translation are stored in the database. Return it if so, otherwise, create it, and return that.',
+      memorySize: 1024,
+      timeout: cdk.Duration.seconds(45)
+    })
+
+    // Define stepFunctionInvoker
+    const stepFunctionInvokerFunction = new Function(this, 'StepFunctionInvokerFunction', {
+      runtime: Runtime.PYTHON_3_10,
+      role: stepFunctionInvokerRole,
+      code: S3Code.fromAsset("../amplify/backend/function/stepFunctionInvoker/step_function_invoker.zip"),
+      handler: 'index.handler',
+      description: 'Invokes the step function',
+      memorySize: 1024,
+      timeout: cdk.Duration.seconds(75)
+    })
+
+
+    const kvm = {
+      "Comment": "A description of my state machine",
+      "StartAt": "Checking Database",
+      "States": {
+        "Checking Database": {
+          "Type": "Task",
+          "Resource": "arn:aws:states:::lambda:invoke",
+          "OutputPath": "$.Payload",
+          "Parameters": {
+            "Payload.$": "$",
+            "FunctionName": checkingURLFunction.functionArn
+          },
+          "Retry": [
+            {
+              "ErrorEquals": [
+                "Lambda.ServiceException",
+                "Lambda.AWSLambdaException",
+                "Lambda.SdkClientException",
+                "Lambda.TooManyRequestsException"
+              ],
+              "IntervalSeconds": 2,
+              "MaxAttempts": 6,
+              "BackoffRate": 2
+            }
+          ]
+        },
+        "Choice": {
+          "Type": "Choice",
+          "Choices": [
+            {
+              "Variable": "$.urlPresent",
+              "BooleanEquals": true,
+              "Next": "Success"
+            },
+            {
+              "Variable": "$.urlPresent",
+              "BooleanEquals": false,
+              "Next": "Storing Translation"
+            }
+          ]
+        },
+        "Storing Translation": {
+          "Type": "Task",
+          "Resource": "arn:aws:states:::lambda:invoke",
+          "OutputPath": "$.Payload",
+          "Parameters": {
+            "Payload.$": "$",
+            "FunctionName": storageTranslationFunction.functionArn
+          },
+          "Retry": [
+            {
+              "ErrorEquals": [
+                "Lambda.ServiceException",
+                "Lambda.AWSLambdaException",
+                "Lambda.SdkClientException",
+                "Lambda.TooManyRequestsException"
+              ],
+              "IntervalSeconds": 2,
+              "MaxAttempts": 6,
+              "BackoffRate": 2
+            }
+          ],
+          "Next": "Checking Database"
+        },
+        "Success": {
+          "Type": "Succeed"
+        }
+      }
+    }
+
+
+    // States      
+    const sucessState = new sf.Succeed(this, 'Success', {
+      comment:kvm.States.Success.Type
+    })
+
+
+    const storingTranslationState = new tasks.LambdaInvoke(this, 'Storing Translation', {
+      lambdaFunction: storageTranslationFunction,
+      outputPath: kvm.States['Storing Translation'].OutputPath,
+    });
+
+    const checkingDbState = new tasks.LambdaInvoke(this, 'Checking Database', {
+      lambdaFunction: checkingURLFunction,
+      outputPath: kvm.States['Checking Database'].OutputPath,
+    });
+
+    const choiceState = new sf.Choice(this, "choice")
+  
+    // Create Statemachine
+    const stateMachine = new sf.StateMachine(this, 'StateMachine', {
+      definition: sf.Chain.start(checkingDbState.next(choiceState
+        .when(sf.Condition.booleanEquals('$.urlPresent', true), sucessState)
+        .otherwise(storingTranslationState.next(checkingDbState))
+        )),
+      timeout: cdk.Duration.minutes(2),
+    });
+
 
     // Define GraphqlApi
     const api = new GraphqlApi(this, 'API', {
@@ -74,7 +250,7 @@ export class CdkInitTsStack extends cdk.Stack {
     });
 
     // Define Lambda Data Source for translateDS
-    const translateDS = api.addLambdaDataSource('lambdaDS', userConfigFunctionCDK);
+    const translateDS = api.addLambdaDataSource('lambdaDS', userConfigFunction);
 
     translateDS.createResolver('userConfigResolver', {
       typeName: 'Query',
@@ -88,6 +264,14 @@ export class CdkInitTsStack extends cdk.Stack {
       typeName: 'Query',
       fieldName: 'getBlogPostParsed'
     });
+
+    // Define Lambda Data source for Step Function Invoker 
+    const stepFunctionDS = api.addLambdaDataSource('stepFunctionInvokerDS', stepFunctionInvokerFunction);
+
+    stepFunctionDS.createResolver('stepFunctionInvoker', {
+      typeName: 'Query',
+      fieldName: 'getStepFunctionInvoker'
+    })
 
 
     const blogPostTable = new ddb.Table(this, 'BlogPostTable', {
@@ -109,6 +293,11 @@ export class CdkInitTsStack extends cdk.Stack {
     const translationConfigTable = new ddb.Table(this, 'TranslationConfigTable', {
       partitionKey: { name: 'id', type: ddb.AttributeType.STRING },
     });
+
+    const translationTable = new ddb.Table(this, 'translations-aws-blog-posts', {
+      partitionKey: {name: 'URL', type: ddb.AttributeType.STRING}
+    })
+
 
     const blogPostDS = api.addDynamoDbDataSource('BlogPost', blogPostTable);
     const ratingDS = api.addDynamoDbDataSource('Rating', ratingTable);
@@ -311,33 +500,40 @@ export class CdkInitTsStack extends cdk.Stack {
         $util.toJson($ctx.result)
       `),
     });
-
-
+   
 
     /**
      * This is missing the creation of DynamoDB tables for everything. This can be justified with the fact that we'd have to manually
      * add everything in CDK, after which, modification would be near impossible. However, this generation simply doesnt work.
      */
+
+    const environmentVariables = {
+      'ENDPOINT': api.graphqlUrl,
+      'REGION': this.region,
+      'API_KEY': (api.apiKey ? api.apiKey : "null"),
+      'STEP_FUNCTION_ARN': stateMachine.stateMachineArn,
+      'USER_CONFIG_NAME': userConfigFunction.functionName,
+      'GET_BLOG_CONTENT_NAME': getBlogPostParsedFunction.functionName,
+      'TRANSLATION_TABLE_NAME': translationTable.tableName,
+      'TRANSLATION_BUCKET_NAME': translationBucket.bucketName
+    };
+    
+    storageTranslationFunction.addEnvironment('USER_CONFIG_NAME', environmentVariables.USER_CONFIG_NAME)
+    storageTranslationFunction.addEnvironment('GET_BLOG_CONTENT_NAME', environmentVariables.GET_BLOG_CONTENT_NAME )
+    storageTranslationFunction.addEnvironment('TRANSLATION_TABLE_NAME', environmentVariables.TRANSLATION_TABLE_NAME)
+    storageTranslationFunction.addEnvironment('TRANSLATION_BUCKET_NAME', environmentVariables.TRANSLATION_BUCKET_NAME)
+    checkingURLFunction.addEnvironment('TRANSLATION_TABLE_NAME', environmentVariables.TRANSLATION_TABLE_NAME)
+    stepFunctionInvokerFunction.addEnvironment('STEP_FUNCTION_ARN', environmentVariables.STEP_FUNCTION_ARN)
+    
     const amplifyApp = new amplify.App(this, 'app', {
       sourceCodeProvider:  new amplify.GitHubSourceCodeProvider({
-        owner: 'kyonc2022',
-        repository: 'awsome-nlp',
-        oauthToken: cdk.SecretValue.secretsManager('kyonkey'),
+        owner: values.owner,
+        repository: values.repository,
+        oauthToken: cdk.SecretValue.secretsManager(values.keyname),
       }),
-      environmentVariables: {
-        'ENDPOINT': api.graphqlUrl,
-        'REGION': this.region,
-        'API_KEY': (api.apiKey ? api.apiKey : "null")
-      }
+      environmentVariables: environmentVariables
     });
-    //amplifyApp.addBranch("dev");
-    amplifyApp.addBranch("cdk_init");
-    
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'CdkInitTsQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    amplifyApp.addBranch("main");
+    amplifyApp.addBranch("dev");
   }
 }

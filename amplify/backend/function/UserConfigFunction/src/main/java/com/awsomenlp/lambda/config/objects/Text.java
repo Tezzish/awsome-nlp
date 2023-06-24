@@ -28,6 +28,12 @@ public class Text {
     this.content = content;
   }
 
+  /**
+   * Default Constructor.
+   */
+  public Text() {
+  }
+
   public Language getLanguage() {
     return language;
   }
