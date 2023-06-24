@@ -20,7 +20,6 @@ class TestHandler(unittest.TestCase):
         mock_response.status = 200  # mock a successful response
         mock_response.read.return_value = '<div class="aws-blog-content">Content</div>'  # Mock the HTML content
         mock_urlopen.return_value = mock_response
-        print(app)
         event = {'url': 'https://aws.amazon.com/blogs/training-and-certification/5-tips-for-a-successful-online-proctored-aws-certification-exam/'}
         context = {}
 
@@ -38,7 +37,6 @@ class TestGetTitle(unittest.TestCase):
         mock_response = MagicMock()
         mock_response.read.return_value = b'<h1 class="lb-h2 blog-post-title" property="name headline">Accelerate time to business insights with the Amazon SageMaker Data Wrangler direct connection to Snowflake</h1>'
         mock_urlopen.return_value = mock_response
-        print(mock_response)
 
         title = app.getTitle('https://aws.amazon.com/blogs/machine-learning/accelerate-time-to-business-insights-with-the-amazon-sagemaker-data-wrangler-direct-connection-to-snowflake/')
 
@@ -69,7 +67,6 @@ class TestParser(unittest.TestCase):
         mock_urlopen.return_value = mock_response
 
         content = app.parser('https://aws.amazon.com/blogs/training-and-certification/5-tips-for-a-successful-online-proctored-aws-certification-exam/')
-        print(content)
         self.assertEqual(content, '<div class="aws-blog-content">\n Content\n</div>\n')
 
 
