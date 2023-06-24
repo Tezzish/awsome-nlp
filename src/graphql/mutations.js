@@ -231,19 +231,6 @@ export const createRating = /* GraphQL */ `
     createRating(input: $input, condition: $condition) {
       id
       stars
-      blogPost {
-        id
-        title
-        authors
-        content
-        createdAt
-        updatedAt
-        blogPostOriginalPostId
-        blogPostLanguageCode
-        blogPostTranslationModelId
-      }
-      createdAt
-      updatedAt
       ratingBlogPostId
     }
   }
@@ -256,19 +243,6 @@ export const updateRating = /* GraphQL */ `
     updateRating(input: $input, condition: $condition) {
       id
       stars
-      blogPost {
-        id
-        title
-        authors
-        content
-        createdAt
-        updatedAt
-        blogPostOriginalPostId
-        blogPostLanguageCode
-        blogPostTranslationModelId
-      }
-      createdAt
-      updatedAt
       ratingBlogPostId
     }
   }

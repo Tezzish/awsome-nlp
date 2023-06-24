@@ -41,4 +41,5 @@ Below is a brief description of each subdirectory:
 - [Step Function Invoker](amplify/backend/function/stepFunctionInvoker): This is the AWS Lambda function that invokes the AWS Step Function.
 - [Storing Translation](amplify/backend/function/storingTranslation): This is the AWS Lambda function that stores the translation in DynamoDB.
 - [User Config Function](amplify/backend/function/UserConfigFunction): This is the AWS Lambda function processes the user's configuration and queries the Translation.
+- [CDK Infrastructure as Code](cdk-init-ts/): This is code that creates all of the infrastucture for the application.
  
