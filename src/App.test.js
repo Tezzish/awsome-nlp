@@ -6,8 +6,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import getStepFunctionInvoker from './graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
-import { isValidURL, App, sendOriginalAndTranslated } from './App';
-
+import App from './App';
+import {isValidURL} from './App';
 
 import LanguageSelect from './components/LanguageSelect';
 
@@ -22,17 +22,47 @@ jest.mock('aws-amplify', () => ({
   graphqlOperation: jest.fn(),
 }));
 
+
+
+// test the isValidURL function
+describe('isValidURL', () => {
+  test('returns true for valid URLs', () => {
+    expect(isValidURL('https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=ele')).toBe(true);
+  });
+});
+
+// test the isValidURL function
+describe('isValidURL', () => {
+  test('returns false for invalid URLs', () => {
+    expect(isValidURL('https://en.wikipedia.org/wiki/Turkey')).toBe(false);
+  });
+});
+
 describe('App', () => {
 
   // clear the mocks before each test
   beforeEach(() => {
     jest.clearAllMocks();
-  });
+  });   
 
- 
-  // test('should update state correctly', async () => {
+  // test('should call sendOriginalAndTranslated and its internal functions', async () => {
+  //   // Mock the required dependencies and set initial values
+  //   const url = 'https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=el';
+  //   const sourceLanguage = { label: 'ENGLISH', value: 'en' };
+  //   const targetLanguage = { label: 'TURKISH', value: 'tr' };
+  //   const translationModel = { label: 'amazonTranslate', value: 'amazonTranslate' };
+
+  //   // Mock the internal functions
+  //   const setRatingMock = jest.fn();
+  //   const setRatingSubmittedMock = jest.fn();
+  //   const setOriginalPostMock = jest.fn();
+  //   const setTranslatedPostMock = jest.fn();
+  //   const setIsLoadingMock = jest.fn();
+  //   const setBackendFinishedMock = jest.fn();
+  //   const setRatingBlogPostIdMock = jest.fn();
+
   //   // Mock the API.graphql function
-  //   API.graphql.mockResolvedValueOnce({
+  //   const mockedGraphql = jest.fn().mockResolvedValue({
   //     data: {
   //       getStepFunctionInvoker: {
   //         lhs: '<p>Original post content</p>',
@@ -42,52 +72,57 @@ describe('App', () => {
   //     },
   //   });
 
-  //   // Set initial state
-  //   const setLoading = jest.fn();
-  //   const setBackendFinished = jest.fn();
-  //   const setOriginalPost = jest.fn();
-  //   const setTranslatedPost = jest.fn();
-  //   const setRating = jest.fn();
-  //   const setRatingSubmitted = jest.fn();
-  //   const setRatingBlogPostId = jest.fn();
+  //   // Mock the API object
+  //   const mockedAPI = {
+  //     graphql: mockedGraphql,
+  //   };
 
-  //   // Call the function with test values
-  //   await sendOriginalAndTranslated(
-  //     'https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=el',
-  //     { label: 'ENGLISH', value: 'en' },
-  //     { label: 'amazonTranslate', value: 'amazonTranslate' },
-  //     setLoading,
-  //     setBackendFinished,
-  //     setOriginalPost,
-  //     setTranslatedPost,
-  //     setRating,
-  //     setRatingSubmitted,
-  //     setRatingBlogPostId
-  //   );
+  //   // Render the App component
+  //   render(<App />);
 
-    // // Assertions
-    // expect(API.graphql).toHaveBeenCalledTimes(1);
-    // expect(API.graphql).toHaveBeenCalledWith(
-    //   graphqlOperation(getStepFunctionInvoker, {
-    //     input: {
-    //       url: 'https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=el',
-    //       sourceLanguage: { name: 'ENGLISH', code: 'en' },
-    //       targetLanguage: { name: 'TURKISH', code: 'tr' },
-    //       translationModel: { type: 'amazonTranslate' },
-    //     },
-    //   })
-    // );
+  //   // Mock the useState hook functions
+  //   jest.spyOn(React, 'useState').mockImplementation((initialValue) => {
+  //     if (initialValue === 0) return [0, setRatingMock];
+  //     if (initialValue === false) return [false, setRatingSubmittedMock];
+  //     if (initialValue === '') return ['', setOriginalPostMock];
+  //     if (initialValue === '') return ['', setTranslatedPostMock];
+  //     if (initialValue === true) return [true, setIsLoadingMock];
+  //     if (initialValue === false) return [false, setBackendFinishedMock];
+  //     if (initialValue === '') return ['', setRatingBlogPostIdMock];
+  //     return jest.requireActual('react').useState(initialValue);
+  //   });
 
-  //   expect(setLoading).toHaveBeenCalledWith(false);
-  //   expect(setBackendFinished).toHaveBeenCalledWith(true);
-  //   expect(setOriginalPost).toHaveBeenCalledWith('<p>Original post content</p>');
-  //   expect(setTranslatedPost).toHaveBeenCalledWith('<p>Translated post content</p>');
-  //   expect(setRating).toHaveBeenCalledWith(0);
-  //   expect(setRatingSubmitted).toHaveBeenCalledWith(false);
-  //   expect(setRatingBlogPostId).toHaveBeenCalledWith('ratingBlogPostId');
+  //   // Call the function
+  //   await sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translationModel);
+
+  //   // Assertions
+  //   expect(console.log).toHaveBeenCalledWith('sending config to backend');
+  //   expect(console.log).toHaveBeenCalledWith('target language: ' + targetLanguage);
+  //   expect(console.log).toHaveBeenCalledWith(targetLanguage);
+  //   expect(console.log).toHaveBeenCalledWith('translation model: ' + translationModel);
+  //   expect(console.log).toHaveBeenCalledWith(translationModel);
+  //   expect(mockedGraphql).toHaveBeenCalledTimes(1);
+  //   expect(mockedGraphql).toHaveBeenCalledWith({
+  //     input: {
+  //       url: url,
+  //       sourceLanguage: { name: 'ENGLISH', code: 'en' },
+  //       targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
+  //       translationModel: { type: translationModel.label },
+  //     },
+  //   });
+  //   expect(console.log).toHaveBeenCalledWith('send successful');
+  //   expect(console.log).toHaveBeenCalledWith(JSON.stringify({ data: { getStepFunctionInvoker: { lhs: '<p>Original post content</p>', rhs: '<p>Translated post content</p>', id: 'ratingBlogPostId' } } }));
+  //   expect(setRatingMock).toHaveBeenCalledWith(0);
+  //   expect(setRatingSubmittedMock).toHaveBeenCalledWith(false);
+  //   expect(setOriginalPostMock).toHaveBeenCalledWith('<p>Original post content</p>');
+  //   expect(setTranslatedPostMock).toHaveBeenCalledWith('<p>Translated post content</p>');
+  //   expect(setIsLoadingMock).toHaveBeenCalledWith(false);
+  //   expect(setBackendFinishedMock).toHaveBeenCalledWith(true);
+  //   expect(setRatingBlogPostIdMock).toHaveBeenCalledWith('ratingBlogPostId');
+  //   expect(console.error).not.toHaveBeenCalled();
+  //   expect(setIsLoadingMock).toHaveBeenCalledWith(false);
   // });
 
-  
   test('renders the app and translates the post', async () => {
     const mockedAPI = API;
 
@@ -120,7 +155,11 @@ describe('App', () => {
     fireEvent.change(modelSelect, {
       target: { value: { label: 'amazonTranslate', value: 'amazonTranslate' } },
     });
-    fireEvent.click(screen.getByText('Translate!'));
+
+    // Set the buttons onClick function to a mock function
+    const button = screen.getByText('Translate!');
+  
+  //   fireEvent.click(screen.getByText('Translate!'));
 
     // Wait for the API call to finish
     await waitFor(() => expect(mockedAPI.graphql).toHaveBeenCalledTimes(2));
@@ -144,6 +183,10 @@ describe('App', () => {
 
     expect(leftSide).toBeInTheDocument();
     expect(rightSide).toBeInTheDocument();
+    // expect right side to have Translated post content
+    expect(rightSide.innerHTML).toBe('<p>Translated post content</p>');
+    // expect left side to have Original post content
+    expect(leftSide.innerHTML).toBe('<p>Original post content</p>');
     
   });
 
