@@ -107,7 +107,7 @@ export class CdkInitTsStack extends cdk.Stack {
     
     // Define CheckingURLFunction
     const checkingURLFunction = new Function(this, 'CheckingURLFunction', {
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_16_X,
       role: checkingURLRole,
       code: S3Code.fromAsset("../amplify/backend/function/checkingUrl/checking_url.zip"),
       handler: 'index.handler',
