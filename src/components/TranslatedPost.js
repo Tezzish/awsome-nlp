@@ -6,9 +6,8 @@ import RatingStars from "./RatingStars";
 function TranslatedPost({ isLoading, translatedPost, backendFinished, rating, changeRating, highlightedElementIndex, handleHighlight }) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(translatedPost, 'text/html');
-    const elements = doc.querySelectorAll('*');
 
-    const paragraphs = Array.from(elements).filter((element) => element.id);
+    const paragraphs = Array.from(doc.querySelectorAll('[id]')).filter(element => element.id.startsWith('element-'));
 
     return (
         <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>

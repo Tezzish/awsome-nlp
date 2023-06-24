@@ -43,28 +43,6 @@ public class URLResolver {
   }
 
   /**
-   * Parses and returns all text nodes from an element (HTML element).
-   * @param element  HTML element
-   * @return List<String> List of text nodes
-   */
-  public List<String> getTextNodes(Element element) {
-    List<String> texts = new ArrayList<>();
-    for (Node node : element.childNodes()) {
-      if (node instanceof TextNode) {
-        texts.add(((TextNode) node).getWholeText());
-      } else if (node instanceof Element) {
-        Element elemNode = (Element) node;
-        // Skip certain tags like 'code', add more tags as required
-        if (!"code".equals(elemNode.tagName())) {
-          texts.addAll(getTextNodes(elemNode));
-        }
-      }
-    }
-    return texts;
-  }
-
-
-  /**
    * Takes an AWSblogpost HTML Document, scrapes it, and returns a matching
    * Text object.
    *
@@ -73,6 +51,13 @@ public class URLResolver {
    * @throws IOException
    */
   public Text resolveDocument(Document doc) throws IOException {
+    // Get the blog content div
+    Element blogContentDiv = doc.select("div.aws-blog-content").first();
+
+    // Collect text lead nodes
+    List<String> textLeadNodes = new ArrayList<>();
+    collectTextLeadNodes(blogContentDiv, textLeadNodes);
+
     // Get Title from blogpost
     Elements titEles = doc.select("h1");
     String title = "";
@@ -88,15 +73,23 @@ public class URLResolver {
     }
     auths = auths.stream().distinct().collect(Collectors.toList());
 
-    // Get text from blogpost excluding 'code', 'script', etc.
-    Element contentDiv = doc.selectFirst("div.aws-blog-content"); // select the specific div
+    return new Text(Language.ENGLISH, title, auths, textLeadNodes);
+  }
 
-    if (contentDiv == null) {
-      throw new IOException("Unable to find expected content div in HTML document.");
+  /**
+   * Recursively collect text lead nodes from an element.
+   * @param node Node to start from
+   * @param textLeadNodes List to accumulate text lead nodes
+   */
+  private void collectTextLeadNodes(Node node, List<String> textLeadNodes) {
+    if (node instanceof Element) {
+      Element element = (Element) node;
+      if (!element.tagName().equals("code") && element.children().isEmpty() && !element.ownText().isEmpty()) {
+        textLeadNodes.add(element.text());
+      }
+      for (Node child : element.childNodes()) {
+        collectTextLeadNodes(child, textLeadNodes);
+      }
     }
-
-    List<String> content = getTextNodes(contentDiv);
-
-    return new Text(Language.ENGLISH, title, auths, content);
   }
 }

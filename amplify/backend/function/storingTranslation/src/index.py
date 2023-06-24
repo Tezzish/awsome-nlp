@@ -180,12 +180,11 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
 # reconstruct the rhs_html by replacing the lhs_html
 # text elements with the translated text elements
 def replace_text_with_translation(lhs_content, rhs_content):
-
     # Create a copy of lhs to avoid modifying the original data
     rhs = deepcopy(lhs_content)
 
     # Parse the HTML content
-    soup = bs(rhs['file'], 'html.parser')
+    soup = bs.BeautifulSoup(rhs['file'], 'html.parser')
 
     # Get the translated content
     translated_content = rhs_content.get('content', [])
@@ -194,13 +193,16 @@ def replace_text_with_translation(lhs_content, rhs_content):
     content_section = soup.find('div', class_='aws-blog-content')
     if content_section:
         # Iterate over all elements with an id that are not code elements
-        for element in content_section.find_all(lambda tag: tag.get('id') and tag.name != 'code'):
-            id_num = element.get('id').split('-')[1]  # get the number part of the id
-            # Check if we have the corresponding translated content
-            if int(id_num) - 1 < len(translated_content):
-                # Replace the content
-                new_content = bs.NavigableString(translated_content[int(id_num) - 1])
-                element.string.replace_with(new_content)
+        for element in content_section.find_all(
+                lambda tag: tag.get('id') and tag.get('id').startswith('element-translate-') and tag.name != 'code'):
+            id_attr = element.get('id')
+            id_parts = id_attr.split('-')
+            if len(id_parts) == 3 and id_parts[2].isdigit():
+                id_num = int(id_parts[2])
+                if id_num - 1 < len(translated_content) and element.string is not None:
+                    # Replace the content
+                    new_content = bs.NavigableString(translated_content[id_num - 1])
+                    element.string.replace_with(new_content)
 
     # Update the file in rhs
     rhs['file'] = str(soup)

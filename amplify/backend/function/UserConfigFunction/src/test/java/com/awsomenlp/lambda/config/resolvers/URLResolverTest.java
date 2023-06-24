@@ -44,36 +44,33 @@ class URLResolverTest {
     Document mockDocument = mock(Document.class);
     Elements mockTitleElements = mock(Elements.class);
     Element mockTitleElement = mock(Element.class);
-    Element mockContentDiv = mock(Element.class);
 
-    when(mockDocument.selectFirst("div.aws-blog-content")).thenReturn(mockContentDiv);
-
-    Element element = new Element("Tag")
-            .appendText("Test Author");
+    Element element = new Element("Tag").appendText("Test Author");
     Elements elements = new Elements(List.of(element));
+
+    // Mock the div.aws-blog-content and its children
+    Element blogContentDiv = new Element("div").addClass("aws-blog-content");
+    Element paraElement = new Element("p").appendText("Test Paragraph");
+    blogContentDiv.appendChild(paraElement);
 
     when(mockDocument.select("h1")).thenReturn(mockTitleElements);
     when(mockTitleElements.first()).thenReturn(mockTitleElement);
     when(mockTitleElement.text()).thenReturn("Test Title");
 
-    when(mockDocument.select("[property=author] [property=name]"))
-            .thenReturn(elements);
+    when(mockDocument.select("[property=author] [property=name]")).thenReturn(elements);
 
-    URLResolver urlResolverSpy = spy(new URLResolver());
+    // Mock the blog content div
+    when(mockDocument.select("div.aws-blog-content")).thenReturn(new Elements(blogContentDiv));
 
-    // Stub the getTextNodes method
-    doReturn(List.of("Test Paragraph")).when(urlResolverSpy).getTextNodes(any(Element.class));
+    urlResolver = new URLResolver();
 
     // Perform test
-    Text result = urlResolverSpy.resolveDocument(mockDocument);
+    Text result = urlResolver.resolveDocument(mockDocument);
 
     // Assert the result
     assertEquals("Test Title", result.getTitle());
     assertEquals(Arrays.asList(new Author("", "", "Test Author")),
             result.getAuthors());
-    assertEquals(List.of("Test Paragraph"),
-            result.getContent());
+    assertEquals(List.of("Test Paragraph"), result.getContent());
   }
-
-
 }

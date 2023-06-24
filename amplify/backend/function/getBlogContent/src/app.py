@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import bs4 as bs
 import urllib.request
 from urllib.request import urlopen
@@ -70,16 +72,40 @@ def parser(url):
 
     id_counter = [1]  # using list so it's mutable in nested function
 
-    def assign_ids(element):
-        for child in element.children:
-            if isinstance(child, bs.NavigableString):
-                continue
-            if child.name != 'code':
-                child['id'] = f"element-{id_counter[0]}"
-                id_counter[0] += 1
-            assign_ids(child)
+    def assign_numerical_ids(lhs):
+        # Create a copy of lhs to avoid modifying the original data
+        new_lhs = deepcopy(lhs)
 
-    assign_ids(blog_content_div)
+        # Parse the HTML content
+        soup = bs.BeautifulSoup(new_lhs['file'], 'html.parser')
+
+        blog_content_div = soup.find('div', class_='aws-blog-content')
+
+        id_counter = [1]  # using list so it's mutable in nested function
+
+        def is_leaf_node(elem):
+            return not any(isinstance(child, bs.Tag) for child in elem.children)
+
+        def has_text(elem):
+            return elem.string is not None
+
+        def assign_ids(element):
+            for child in element.descendants:
+                if isinstance(child, bs.Tag):
+                    if child.name != 'code' and is_leaf_node(child) and has_text(child):
+                        child['id'] = f"element-translate-{id_counter[0]}"
+                        id_counter[0] += 1
+                    elif is_leaf_node(child):
+                        child['id'] = f"element-{id_counter[0]}"
+                        id_counter[0] += 1
+
+        assign_ids(blog_content_div)
+
+        new_lhs['file'] = blog_content_div.prettify()
+
+        return new_lhs
+
+    assign_numerical_ids(blog_content_div)
 
     return blog_content_div.prettify()
 
