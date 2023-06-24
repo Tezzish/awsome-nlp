@@ -26,7 +26,9 @@ Furthermore, you need to have Java **17** installed and as the active version (r
 
 2. In `exports.ts`, change the `owner` field to your Github name, the `repository` field to the repo name, and the `keyname` to what you stored your AWS secret as (should be **oauthkey**).
 
-3. Run these commands:
+3. Navigate back to the [CDK directory](../cdk-init-ts/)
+
+4. Run these commands:
 
 ```$ ./buildall.sh``` to build all of the Lambda Functions
 **Note** If you are running this on a Unix based based system, there may be an extra carriage return, in the bash scripts, so install the dos2unix tool and then run ```$ ./dos2unix.sh```. It should work afterwards.
