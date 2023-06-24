@@ -3,8 +3,8 @@
  pip3 install --target package -r Requirements.txt
 cp -r src/* package
 cd package
-zip -r get_blog_content.zip .
-mv get_blog_content.zip ../
+zip -r storing_translation.zip .
+mv storing_translation.zip ../
 cd ..
 rm -r package
-\echo "Deployment package get_blog_content.zip has been created"
+\echo "Deployment package storing_translation.zip has been created"
