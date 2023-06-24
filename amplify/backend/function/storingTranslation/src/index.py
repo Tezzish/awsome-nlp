@@ -135,10 +135,47 @@ def get_html(url, sourceLanguage, targetLanguage, translationModel, lambda_name)
         )
         # get the html from the response
         response_json = json.load(response['Payload'])
+        # lhsNew = response_json['title'], response_json['author'], response_json, response_json['file']
+        def assign_numerical_ids(lhs):
+            # Create a copy of lhs to avoid modifying the original data
+            new_lhs = deepcopy(lhs)
 
+            # Parse the HTML content
+            soup = bs.BeautifulSoup(new_lhs['file'], 'html.parser')
+
+            blog_content_div = soup.find('div', class_='aws-blog-content')
+
+            id_counter = [1]  # using list so it's mutable in nested function
+
+            def is_leaf_node(elem):
+                return not any(isinstance(child, bs.Tag) for child in elem.children)
+
+            def has_text(elem):
+                return elem.string is not None
+
+            def assign_ids(element):
+                for child in element.descendants:
+                    if isinstance(child, bs.Tag):
+                        if child.name != 'code' and is_leaf_node(child) and has_text(child):
+                            child['id'] = f"element-translate-{id_counter[0]}"
+                            id_counter[0] += 1
+                        elif is_leaf_node(child):
+                            child['id'] = f"element-{id_counter[0]}"
+                            id_counter[0] += 1
+
+            assign_ids(blog_content_div)
+
+            new_lhs['file'] = blog_content_div.prettify()
+
+            return new_lhs
+
+        new_lhs = assign_numerical_ids(response_json)
+    # return blog_content_div.prettify()
     except Exception as e:
         raise e
-    return response_json['title'], response_json['author'], response_json, response_json['file']
+    # return response_json['title'], response_json['author'], response_json, response_json['file']
+    return new_lhs['title'], new_lhs['author'], new_lhs, new_lhs['file']
+    # return new_lhs['title'], new_lhs['author'], new_lhs, new_lhs['file']
 
 
 def get_translated(url, sourceLanguage, targetLanguage, translationModel):
@@ -182,6 +219,8 @@ def get_translated(url, sourceLanguage, targetLanguage, translationModel):
 def replace_text_with_translation(lhs_content, rhs_content):
     # Create a copy of lhs to avoid modifying the original data
     rhs = deepcopy(lhs_content)
+    lhsNew = deepcopy(lhs_content)
+
 
     # Parse the HTML content
     soup = bs.BeautifulSoup(rhs['file'], 'html.parser')
