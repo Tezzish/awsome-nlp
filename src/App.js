@@ -16,10 +16,7 @@ import URLInput from "./components/URLInput";
 import RatingStars from "./components/RatingStars";
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from './TUpoweredAWS.png';
-export default App;
-export {isValidURL};
 
-export {sendOriginalAndTranslated};
 
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
@@ -69,45 +66,7 @@ function App() {
     setAlertIsVisible(false);
   };
 
-  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
-    try {
-      console.log('sending config to backend');
-      console.log('target language: ' + targetLanguage);
-      console.log(targetLanguage)
-      console.log('translation model: ' + translationModel);
-      console.log(translationModel)
-
-      const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
-        input: {
-          url: url,
-          sourceLanguage: { name: "ENGLISH", code: "en" },
-          targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
-          translationModel: { type: translationModel.label }
-        }
-      }));
-
-      console.log('send successful');
-      console.log(JSON.stringify(output));
-
-      const original = output.data.getStepFunctionInvoker.lhs;
-      const translated = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.id; 
-      console.log(original);
-
-      setRating(0);
-      setRatingSubmitted(false);
-      setOriginalPost(original);
-      setTranslatedPost(translated);
-
-      setIsLoading(false);
-      setBackendFinished(true);
-      setRatingBlogPostId(id);
-    } catch (error) {
-      console.error('Error sending config to backend:', error);
-      setIsLoading(false);
-    }
-  }
-
+  
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
     e.preventDefault();
@@ -156,16 +115,7 @@ function App() {
     }
   };
 
-  //Booleans
-  const isValidURL = (str) => {
-    try {
-      new URL(str);
-      return str.includes("https://aws.amazon.com/blogs/");
-    } catch {
-      return false;
-    }
-  };
-
+  
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
       try {
@@ -269,6 +219,59 @@ function App() {
     </div>
   );
 }
+
+const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+  try {
+    console.log('sending config to backend');
+    console.log('target language: ' + targetLanguage);
+    console.log(targetLanguage)
+    console.log('translation model: ' + translationModel);
+    console.log(translationModel)
+
+    const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
+      input: {
+        url: url,
+        sourceLanguage: { name: "ENGLISH", code: "en" },
+        targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },
+        translationModel: { type: translationModel.label }
+      }
+    }));
+
+    console.log('send successful');
+    console.log(JSON.stringify(output));
+
+    const original = output.data.getStepFunctionInvoker.lhs;
+    const translated = output.data.getStepFunctionInvoker.rhs;
+    const id = output.data.getStepFunctionInvoker.id; 
+    console.log(original);
+
+    setRating(0);
+    setRatingSubmitted(false);
+    setOriginalPost(original);
+    setTranslatedPost(translated);
+
+    setIsLoading(false);
+    setBackendFinished(true);
+    setRatingBlogPostId(id);
+  } catch (error) {
+    console.error('Error sending config to backend:', error);
+    setIsLoading(false);
+  }
+}
+
+//Booleans
+const isValidURL = (str) => {
+  try {
+    new URL(str);
+    return str.includes("https://aws.amazon.com/blogs/");
+  } catch {
+    return false;
+  }
+};
+
+export default App;
+export {isValidURL};
+export {sendOriginalAndTranslated};
 
 
 
