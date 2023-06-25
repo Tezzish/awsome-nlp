@@ -6,7 +6,7 @@ This function uses Python 3.9. It is intended to run using AWS Lambda. The depen
 
 
 ### Testing
-This function is tested using unittest and pytest. 
+This function is tested using pytest. 
 
 #### Deployment
 
