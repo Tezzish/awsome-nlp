@@ -246,8 +246,8 @@ function App() {
     }
   }
 
-  //APP
-  return (
+    //APP
+    return (
       <div className="App">
         <div className="icon-container">
           <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
@@ -255,11 +255,11 @@ function App() {
         <Form>
           <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
           <div className="dropdown-container">
-            <URLInput data-testid='url-input' onChange={handleInputChangeURL} />
-            <LanguageSelect data-testid='select-language' languages={languages} onChange={handleInputChangeLanguage} />
-            <TranslationModelSelect data-testid='translation-model-select' translationModels={translationModels} onChange={handleInputChangeModel} />
+            <URLInput onChange={handleInputChangeURL} />
+            <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
+            <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
             <div>
-              <Button data-testid="translate" id="translate" onClick={handleButtonClick}>Translate!</Button>
+              <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
             </div>
           </div>
         </Form>
