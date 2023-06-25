@@ -19,67 +19,6 @@ sys.path.append(src_dir)
 
 import index
 
-# class TestHandler(TestCase):
-
-#     @mock.patch('index.boto3.client')
-#     @mock.patch('index.boto3.resource')
-#     @mock.patch('index.s3_connection.put_object')
-#     @mock.patch('index.table.get_item')
-#     @mock.patch('index.table.put_item')
-#     @mock.patch('index.lambda_connection.invoke')
-#     @mock.patch('index.get_html')
-#     def test_handler(self, mock_invoke, mock_put_item, mock_get_item, mock_put_object,
-#                      mock_resource, mock_client, mock_get_html):
-#         # Mock the response of get_html
-#         mock_get_html.return_value._1 = 'Mock Title'
-#         mock_get_html.return_value._2 = 'Mock Authors',{'title': 'Mock Title', 'authors': 'Mock Authors', 'file': 'Mock HTML'},'Mock HTML'
-        
-#         # Mock responses and objects
-#         event = {
-#             'url': 'https://example.com',
-#             'sourceLanguage': {'name': 'English', 'code': 'en'},
-#             'targetLanguage': {'name': 'Spanish', 'code': 'es'},
-#             'translationModel': {'type': 'model'}
-#         }
-#         context = None
-#         mock_invoke.return_value = {
-#             'Payload': json.dumps({
-#                 'title': 'Test Title',
-#                 'author': 'Test Author',
-#                 'file': '<html><body>Test Content</body></html>',
-#             })
-#         }
-#         mock_get_item.return_value = {}
-#         mock_resource.return_value.Table.return_value.put_item.return_value = {}
-
-#         # Call the handler function
-#         result = index.handler(event, context)
-#         print(result)
-#         # Assertions
-#         self.assertEqual(result['statusCode'], 200)
-#         self.assertEqual(result['body'], 'great success')
-
-#         # Check the mocked function calls
-#         mock_invoke.assert_called_once_with(
-#             FunctionName='getBlogContent-storagedev',
-#             InvocationType='RequestResponse',
-#             Payload=mock.ANY
-#         )
-#         mock_put_object.assert_called_once_with(
-#             Bucket='translations-aws-blog-posts-bucket',
-#             Key='example.com-lhs.html',
-#             Body=mock.ANY
-#         )
-#         mock_put_item.assert_called_with(
-#             Item={
-#                 'URL': 'example.com',
-#                 'authors': 'Test Author',
-#                 'title': 'Test Title',
-#                 'language': 'en',
-#                 'S3_loc': 'https://s3.amazonaws.com/translations-aws-blog-posts-bucket/example.com-lhs.html'
-#             }
-#         )
-
 @pytest.fixture
 def lhs_content():
     return {

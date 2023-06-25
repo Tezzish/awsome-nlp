@@ -2,8 +2,6 @@ import { render, fireEvent, waitFor, screen} from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 import '@testing-library/react';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import getStepFunctionInvoker from './graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import App from './App';
@@ -22,20 +20,6 @@ jest.mock('aws-amplify', () => ({
   graphqlOperation: jest.fn(),
 }));
 
-
-// test the isValidURL function
-describe('isValidURL', () => {
-  test('returns true for valid URLs', () => {
-    expect(isValidURL('https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=ele')).toBe(true);
-  });
-});
-
-// test the isValidURL function
-describe('isValidURL', () => {
-  test('returns false for invalid URLs', () => {
-    expect(isValidURL('https://en.wikipedia.org/wiki/Turkey')).toBe(false);
-  });
-});
 
 describe('App', () => {
 

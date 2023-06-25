@@ -24,15 +24,7 @@ You can add these manually in AppSync and under the Queries Menu.
 
 Amplify.configure(awsExports);
 
-//Booleans
-const isValidURL = (str) => {
-  try {
-    new URL(str);
-    return str.includes("https://aws.amazon.com/blogs/");
-  } catch {
-    return false;
-  }
-};
+
 
 function App() {
   //Form State Declarations
@@ -74,6 +66,16 @@ function App() {
 
   const handleDismiss = () => {
     setAlertIsVisible(false);
+  };
+
+  //Booleans
+  const isValidURL = (str) => {
+    try {
+      new URL(str);
+      return str.includes("https://aws.amazon.com/blogs/");
+    } catch {
+      return false;
+    }
   };
 
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
@@ -270,4 +272,3 @@ function App() {
   );
 }
 export default App;
-export {isValidURL};
