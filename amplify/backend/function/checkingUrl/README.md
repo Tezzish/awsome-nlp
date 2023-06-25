@@ -6,7 +6,7 @@ This directory contains the service that is responsible for checking if the AWS 
 This function uses Node.js 18. It is intended to run using AWS Lambda. The dependencies used by this function are installed in a packages directory and uploaded as a Lambda layer: aws-sdk. 
 
 ### Testing
-ADD LATER ON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Jest was used to test the functionality by running the command ```$ npm test```
 
 #### Deployment
 
