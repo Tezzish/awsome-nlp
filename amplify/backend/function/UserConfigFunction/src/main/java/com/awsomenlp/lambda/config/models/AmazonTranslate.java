@@ -57,11 +57,6 @@ public class AmazonTranslate extends TranslationModel {
   }
 
 
-  //  TODO ADD CREDENTIALS
-  //  TODO ADD REGION
-  //  TODO ADD CUSTOM TERMS (SUPPORTED)
-  //  TODO ADD TRANSLATING AUTHOR TITLE
-
   /**
    * @param text
    * @return Translated text or partially translated text if it was
@@ -77,7 +72,7 @@ public class AmazonTranslate extends TranslationModel {
     //get each item in the content and translate individually
     List<Future<TranslateTextResult>> resultList = new ArrayList<>();
     for (String paragraph
-        :text.getContent()) {
+        : text.getContent()) {
       request = new TranslateTextRequest()
           .withSourceLanguageCode(sourceLanguage.getCode())
           .withTargetLanguageCode(targetLanguage.getCode());
@@ -92,35 +87,35 @@ public class AmazonTranslate extends TranslationModel {
     Future<TranslateTextResult> translatedTitle = translateAsync
         .translateTextAsync(request.withText(text.getTitle()));
 
-    //translates everything paragraph by paragraph
-    return getTranslatedText(targetLanguage, resultList, translatedTitle,
-        text);
+    //translates everything paragraph by paragraph. if it cannot translate
+    //everything, it translates nothing.
+    try {
+      return getTranslatedText(targetLanguage, resultList, translatedTitle,
+          text);
+    } catch (ExecutionException e) {
+      System.out.println("ExecutionException");
+    } catch (InterruptedException e) {
+      System.out.println("InterruptedException");
+    }
+
+    return text;
   }
 
-  private Text getTranslatedText(Language targetLanguage,
-                                 List<Future<TranslateTextResult>> resultList,
-                                 Future<TranslateTextResult> translatedTitle,
-                                 Text text) {
+  protected Text getTranslatedText(Language targetLanguage,
+                                   List<Future<TranslateTextResult>> resultList,
+                                   Future<TranslateTextResult> translatedTitle,
+                                   Text text)
+      throws ExecutionException, InterruptedException {
+
     List<String> translatedParagraphs = new ArrayList<>();
+
     //translate the body
-    resultList.forEach(x -> {
-      try {
-        translatedParagraphs.add(x.get().getTranslatedText());
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      } catch (ExecutionException e) {
-        e.printStackTrace();
-      }
-    });
+    for (Future<TranslateTextResult> result : resultList) {
+      translatedParagraphs.add(result.get().getTranslatedText());
+    }
 
     //translate the title
-    try {
-      text.setTitle(translatedTitle.get().getTranslatedText());
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } catch (ExecutionException e) {
-      e.printStackTrace();
-    }
+    text.setTitle(translatedTitle.get().getTranslatedText());
 
     text.setContent(translatedParagraphs);
     text.setLanguage(targetLanguage);
