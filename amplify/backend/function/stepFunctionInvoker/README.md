@@ -3,7 +3,7 @@
 This directory contains the service that is responsible for invoking the step function with the respective ARN which creates the workflow of the whole application. 
 
 ## Tech Specs
-This function uses Python 3.9. It is intended to run using AWS Lambda. This function uses the dependencies: os, boto3, json, time to interact with AWS services and the operating system. 
+This function uses Python 3.9. It is intended to run using AWS Lambda. This function uses the dependencies: os, boto3, json, and time to interact with AWS services and the operating system. 
 
 ### Testing
 This function is tested using unittest pytest. 
