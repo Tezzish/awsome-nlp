@@ -18,13 +18,13 @@ import ClipLoader from "react-spinners/ClipLoader";
 import logo from './TUpoweredAWS.png';
 
 
-
 /*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
 You can add these manually in AppSync and under the Queries Menu.
  */
 
 Amplify.configure(awsExports);
 
+//Booleans
 const isValidURL = (str) => {
   try {
     new URL(str);
@@ -33,7 +33,6 @@ const isValidURL = (str) => {
     return false;
   }
 };
-
 
 function App() {
   //Form State Declarations
@@ -77,8 +76,6 @@ function App() {
     setAlertIsVisible(false);
   };
 
-  
-
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend');
@@ -86,7 +83,7 @@ function App() {
       console.log(targetLanguage)
       console.log('translation model: ' + translationModel);
       console.log(translationModel)
-  
+
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
@@ -95,22 +92,20 @@ function App() {
           translationModel: { type: translationModel.label }
         }
       }));
-  
+
       console.log('send successful');
       console.log(JSON.stringify(output));
-  
+
       const original = output.data.getStepFunctionInvoker.lhs;
       const translated = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.id; 
+      const id = output.data.getStepFunctionInvoker.id;
       console.log(original);
-      console.log(translated);
-      console.log(id);
-  
+
       setRating(0);
       setRatingSubmitted(false);
       setOriginalPost(original);
       setTranslatedPost(translated);
-  
+
       setIsLoading(false);
       setBackendFinished(true);
       setRatingBlogPostId(id);
@@ -120,7 +115,6 @@ function App() {
     }
   }
 
-  
   //TODO: Currently we are displaying the same values for the left and right iframes
   const handleButtonClick = (e) => {
     e.preventDefault();
@@ -170,6 +164,7 @@ function App() {
   };
 
   
+
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
       try {
@@ -188,6 +183,7 @@ function App() {
 
     fetchLanguagesAndModels();
   }, []);
+
 
 
   //Rating Functions
@@ -231,9 +227,6 @@ function App() {
     }
   }
 
-  
-  
-
   //APP
   return (
     <div className="App">
@@ -243,11 +236,11 @@ function App() {
       <Form>
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
         <div className="dropdown-container">
-          <URLInput id="url-input" onChange={handleInputChangeURL} />
-          <LanguageSelect id="language-select" languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect id="model-select" translationModels={translationModels} onChange={handleInputChangeModel} />
+          <URLInput data-testid='url-input' onChange={handleInputChangeURL} />
+          <LanguageSelect data-testid='select-language' languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect data-testid='translation-model-select' translationModels={translationModels} onChange={handleInputChangeModel} />
           <div>
-            <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
+            <Button data-testid="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
         </div>
       </Form>
@@ -256,7 +249,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" id="leftSide"className="left-side-content">
+              <TextContent variant="div" id='leftSide' className="left-side-content">
                 <div dangerouslySetInnerHTML={{ __html: originalPost }} />
               </TextContent>
           )}
@@ -266,7 +259,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" id="rightSide" className="right-content">
+              <TextContent variant="div" id='rightSide' className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
                 <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
               </TextContent>
@@ -276,16 +269,5 @@ function App() {
     </div>
   );
 }
-
-
-
 export default App;
 export {isValidURL};
-
-
-
-
-
-
-
-
