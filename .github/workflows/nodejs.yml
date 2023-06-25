@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 16.x]
-        directory: ['./amplify/backend/function/checkingUrl/', ./src/]
+        directory: [ './src/']
 
     steps:
       - uses: actions/checkout@v3
