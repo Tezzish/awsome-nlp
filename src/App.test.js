@@ -1,11 +1,14 @@
 import { render, fireEvent, waitFor, screen} from '@testing-library/react';
 import React from 'react';
-import {App, sendOriginalAndTranslated} from './App';
 import '@testing-library/jest-dom';
 import '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import getStepFunctionInvoker from './graphql/queries';
+import { API, graphqlOperation } from 'aws-amplify';
+import App from './App';
+import {isValidURL} from './App';
+
 import LanguageSelect from './components/LanguageSelect';
 
 // Mocks for AWS Amplify API and graphqlOperation
@@ -18,6 +21,21 @@ jest.mock('aws-amplify', () => ({
   },
   graphqlOperation: jest.fn(),
 }));
+
+
+// test the isValidURL function
+describe('isValidURL', () => {
+  test('returns true for valid URLs', () => {
+    expect(isValidURL('https://aws.amazon.com/blogs/aws/learn-how-to-streamline-and-secure-your-saas-applications-at-aws-applications-innovation-day/?trk=b34102c3-e32b-4e8b-8ff6-a5c374bbc252&sc_channel=ele')).toBe(true);
+  });
+});
+
+// test the isValidURL function
+describe('isValidURL', () => {
+  test('returns false for invalid URLs', () => {
+    expect(isValidURL('https://en.wikipedia.org/wiki/Turkey')).toBe(false);
+  });
+});
 
 describe('App', () => {
 
@@ -47,28 +65,7 @@ describe('App', () => {
     await waitFor(() => screen.getByText('Incorrect Link'));
   });
 
-  // mock the getStepFunctionInvoker query which receives url: url, sourceLanguage: { name: "ENGLISH", code: "en" }, targetLanguage: { name: targetLanguage.label, code: targetLanguage.value },translationModel: { type: translationModel.label } to return a mock response
-   test('clicking button with valid data given', async () => {
-
-    const App = new App();
-    const mockStepFunctionInvoker = jest.spyOn(App, 'sendOriginalAndTranslated').mockImplementation(() => Promise.resolve({ 
-      data: { getStepFunctionInvoker: 
-        { 
-        lhs: "original", 
-        rhs: "translated", 
-        id: "id" 
-        } 
-      } 
-    })
-    );
-
-    // Clicking the button without any data should call alert with 'Incorrect Link' error
-    fireEvent.click(screen.getByText('Translate!'));
-    await waitFor(() => screen.getByText('Incorrect Link'));
-
-
-    
-  });
+ 
 });
   
 

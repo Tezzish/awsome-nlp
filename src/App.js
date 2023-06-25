@@ -24,6 +24,16 @@ You can add these manually in AppSync and under the Queries Menu.
 
 Amplify.configure(awsExports);
 
+//Booleans
+const isValidURL = (str) => {
+  try {
+    new URL(str);
+    return str.includes("https://aws.amazon.com/blogs/");
+  } catch {
+    return false;
+  }
+};
+
 function App() {
   //Form State Declarations
   const [languages, setLanguages] = useState([]);
@@ -50,23 +60,23 @@ function App() {
   const [translatedPost, setTranslatedPost] = useState(null);
 
   //Handlers
-  export const handleInputChangeURL = (newValue) => {
+  const handleInputChangeURL = (newValue) => {
     setURLValue(newValue);
   };
 
-  export const handleInputChangeLanguage = (selectedOption) => {
+  const handleInputChangeLanguage = (selectedOption) => {
     setSelectedLanguage(selectedOption);
   };
 
-  export const handleInputChangeModel = (selectedOption) => {
+  const handleInputChangeModel = (selectedOption) => {
     setSelectedModel(selectedOption);
   };
 
-  export const handleDismiss = () => {
+  const handleDismiss = () => {
     setAlertIsVisible(false);
   };
 
-  export const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
+  const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
       console.log('sending config to backend');
       console.log('target language: ' + targetLanguage);
@@ -88,7 +98,7 @@ function App() {
 
       const original = output.data.getStepFunctionInvoker.lhs;
       const translated = output.data.getStepFunctionInvoker.rhs;
-      const id = output.data.getStepFunctionInvoker.id; 
+      const id = output.data.getStepFunctionInvoker.id;
       console.log(original);
 
       setRating(0);
@@ -106,7 +116,7 @@ function App() {
   }
 
   //TODO: Currently we are displaying the same values for the left and right iframes
-  export const handleButtonClick = (e) => {
+  const handleButtonClick = (e) => {
     e.preventDefault();
     console.log("Button Clicked");
     const url = URLValue;
@@ -153,15 +163,7 @@ function App() {
     }
   };
 
-  //Booleans
-  export const isValidURL = (str) => {
-    try {
-      new URL(str);
-      return str.includes("https://aws.amazon.com/blogs/");
-    } catch {
-      return false;
-    }
-  };
+  
 
   useEffect(() => {
     const fetchLanguagesAndModels = async () => {
@@ -183,8 +185,9 @@ function App() {
   }, []);
 
 
+
   //Rating Functions
-  export const changeRating = async (newRating, name) => {
+  const changeRating = async (newRating, name) => {
     setRating(newRating);
     if (!ratingSubmitted) {
       createRatingFunc(newRating, ratingBlogPostId);
@@ -194,7 +197,7 @@ function App() {
     }
   };
 
-  export async function createRatingFunc(star, ratingBlogPostId) {
+  async function createRatingFunc(star, ratingBlogPostId) {
     try {
       const output = await API.graphql(graphqlOperation(createRating, {
         input: {
@@ -209,7 +212,7 @@ function App() {
     }
   }
 
-  export async function mutateRatingFunc(star) {
+  async function mutateRatingFunc(star) {
     try {
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
@@ -233,11 +236,11 @@ function App() {
       <Form>
         <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
         <div className="dropdown-container">
-          <URLInput onChange={handleInputChangeURL} />
-          <LanguageSelect data-testid="language-select" languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect data-testid="model-select" translationModels={translationModels} onChange={handleInputChangeModel} />
+          <URLInput data-testid='url-input' onChange={handleInputChangeURL} />
+          <LanguageSelect data-testid='select-language' languages={languages} onChange={handleInputChangeLanguage} />
+          <TranslationModelSelect data-testid='translation-model-select' translationModels={translationModels} onChange={handleInputChangeModel} />
           <div>
-            <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
+            <Button data-testid="translate" onClick={handleButtonClick}>Translate!</Button>
           </div>
         </div>
       </Form>
@@ -246,7 +249,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="left-side-content">
+              <TextContent variant="div" id='leftSide' className="left-side-content">
                 <div dangerouslySetInnerHTML={{ __html: originalPost }} />
               </TextContent>
           )}
@@ -256,7 +259,7 @@ function App() {
           {isLoading ? (
               <ClipLoader color="#000000" loading={isLoading} size={50} />
           ) : (
-              <TextContent variant="div" className="right-content">
+              <TextContent variant="div" id='rightSide' className="right-content">
                 {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
                 <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
               </TextContent>
@@ -267,5 +270,4 @@ function App() {
   );
 }
 export default App;
-
-
+export {isValidURL};
