@@ -65,7 +65,7 @@ public class URLResolver {
     auths = auths.stream().distinct().collect(Collectors.toList());
 
     //get headers and paragraphs from blogpost
-    Elements paraEles = doc.select("p, h2, li");
+    Elements paraEles = doc.select("p, h2");
     List<String> paragraphs = new ArrayList<>();
     for (Element ele : paraEles) {
       paragraphs.add(ele.text());

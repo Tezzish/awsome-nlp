@@ -1,6 +1,7 @@
 import json
 import boto3
 import time
+import os
 
 client = boto3.client('stepfunctions')
 
@@ -10,7 +11,7 @@ def handler(event, context):
     try:
         # Invoke Step Function state machine with the correct ARN
         response = client.start_execution(
-            stateMachineArn='arn:aws:states:eu-west-1:184473660456:stateMachine:applicationWorkflow',
+            stateMachineArn= os.getenv('STEP_FUNCTION_ARN'),
             input=json.dumps({
                 'url': event['arguments']['input']['url'],
                 'targetLanguage': event['arguments']['input']['targetLanguage'],
