@@ -246,22 +246,22 @@ function App() {
     }
   }
 
-  //APP
-  return (
-    <div className="App">
-      <div className="icon-container">
-        <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
-      </div>
-      <Form>
-        <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
-        <div className="dropdown-container">
-          <URLInput onChange={handleInputChangeURL} />
-          <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
-          <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
-          <div>
-            <Button onClick={handleButtonClick}>Translate!</Button>
-          </div>
+    //APP
+    return (
+      <div className="App">
+        <div className="icon-container">
+          <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
         </div>
+        <Form>
+          <Alert isVisible={alertIsVisible} handleDismiss={handleDismiss} header={alertHeader} content={alertContent} />
+          <div className="dropdown-container">
+            <URLInput onChange={handleInputChangeURL} />
+            <LanguageSelect languages={languages} onChange={handleInputChangeLanguage} />
+            <TranslationModelSelect translationModels={translationModels} onChange={handleInputChangeModel} />
+            <div>
+              <Button id="translate" onClick={handleButtonClick}>Translate!</Button>
+            </div>
+          </div>
         </Form>
         <Box className="content-container">
           <OriginalPost isLoading={isLoading} originalPost={originalPost} />
