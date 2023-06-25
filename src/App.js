@@ -1,39 +1,33 @@
+// Import all required libraries
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import { API, graphqlOperation } from 'aws-amplify';
 import {Amplify} from "aws-amplify";
 import awsExports from './aws-exports';
 import { listLanguages, listTranslationModels, getStepFunctionInvoker } from "./graphql/queries";
 import { createRating, updateRating } from "./graphql/mutations";
-import "@cloudscape-design/global-styles/index.css"
-import Button from "@cloudscape-design/components/button"
-import {Box, Form} from "@cloudscape-design/components";
-import Alert from "./components/Alert"
-import TextContent from "@cloudscape-design/components/text-content";
+
+// Import all required CSS styles
+import "./App.css";
+import "@cloudscape-design/global-styles/index.css";
+
+// Import all required components
+import { Box, Form, Button} from "@cloudscape-design/components";
+import Alert from "./components/Alert";
 import LanguageSelect from './components/LanguageSelect';
 import TranslationModelSelect from './components/TranslationModelSelect';
 import URLInput from "./components/URLInput";
-import RatingStars from "./components/RatingStars";
-import ClipLoader from "react-spinners/ClipLoader";
+import OriginalPost from "./components/OriginalPost";
+import TranslatedPost from "./components/TranslatedPost";
+import {defaultOriginalHTML} from "./components/defaultOriginalHTML";
+import {defaultTranslatedHTML} from "./components/defaultTranslatedHTML";
+
+// Importing logo image
 import logo from './TUpoweredAWS.png';
 
 
-/*NOTE: you may have noticed that there appears to be no languages or models for you to select. These must be added manually.
-You can add these manually in AppSync and under the Queries Menu.
- */
-
 Amplify.configure(awsExports);
 
-//Booleans
-const isValidURL = (str) => {
-  try {
-    new URL(str);
-    return str.includes("https://aws.amazon.com/blogs/");
-  } catch {
-    return false;
-  }
-};
-
+// Application component
 function App() {
   //Form State Declarations
   const [languages, setLanguages] = useState([]);
@@ -56,10 +50,10 @@ function App() {
   //Content State Declarations
   const [backendFinished, setBackendFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [originalPost, setOriginalPost] = useState(null);
-  const [translatedPost, setTranslatedPost] = useState(null);
+  const [originalPost, setOriginalPost] = useState(defaultOriginalHTML);
+  const [translatedPost, setTranslatedPost] = useState(defaultTranslatedHTML);
 
-  //Handlers
+  //On Change Handlers
   const handleInputChangeURL = (newValue) => {
     setURLValue(newValue);
   };
@@ -72,18 +66,97 @@ function App() {
     setSelectedModel(selectedOption);
   };
 
+  // Alert dismissal handler
   const handleDismiss = () => {
     setAlertIsVisible(false);
   };
 
+  // Main translation action trigger on button click
+  const handleButtonClick = (e) => {
+    //Inform user that translation is in progress and prevent default action (page reload)
+    e.preventDefault();
+    console.log("Button Clicked");
+
+    //set url, land, and translator to user values
+    const url = URLValue;
+    const sourceLanguage = { name: "ENGLISH", code: "en" };
+    const targetLanguage = selectedLanguage;
+    const translator = selectedModel;
+
+    //set loading and alert states
+    setIsLoading(true);
+    setAlertIsVisible(false)
+
+    //Check if all fields are filled
+    //Check if URL is valid
+    if (!isValidURL(url)) {
+      console.log("invalid url")
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Incorrect Link</React.Fragment>);
+      setAlertContent("The link you placed appears to be incorrect. Please make sure that this URL is reachable and directs to an AWS Blogpost (https://aws.amazon.com/blogs/...).");
+      setIsLoading(false);
+    }
+    //check if a language is selected
+    else if (targetLanguage === null) {
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Language Not Selected</React.Fragment>);
+      setAlertContent("Please select a language for the translation.");
+      setIsLoading(false);
+    }
+    //check if a translation model is selected
+    else if (translator === null) {
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Translation Model Not Selected</React.Fragment>);
+      setAlertContent("Please select a translation model.");
+      setIsLoading(false);
+    }
+    else {
+      //if all fields are filled, try translation
+      sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
+    }
+  };
+
+  //Booleans
+  //checks if a string is a valid URL and if it is an AWS blog post
+  const isValidURL = (str) => {
+    try {
+      new URL(str);
+      return str.includes("https://aws.amazon.com/blogs/");
+    } catch {
+      return false;
+    }
+  };
+
+  //API communication
+  //fetches languages and translation models from the backend
+  useEffect(() => {
+    const fetchLanguagesAndModels = async () => {
+      try {
+        // fetch languages and models from backend
+        const languagesData = await API.graphql(graphqlOperation(listLanguages));
+        const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
+
+        // log languages and models to console
+        console.log("Fetched languages: ", languagesData);
+        console.log("Fetched models: ", modelsData);
+
+        // set languages and models in state
+        setLanguages(languagesData.data.listLanguages.items);
+        setTranslationModels(modelsData.data.listTranslationModels.items);
+      } catch (error) {
+        // log error to console in case of failure
+        console.log('Error fetching languages and models:', error);
+      }
+    };
+
+    // call fetchLanguagesAndModels function
+    fetchLanguagesAndModels();
+  }, []);
+
+  // Communicate with backend to get original and translated posts
   const sendOriginalAndTranslated = async (url, sourceLanguage, targetLanguage, translationModel) => {
     try {
-      console.log('sending config to backend');
-      console.log('target language: ' + targetLanguage);
-      console.log(targetLanguage)
-      console.log('translation model: ' + translationModel);
-      console.log(translationModel)
-
+      // get original and translated posts from backend
       const output = await API.graphql(graphqlOperation(getStepFunctionInvoker, {
         input: {
           url: url,
@@ -93,114 +166,56 @@ function App() {
         }
       }));
 
-      console.log('send successful');
-      console.log(JSON.stringify(output));
-
+      // Set original and translated posts
       const original = output.data.getStepFunctionInvoker.lhs;
       const translated = output.data.getStepFunctionInvoker.rhs;
       const id = output.data.getStepFunctionInvoker.id;
-      console.log(original);
 
-      setRating(0);
-      setRatingSubmitted(false);
+      // Set original and translated posts
       setOriginalPost(original);
       setTranslatedPost(translated);
 
+      // Set rating and loading states
+      setRating(0);
+      setRatingSubmitted(false);
       setIsLoading(false);
       setBackendFinished(true);
       setRatingBlogPostId(id);
+
     } catch (error) {
+      // Log error and set loading state
       console.error('Error sending config to backend:', error);
+      console.log("Error:", error);
       setIsLoading(false);
+      setAlertIsVisible(true);
+      setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
+      setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
     }
   }
 
-  //TODO: Currently we are displaying the same values for the left and right iframes
-  const handleButtonClick = (e) => {
-    e.preventDefault();
-    console.log("Button Clicked");
-    const url = URLValue;
-    const sourceLanguage = { name: "ENGLISH", code: "en" };
-    const targetLanguage = selectedLanguage;
-    const translator = selectedModel;
-
-    setIsLoading(true);
-    setAlertIsVisible(false)
-
-    if (!isValidURL(url)) {
-      console.log("invalid url")
-      setAlertIsVisible(true);
-      setAlertHeader(<React.Fragment>Incorrect Link</React.Fragment>);
-      setAlertContent("The link you placed appears to be incorrect. Please make sure that this URL is reachable and directs to an AWS Blogpost (https://aws.amazon.com/blogs/...).");
-      setIsLoading(false);
-    }
-    else if (targetLanguage === null) {
-      setAlertIsVisible(true);
-      setAlertHeader(<React.Fragment>Language Not Selected</React.Fragment>);
-      setAlertContent("Please select a language for the translation.");
-      setIsLoading(false);
-    }
-    else if (translator === null) {
-      setAlertIsVisible(true);
-      setAlertHeader(<React.Fragment>Translation Model Not Selected</React.Fragment>);
-      setAlertContent("Please select a translation model.");
-      setIsLoading(false);
-    }
-    else {
-      try {
-        // send to backend
-        // sendOriginalToBackend(url);
-        // sendConfigToBackend(url, lang, translator)
-        // calls the function to trigger step function
-        sendOriginalAndTranslated(url, sourceLanguage, targetLanguage, translator)
-      } catch (error) {
-        console.log("Error:", error);
-        setIsLoading(false);
-        setAlertIsVisible(true);
-        setAlertHeader(<React.Fragment>Failed to Reach Server</React.Fragment>);
-        setAlertContent("Failed to reach the server. Please ensure you have put in a proper URL. Try again after a few seconds");
-      }
-    }
-  };
-
-  
-
-  useEffect(() => {
-    const fetchLanguagesAndModels = async () => {
-      try {
-        const languagesData = await API.graphql(graphqlOperation(listLanguages));
-        const modelsData = await API.graphql(graphqlOperation(listTranslationModels));
-
-        console.log("Fetched languages: ", languagesData);
-        console.log("Fetched models: ", modelsData);
-
-        setLanguages(languagesData.data.listLanguages.items);
-        setTranslationModels(modelsData.data.listTranslationModels.items);
-      } catch (error) {
-        console.log('Error fetching languages and models:', error);
-      }
-    };
-
-    fetchLanguagesAndModels();
-  }, []);
-
-
 
   //Rating Functions
-  const changeRating = async (newRating, name) => {
+  //changes the rating of the blog post
+  const changeRating = async (newRating) => {
     setRating(newRating);
+    //check if rating has been submitted before
     if (!ratingSubmitted) {
+      //create rating
       createRatingFunc(newRating, ratingBlogPostId);
       setRatingSubmitted(true);
     } else {
+      //update rating
       mutateRatingFunc(newRating);
     }
   };
 
+  //creates a rating for the blog post
   async function createRatingFunc(star, ratingBlogPostId) {
     try {
+      //create rating
       const output = await API.graphql(graphqlOperation(createRating, {
         input: {
+          id: ratingId,
           ratingBlogPostId: ratingBlogPostId,
           stars: star
         }
@@ -208,12 +223,15 @@ function App() {
       setRatingId(output.data.createRating.id)
       console.log(output.data.createRating);
     } catch (error) {
+      // log error to console in case of failure
       console.log("Rating not created:", error)
     }
   }
 
+  //updates the rating of the blog post
   async function mutateRatingFunc(star) {
     try {
+      //update rating
       const output = await API.graphql(graphqlOperation(updateRating, {
         input: {
           id: ratingId,
@@ -223,6 +241,7 @@ function App() {
       }));
       console.log(output);
     } catch (error) {
+      // log error to console in case of failure
       console.log("Rating not updated:", error)
     }
   }
@@ -243,31 +262,13 @@ function App() {
             <Button onClick={handleButtonClick}>Translate!</Button>
           </div>
         </div>
-      </Form>
-      <Box className="content-container">
-        <Box variant="div" className={`left-side ${isLoading ? 'loading' : ''}`}>
-          {isLoading ? (
-              <ClipLoader color="#000000" loading={isLoading} size={50} />
-          ) : (
-              <TextContent variant="div" id='leftSide' className="left-side-content">
-                <div dangerouslySetInnerHTML={{ __html: originalPost }} />
-              </TextContent>
-          )}
+        </Form>
+        <Box className="content-container">
+          <OriginalPost isLoading={isLoading} originalPost={originalPost} />
+          <div className="vertical-divider"></div>
+          <TranslatedPost isLoading={isLoading} translatedPost={translatedPost} backendFinished={backendFinished} rating={rating} changeRating={changeRating} />
         </Box>
-        <div className="vertical-divider"></div>
-        <Box variant="div" className={`right-side ${isLoading ? 'loading' : ''}`}>
-          {isLoading ? (
-              <ClipLoader color="#000000" loading={isLoading} size={50} />
-          ) : (
-              <TextContent variant="div" id='rightSide' className="right-content">
-                {backendFinished && <RatingStars rating={rating} changeRating={changeRating} />}
-                <div dangerouslySetInnerHTML={{ __html: translatedPost }} />
-              </TextContent>
-          )}
-        </Box>
-      </Box>
-    </div>
+      </div>
   );
 }
 export default App;
-export {isValidURL};

@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class AppSyncResolver {
 
   /**
-   * This function turns the specific JsonNode, formatted like how it came
+   * This function turns the specific JsonNode, in the way it arrived
    * from AppSync into a proper Config object.
    *
    * @param input

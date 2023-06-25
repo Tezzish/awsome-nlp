@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 16.x]
-        directory: ['./amplify/backend/function/checkingUrl/']
+        directory: ['./amplify/backend/function/checkingUrl/', ./src/App.test.js]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        working-directory: ${{ matrix.directory }}
+        # working-directory: ${{ matrix.directory }}
         run: |
           npm install
       - name: Run tests

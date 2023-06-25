@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from "@cloudscape-design/components/select";
 
+// This component is used to display a translation model select so the user can select a translation model
 const TranslationModelSelect = ({ translationModels, onChange }) => {
     const options = translationModels.map(model => ({
         label: model.name,
