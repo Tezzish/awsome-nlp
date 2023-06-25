@@ -16,7 +16,14 @@ amplify/backend/function/UserConfigFunction/dist/latest-build.zip
 amplify/team-provider-info.json
 amplify/backend/awscloudformation/build/
 amplify/backend/function/UserConfigFunction/.gradle
-amplify/backend/amplify-meta.json
+# amplify/backend/amplify-meta.json
+
+
+amplify/backend/function/getBlogContent/test/__pycache__/
+amplify/backend/function/stepFunctionInvoker/test/__pycache__/
+amplify/backend/function/storingTranslation/test/__pycache__/
+amplify/backend/function/storingTranslation/src/__pycache__/
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -41,3 +48,26 @@ amplifytools.xcconfig
 
 
 amplify/backend/function/getBlogContent/test/__pycache__/
+amplify/backend/function/UserConfigFunction/out/
+amplify/\#current-cloud-backend
+amplify/.config/local-*
+amplify/mock-data
+amplify/backend/amplify-meta.json
+amplify/backend/awscloudformation
+build/
+dist/
+node_modules/
+aws-exports.js
+awsconfiguration.json
+amplifyconfiguration.json
+amplify-build-config.json
+amplify-gradle-config.json
+amplifytools.xcconfig
+_pycache_
+amplify/backend/function/getBlogContent/package/
+amplify/backend/function/stepFunctionInvoker/package/event.json
+amplify/backend/function/stepFunctionInvoker/package/
+amplify/backend/function/storingTranslation/package/
+amplify/backend/function/storingTranslation/storing_translation.zip
+amplify/backend/function/getBlogContent/get_blog_content.zip
+amplify/backend/function/stepFunctionInvoker/step_function_invoker.zip

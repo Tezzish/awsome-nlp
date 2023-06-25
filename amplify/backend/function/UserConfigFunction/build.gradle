@@ -43,6 +43,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 // https://mvnrepository.com/artifact/software.amazon.awssdk/aws-core
     implementation 'software.amazon.awssdk:aws-core:2.20.62'
+    implementation 'software.amazon.awssdk:core:2.16.30'
+    implementation 'software.amazon.awssdk:apigateway:2.16.30'
 // https://mvnrepository.com/artifact/software.amazon.awssdk/translate
     implementation 'software.amazon.awssdk:translate:2.20.62'
 
@@ -77,7 +79,7 @@ task buildZip(type: Zip) {
     into('lib') {
         from configurations.runtimeClasspath
     }
-    archiveFileName = 'latest_build.zip'
+    archiveFileName = 'user_config_latest.zip'
 }
 
 test {

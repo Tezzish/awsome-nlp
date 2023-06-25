@@ -1,51 +1,70 @@
-import json
 import bs4 as bs
+import urllib.request
 from urllib.request import urlopen
 
+
 def handler(event, context):
-  # url = event['arguments']['url']
-  print('received event:')
-  print(event)
-  print(event['arguments'])
-  response = parser(event['arguments']['url'])
-#   print(parser(event['url']))
-  # body = parser(event['url'])
 
-  return {
-      'statusCode': 200,
-      'headers': {
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-      },
-      'file' : response
-  }
+    blogUrl = event['url']
 
-# # function called when the url is passed to the lambda function
-def parser(url):
+    response = urllib.request.urlopen(blogUrl)
+    if response.status != 404:
+        # if page exists, and has correct response continue
+        print("Page exists")
+    else:
+        # if page doesn't exist
+        return False
 
-    # gets the html from the website
+    # html content of the blog post
+    postReturned = parser(blogUrl)
+    # title of the blog post
+    postTitle = getTitle(blogUrl)
+    # author(s) of the blog post
+    postAuthors = getAuthorNames(blogUrl)
+
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'file': postReturned,
+        'title': postTitle,
+        'author': postAuthors
+    }
+
+
+# this function retrieves the title of the blog post
+def getTitle(url):
     html = urlopen(url).read()
-    # print(html)
-
     soup = bs.BeautifulSoup(html, 'html.parser')
-    title = soup.find('h1', class_='lb-h2 blog-post-title')
-    content = soup.find('section', class_='blog-post-content lb-rtxt')
-    paragraphs = soup.find_all('p')
-    paragraphList = []
-    for i in paragraphs:
-        paragraphList.append(str(i))
-    # print(title.text + content.text + '\n'.join(paragraphList))
-    beginning = '''<!DOCTYPE html>
-                  <html>
-                  <head>
-                  </head>
-                  <body>
-                  '''
+    # check if there is a title
+    title_element = soup.find('h1', class_='lb-h2 blog-post-title')
+    if title_element:
+        title = title_element.text.strip()
+    else:
+        title = None
+    return title
 
-    return (beginning + str(title) + str(content) + '\n'.join(paragraphList) + '</body></html>')
-    
-    
-    
-# parser("https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el")
-# print(handler({'arguments': {'url': 'https://aws.amazon.com/blogs/aws/new-amazon-aurora-i-o-optimized-cluster-configuration-with-up-to-40-cost-savings-for-i-o-intensive-applications/?trk=f06df17d-71cb-481d-b7b8-8dd14f9b578c&sc_channel=el'}}, 1))
+
+# this function retrieves the authors of the blog post
+def getAuthorNames(url):
+    html = urlopen(url).read()
+    soup = bs.BeautifulSoup(html, 'html.parser')
+    # check if there are multiple authors
+    author_elements = soup.find_all('span', attrs={'property': 'author'})
+    author_names = []
+    for author_element in author_elements:
+        name_element = author_element.find('span', attrs={'property': 'name'})
+        if name_element:
+            author_names.append(name_element.text.strip())
+    return author_names
+
+
+# this function retrieves the content of the blog post
+def parser(url):
+    html = urlopen(url).read()
+    soup = bs.BeautifulSoup(html, 'html.parser')
+    blog_content = soup.find('div', class_='aws-blog-content').prettify()
+    return blog_content
