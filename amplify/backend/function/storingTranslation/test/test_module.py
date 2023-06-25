@@ -5,10 +5,10 @@ from unittest import mock, TestCase
 import boto3
 import os
 import sys
-from moto import mock_s3, mock_dynamodb, mock_lambda
-from botocore.exceptions import ClientError
-from botocore.stub import Stubber
-import json
+# from moto import mock_s3, mock_dynamodb, mock_lambda
+# from botocore.exceptions import ClientError
+# from botocore.stub import Stubber
+# import json
 
 # Navigate to the parent directoryS
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
