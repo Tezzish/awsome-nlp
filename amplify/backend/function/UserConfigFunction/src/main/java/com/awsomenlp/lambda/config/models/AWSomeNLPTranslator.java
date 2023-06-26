@@ -1,13 +1,22 @@
 package com.awsomenlp.lambda.config.models;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.awsomenlp.lambda.config.objects.Language;
 import com.awsomenlp.lambda.config.objects.Text;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import org.apache.commons.text.StringEscapeUtils;
+
+
 
 
 
@@ -32,85 +41,83 @@ public class AWSomeNLPTranslator extends TranslationModel {
     //translate each line in text.getContent()
     for (String line : text.getContent()) {
       //create the request body for the api call
-      String requestBody = createRequestBody(line);
 
       String translatedLine = null;
 
       try {  //make the api call
-        translatedLine = makePostRequest(requestBody);
+        translatedLine = makePostRequest(line);
+        System.out.println(translatedLine);
       } catch (Exception e) {
         System.out.println("Error making api call");
-
+        translatedLine = "Oopsie Doopsie";
       //add the translated line to the content of the text
-      content.add(translatedLine);
-    }
+      }
+    content.add(translatedLine);
+  }
+  String title = text.getTitle();
+  try {
+    title = makePostRequest(title);
+  } catch (Exception e) {
+    System.out.println("Error making api call");
+    title = "Oopsie Doopsie";
   }
 
-    //set the content of the text to the translated content
-    text.setContent(content);
+  //set the content of the text to the translated content
+  text.setContent(content);
+  text.setLanguage(destinationLanguage);
 
-    return text;
+  return new Text(text.getLanguage(),
+    title,
+    text.getAuthors(),
+    content);
 }
-
-  /**
-   * returns the text for the api call.
-   * @param inputData
-   * @return String
-   */
-
-  public static String createRequestBody(String inputData) {
-    return "{\"data\":{\"inputs\":\"" + inputData + "\"}}";
-  }
 
 
   /**
    * Makes a post request to the api.
-   * @param requestBody
+   * @param sentence the sentence to be translated.
    * @return String
    */
-  public static String makePostRequest(String requestBody) throws Exception {
-      URL apiUrl =
-      new URL("https://2c9kzo2ub4.execute-api.eu-west-1.amazonaws.com/dev");
-      HttpURLConnection connection =
-      (HttpURLConnection) apiUrl.openConnection();
+  public static String makePostRequest(String sentence) throws Exception {
+      OkHttpClient client = new OkHttpClient().newBuilder()
+    .build();
+    MediaType mediaType = MediaType.parse("application/json");
+    String requestBody = "{\"data\":{\"inputs\":\""
+    + sentence
+    + "\",\"parameters\":{\"max_length\":256}}}";
+    RequestBody body = RequestBody.create(
+      mediaType,
+      requestBody);
 
-      // Set the request method to POST
-      connection.setRequestMethod("POST");
-
-      // Set the request headers
-      connection.setRequestProperty("Content-Type", "application/json");
-
-      // Enable input and output streams
-      connection.setDoInput(true);
-      connection.setDoOutput(true);
-
-      // Write the request body to the output stream
-      connection.getOutputStream().write(requestBody.getBytes("UTF-8"));
-
-      // Get the response status code
-      int statusCode = connection.getResponseCode();
-
-      // Read the response body
-      BufferedReader reader =
-      new BufferedReader(
-        new InputStreamReader(connection.getInputStream())
-        );
-      StringBuilder responseBody = new StringBuilder();
-      String line;
-      while ((line = reader.readLine()) != null) {
-          responseBody.append(line);
+    Request request = new Request.Builder()
+    .url(
+    "https://2c9kzo2ub4.execute-api.eu-west-1.amazonaws.com/auth/ml-model-api"
+    )
+    .method("POST", body)
+    .addHeader("authorizationToken", "abc123")
+    .addHeader("Content-Type", "application/json")
+    .build();
+    try (Response response = client.newCall(request).execute()) {
+      if (!response.isSuccessful()) {
+        throw new IOException("Unexpected response code: " + response.code());
       }
-      reader.close();
 
-      // Handle the response based on the status code
-      if (statusCode >= 200 && statusCode < 300) {
-          // Success response
-          return responseBody.toString();
-      } else {
-          // Error response
-          throw new Exception("API request failed with status code: "
-          + statusCode);
-      }
+      String ret = response.body().string();
+      System.out.println(ret);
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode jsonNode = objectMapper.readTree(ret);
+      ret = jsonNode.get(0).get("generated_text").asText();
+      ret = ret.replace("``", "").replace("''", "");
+      // make sure that ret is first utf-encoded then utf escape decoded
+      ret = new String(ret.getBytes("UTF-8"), "UTF-8");
+      ret = StringEscapeUtils.unescapeJava(ret);
+      return ret;
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.out.println("Error making API call: " + e.getMessage());
+      return "Oopsie doopsie: " + e.getMessage();
+    }
   }
 
   /**

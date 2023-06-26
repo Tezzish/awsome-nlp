@@ -89,33 +89,65 @@ public class AmazonTranslate extends TranslationModel {
 
     //translates everything paragraph by paragraph. if it cannot translate
     //everything, it translates nothing.
-    try {
-      return getTranslatedText(targetLanguage, resultList, translatedTitle,
-          text);
-    } catch (ExecutionException e) {
-      System.out.println("ExecutionException");
-    } catch (InterruptedException e) {
-      System.out.println("InterruptedException");
-    }
+    // try {
+    //   return getTranslatedText(targetLanguage, resultList, translatedTitle,
+    //       text);
+    // } catch (ExecutionException e) {
+    //   System.out.println("ExecutionException");
+    // } catch (InterruptedException e) {
+    //   System.out.println("InterruptedException");
+    // }
 
-    return text;
+    // return text;
+    return getTranslatedText(targetLanguage, resultList, translatedTitle,
+        text);
   }
 
-  protected Text getTranslatedText(Language targetLanguage,
-                                   List<Future<TranslateTextResult>> resultList,
-                                   Future<TranslateTextResult> translatedTitle,
-                                   Text text)
-      throws ExecutionException, InterruptedException {
+  // protected Text getTranslatedText(Language targetLanguage,
+  //                              List<Future<TranslateTextResult>> resultList,
+  //                               Future<TranslateTextResult> translatedTitle,
+  //                                  Text text)
+  //     throws ExecutionException, InterruptedException {
 
+  //   List<String> translatedParagraphs = new ArrayList<>();
+
+  //   //translate the body
+  //   for (Future<TranslateTextResult> result : resultList) {
+  //     translatedParagraphs.add(result.get().getTranslatedText());
+  //   }
+
+  //   //translate the title
+  //   text.setTitle(translatedTitle.get().getTranslatedText());
+
+  //   text.setContent(translatedParagraphs);
+  //   text.setLanguage(targetLanguage);
+  //   return text;
+  // }
+
+  private Text getTranslatedText(Language targetLanguage,
+                                 List<Future<TranslateTextResult>> resultList,
+                                 Future<TranslateTextResult> translatedTitle,
+                                 Text text) {
     List<String> translatedParagraphs = new ArrayList<>();
-
     //translate the body
-    for (Future<TranslateTextResult> result : resultList) {
-      translatedParagraphs.add(result.get().getTranslatedText());
-    }
+    resultList.forEach(x -> {
+      try {
+        translatedParagraphs.add(x.get().getTranslatedText());
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      } catch (ExecutionException e) {
+        e.printStackTrace();
+      }
+    });
 
     //translate the title
-    text.setTitle(translatedTitle.get().getTranslatedText());
+    try {
+      text.setTitle(translatedTitle.get().getTranslatedText());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
 
     text.setContent(translatedParagraphs);
     text.setLanguage(targetLanguage);

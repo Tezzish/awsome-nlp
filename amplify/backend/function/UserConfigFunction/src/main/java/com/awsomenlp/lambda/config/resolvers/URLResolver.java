@@ -68,6 +68,9 @@ public class URLResolver {
     Elements paraEles = doc.select("p, h2");
     List<String> paragraphs = new ArrayList<>();
     for (Element ele : paraEles) {
+      if (ele.text().equals("") || ele.text().equals(null)) {
+        continue;
+      }
       paragraphs.add(ele.text());
     }
 
