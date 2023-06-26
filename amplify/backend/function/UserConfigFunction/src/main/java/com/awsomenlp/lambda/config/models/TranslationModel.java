@@ -11,7 +11,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     include = JsonTypeInfo.As.PROPERTY,
     property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = AmazonTranslate.class, name = "amazonTranslate")
+    @JsonSubTypes.Type(value = AmazonTranslate.class,
+    name = "amazonTranslate"),
+    @JsonSubTypes.Type(value = AWSomeNLPTranslator.class,
+    name = "AWSomeNLPTranslator")
 })
 public abstract class TranslationModel {
   private String id;

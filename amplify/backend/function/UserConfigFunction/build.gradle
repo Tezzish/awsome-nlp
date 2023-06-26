@@ -55,11 +55,17 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.16.1'
     // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-checkstyle-plugin
     implementation 'org.apache.maven.plugins:maven-checkstyle-plugin:3.3.0'
+    
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1' // Add OkHttp dependency here
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation 'org.mockito:mockito-core:5.3.1'
 
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    
+    implementation 'org.apache.commons:commons-text:1.9'
+    
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
