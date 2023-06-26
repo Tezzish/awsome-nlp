@@ -24,7 +24,19 @@ import {defaultTranslatedHTML} from "./components/defaultTranslatedHTML";
 // Importing logo image
 import logo from './TUpoweredAWS.png';
 
+
 Amplify.configure(awsExports);
+
+ //Booleans
+  //checks if a string is a valid URL and if it is an AWS blog post
+  const isValidURL = (str) => {
+    try {
+      new URL(str);
+      return str.includes("https://aws.amazon.com/blogs/");
+    } catch {
+      return false;
+    }
+  };
 
 // Application component
 function App() {
@@ -115,16 +127,6 @@ function App() {
     }
   };
 
-  //Booleans
-  //checks if a string is a valid URL and if it is an AWS blog post
-  const isValidURL = (str) => {
-    try {
-      new URL(str);
-      return str.includes("https://aws.amazon.com/blogs/");
-    } catch {
-      return false;
-    }
-  };
 
   //API communication
   //fetches languages and translation models from the backend
@@ -271,3 +273,4 @@ function App() {
   );
 }
 export default App;
+export {isValidURL};
