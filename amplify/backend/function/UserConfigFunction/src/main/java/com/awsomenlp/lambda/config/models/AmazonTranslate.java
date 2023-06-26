@@ -92,8 +92,6 @@ public class AmazonTranslate extends TranslationModel {
     try {
       return getTranslatedText(targetLanguage, resultList, translatedTitle,
           text);
-    } catch (ExecutionException e) {
-      System.out.println("ExecutionException");
     } catch (InterruptedException e) {
       System.out.println("InterruptedException");
     }
@@ -105,17 +103,26 @@ public class AmazonTranslate extends TranslationModel {
                                    List<Future<TranslateTextResult>> resultList,
                                    Future<TranslateTextResult> translatedTitle,
                                    Text text)
-      throws ExecutionException, InterruptedException {
+      throws InterruptedException {
 
     List<String> translatedParagraphs = new ArrayList<>();
 
     //translate the body
     for (Future<TranslateTextResult> result : resultList) {
-      translatedParagraphs.add(result.get().getTranslatedText());
+
+      try {
+        translatedParagraphs.add(result.get().getTranslatedText());
+      } catch (ExecutionException e) {
+        e.printStackTrace();
+      }
     }
 
     //translate the title
-    text.setTitle(translatedTitle.get().getTranslatedText());
+    try {
+      text.setTitle(translatedTitle.get().getTranslatedText());
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
 
     text.setContent(translatedParagraphs);
     text.setLanguage(targetLanguage);
