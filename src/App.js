@@ -247,8 +247,8 @@ function App() {
     }
   }
 
-    //APP
-    return (
+  //APP
+  return (
       <div className="App">
         <div className="icon-container">
           <img src={logo} alt="logo" className={`icon ${alertIsVisible ? 'icon-alert' : ''}`} onClick={() => window.location.reload()}/>
